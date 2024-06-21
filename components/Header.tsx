@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button"
 import Link from "next/link";
-import { Bell,MessageCircle,UserRound } from 'lucide-react';
+import { Bell,MessageCircle,UserRound,Moon } from 'lucide-react';
 
 const Header = () => {
     return (
@@ -26,6 +26,9 @@ const Header = () => {
             </Button>
             <Button variant="outline" size="icon" className="shadow-sm">
                 <UserRound className="h-4 w-4 " />
+            </Button>
+            <Button variant="outline" size="icon" className="shadow-sm">
+                <Moon className="h-4 w-4 " />
             </Button>
             </div>
         </header>
