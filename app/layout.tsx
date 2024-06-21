@@ -8,6 +8,7 @@ import "./globals.css";
 import Header from '../components/Header';
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Crowd Monitoring System",
@@ -25,7 +26,10 @@ export default function RootLayout({
         <Sidebar/>
         <main className="w-full h-full">
           <Header/>
-          {children}
+          <div className="p-4">
+            <Breadcrumbs/>
+            {children}
+          </div>
         </main>
       </body>
     </html>

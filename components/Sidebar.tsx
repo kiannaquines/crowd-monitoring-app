@@ -23,12 +23,14 @@ const Sidebar = () => {
             <Command style={{ overflow:'visible' }}>
                 <CommandInput placeholder="Search..." />
                 <CommandList style={{ overflow:'visible' }}>
-                    <CommandEmpty>No search result found.</CommandEmpty>
+                    <CommandEmpty>Crowd Monitoring System Module Not Found.</CommandEmpty>
                     <CommandGroup heading="General">
-                        <CommandItem>
-                            <LayoutDashboard className="mr-2 h-4 w-4" />
-                            <span>Dashboard</span>
-                        </CommandItem>
+                        <Link href="/" passHref>
+                            <CommandItem className='cursor-pointer'>
+                                <LayoutDashboard className="mr-2 h-4 w-4" />
+                                <span>Dashboard</span>
+                            </CommandItem>
+                        </Link>
                         <CommandItem>
                             <Calendar className="mr-2 h-4 w-4" />
                             <span>Calendar</span>
@@ -43,10 +45,12 @@ const Sidebar = () => {
                         </CommandItem>
                     </CommandGroup>
                     <CommandGroup heading="Device">
-                        <CommandItem>
-                            <Unplug className="mr-2 h-4 w-4" />
-                            <span>Devices</span>
-                        </CommandItem>
+                        <Link href="/sections" passHref>
+                            <CommandItem className='cursor-pointer'>
+                                <Unplug className="mr-2 h-4 w-4" />
+                                <span>Devices</span>
+                            </CommandItem>
+                        </Link>
                         <CommandItem>
                             <Settings2 className="mr-2 h-4 w-4" />
                             <span>Configure</span>
