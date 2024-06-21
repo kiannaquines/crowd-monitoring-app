@@ -2,11 +2,17 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+
+// app components
+import Navbar from '../components/Navbar';
+import Sidebar from "../components/Sidebar";
+import Footer from "../components/Footer";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Crowd Monitoring System",
-  description: "Artificial inteligence driven crowd monitoring system",
+  description: "Artificial Intelligence driven crowd monitoring system",
 };
 
 export default function RootLayout({
@@ -16,7 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Navbar/>
+        <Sidebar/>
+        {children}
+        <Footer/>
+      </body>
     </html>
   );
 }

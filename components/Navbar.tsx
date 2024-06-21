@@ -3,7 +3,7 @@ import React from "react";
 const Navbar = () => {
     return (
         <div>
-            <h1>Navbar Component</h1>
+            <h2>Crowd Monitoring System</h2>
         </div>
     )
 }
