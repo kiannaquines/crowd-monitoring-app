@@ -23,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="">
       <body className={`${GeistSans.className} flex items-start justify-between`}>
-        <Sidebar/>
+        <div className="min-w-[300px] border-r min-h-screen">
+          <Sidebar/>
+        </div>
         <main className="w-full h-full">
           <Header/>
           <div className="p-4">
