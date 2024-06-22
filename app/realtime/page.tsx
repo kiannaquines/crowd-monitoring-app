@@ -22,14 +22,14 @@ const RealtimeDashboard = () => {
         <Card className="col-span-4 row-span-6 shadow-sm">
           <CardContent className='py-3'>
               <h4 className='font-medium'>Visitors Overview</h4>
-              <small className='text-slate-400'>Todays overview in realtime.</small>
+              <small className='text-slate-300'>Todays overview in realtime.</small>
               <BarGraphToday/>
           </CardContent>
         </Card>
         <Card className="col-span-4 row-span-6 shadow-sm">
           <CardContent className='py-3'>
               <h4 className='font-medium'>Model Accuracy Overview</h4>
-              <small className='text-slate-400'>Todays model accuracy in realtime.</small>
+              <small className='text-slate-300'>Todays model accuracy in realtime.</small>
               <ModelAccuracyModel/>
           </CardContent>
         </Card>
