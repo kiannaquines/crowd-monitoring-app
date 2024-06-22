@@ -13,7 +13,8 @@ import {
     Unplug,
     Settings2,
     LogOut,
-    Scroll 
+    Scroll,
+    GanttChart 
   } from "lucide-react"
 
 const Sidebar = () => {
@@ -33,12 +34,12 @@ const Sidebar = () => {
                             </CommandItem>
                         </Link>
                         <CommandItem>
-                            <Calendar className="mr-2 h-4 w-4" />
+                            <GanttChart className="mr-2 h-4 w-4" />
                             <span>Realtime Monitoring</span>
                         </CommandItem>
                         <CommandItem>
                             <Calendar className="mr-2 h-4 w-4" />
-                            <span>Calendar</span>
+                            <span>Schedules</span>
                         </CommandItem>
                         <CommandItem>
                             <Building className="mr-2 h-4 w-4" />

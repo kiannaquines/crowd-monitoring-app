@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button"
 import Link from "next/link";
-import { Bell,MessageCircle,UserRound,Moon,Menu } from 'lucide-react';
+import { Bell,Moon,Menu } from 'lucide-react';
 
 const Header = () => {
     return (
@@ -22,13 +22,7 @@ const Header = () => {
             </div>
             <div className="flex flex-row gap-2">
             <Button variant="outline" size="icon" className="shadow-sm">
-                <MessageCircle className="h-4 w-4" />
-            </Button>
-            <Button variant="outline" size="icon" className="shadow-sm">
                 <Bell className="h-4 w-4" />
-            </Button>
-            <Button variant="outline" size="icon" className="shadow-sm">
-                <UserRound className="h-4 w-4 " />
             </Button>
             <Button variant="outline" size="icon" className="shadow-sm">
                 <Moon className="h-4 w-4 " />
