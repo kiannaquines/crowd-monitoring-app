@@ -33,10 +33,12 @@ const Sidebar = () => {
                                 <span>Dashboard</span>
                             </CommandItem>
                         </Link>
-                        <CommandItem>
-                            <GanttChart className="mr-2 h-4 w-4" />
-                            <span>Realtime Monitoring</span>
-                        </CommandItem>
+                        <Link href="/realtime" passHref>
+                            <CommandItem className='cursor-pointer'>
+                                <GanttChart className="mr-2 h-4 w-4" />
+                                <span>Realtime Monitoring</span>
+                            </CommandItem>
+                        </Link>
                         <CommandItem>
                             <Calendar className="mr-2 h-4 w-4" />
                             <span>Schedules</span>

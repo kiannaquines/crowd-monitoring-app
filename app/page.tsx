@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from '../components/Header'
 import {
   Card,
   CardContent,

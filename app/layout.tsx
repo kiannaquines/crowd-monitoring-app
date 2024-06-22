@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="">
+    <html lang="en" className="dark">
       <body className={`${GeistSans.className} flex items-start justify-between`}>
         <div className="min-w-[300px] border-r min-h-screen">
           <Sidebar/>
