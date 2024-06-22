@@ -12,7 +12,8 @@ import {
     Lock,
     Unplug,
     Settings2,
-    LogOut 
+    LogOut,
+    Scroll 
   } from "lucide-react"
 
 const Sidebar = () => {
@@ -31,6 +32,10 @@ const Sidebar = () => {
                                 <span>Dashboard</span>
                             </CommandItem>
                         </Link>
+                        <CommandItem>
+                            <Calendar className="mr-2 h-4 w-4" />
+                            <span>Realtime Monitoring</span>
+                        </CommandItem>
                         <CommandItem>
                             <Calendar className="mr-2 h-4 w-4" />
                             <span>Calendar</span>
@@ -54,6 +59,10 @@ const Sidebar = () => {
                         <CommandItem>
                             <Settings2 className="mr-2 h-4 w-4" />
                             <span>Configure</span>
+                        </CommandItem>
+                        <CommandItem>
+                            <Scroll className="mr-2 h-4 w-4" />
+                            <span>Logs</span>
                         </CommandItem>
                     </CommandGroup>
                     <CommandGroup heading="Settings">

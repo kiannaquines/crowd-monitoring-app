@@ -1,12 +1,15 @@
 import React from "react";
 import { Button } from "@/components/ui/button"
 import Link from "next/link";
-import { Bell,MessageCircle,UserRound,Moon } from 'lucide-react';
+import { Bell,MessageCircle,UserRound,Moon,Menu } from 'lucide-react';
 
 const Header = () => {
     return (
         <header className="flex flex-row justify-items-between justify-between border-b p-4">
             <div className="flex justify-items-center justify-center gap-2">
+                <Button variant="ghost">
+                    <Menu className="h4 w-4"/>
+                </Button>
                 <Button>
                     <Link href="/">Overview</Link>
                 </Button>
