@@ -26,7 +26,7 @@ export default function RootLayout({
         <div className="min-w-[300px] min-h-[1100px]">
           <Sidebar/>
         </div>
-        <main className="w-full h-full">
+        <main className="w-full h-full overflow-y-auto">
           <Header/>
           <div className="p-4">
             <Breadcrumbs/>

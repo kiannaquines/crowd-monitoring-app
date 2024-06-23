@@ -72,7 +72,7 @@ const Sidebar = () => {
                         <Link href="/sections" passHref>
                             <CommandItem className='cursor-pointer'>
                                 <Unplug className="mr-2 h-4 w-4" />
-                                <span>Devices</span>
+                                <span>Device Token</span>
                             </CommandItem>
                         </Link>
                         <CommandItem className='cursor-pointer'>
