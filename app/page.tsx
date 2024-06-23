@@ -16,9 +16,9 @@ import Link from 'next/link';
 const HomePage = () => {
   return (
     <main>
-      <h1 className='text-xl font-semibold'>Overview</h1>
+      <h1 className='text-xl font-semibold'>Todays Overview</h1>
 
-      <div className='grid grid-cols-4 mt-4 gap-2'>
+      <div className='grid grid-cols-4 mt-4 gap-4'>
         <Card className='shadow-sm'>
           <CardContent className='py-3'>
             <div className='flex flex-row justify-between justify-items-center items-center'>

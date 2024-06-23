@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from "next/link";
 import UserItem from '../components/UserItem'
@@ -33,24 +35,38 @@ const Sidebar = () => {
                                 <span>Dashboard</span>
                             </CommandItem>
                         </Link>
+                        <Link href="/schedule">
+                            <CommandItem className='cursor-pointer'>
+                                <Calendar className="mr-2 h-4 w-4" />
+                                <span>Schedules</span>
+                            </CommandItem>
+                        </Link>
+                        <Link href="/sections" passHref>
+                            <CommandItem className='cursor-pointer'>
+                                <Building className="mr-2 h-4 w-4" />
+                                <span>Sections</span>
+                            </CommandItem>
+                        </Link>
+                        <Link href="/users">
+                            <CommandItem className='cursor-pointer'>
+                                <Users className="mr-2 h-4 w-4" />
+                                <span>Users</span>
+                            </CommandItem>
+                        </Link>
+                    </CommandGroup>
+                    <CommandGroup heading="Realtime Charts">
                         <Link href="/realtime" passHref>
                             <CommandItem className='cursor-pointer'>
                                 <GanttChart className="mr-2 h-4 w-4" />
                                 <span>Realtime Monitoring</span>
                             </CommandItem>
                         </Link>
-                        <CommandItem>
-                            <Calendar className="mr-2 h-4 w-4" />
-                            <span>Schedules</span>
-                        </CommandItem>
-                        <CommandItem>
-                            <Building className="mr-2 h-4 w-4" />
-                            <span>Sections</span>
-                        </CommandItem>
-                        <CommandItem>
-                            <Users className="mr-2 h-4 w-4" />
-                            <span>Users</span>
-                        </CommandItem>
+                        <Link href="/realtime/model" passHref>
+                            <CommandItem className='cursor-pointer'>
+                                <GanttChart className="mr-2 h-4 w-4" />
+                                <span>Model Accuracy</span>
+                            </CommandItem>
+                        </Link>
                     </CommandGroup>
                     <CommandGroup heading="Device">
                         <Link href="/sections" passHref>
@@ -59,31 +75,31 @@ const Sidebar = () => {
                                 <span>Devices</span>
                             </CommandItem>
                         </Link>
-                        <CommandItem>
+                        <CommandItem className='cursor-pointer'>
                             <Settings2 className="mr-2 h-4 w-4" />
                             <span>Configure</span>
                         </CommandItem>
-                        <CommandItem>
+                        <CommandItem className='cursor-pointer'>
                             <Scroll className="mr-2 h-4 w-4" />
                             <span>Logs</span>
                         </CommandItem>
                     </CommandGroup>
                     <CommandGroup heading="Settings">
-                        <CommandItem>
+                        <CommandItem className='cursor-pointer'>
                             <User className="mr-2 h-4 w-4" />
                             <span>Profile</span>
                         </CommandItem>
-                        <CommandItem>
+                        <CommandItem className='cursor-pointer'>
                             <Lock className="mr-2 h-4 w-4" />
                             <span>Privacy</span>
                         </CommandItem>
-                        <CommandItem>
+                        <CommandItem className='cursor-pointer'>
                             <Settings className="mr-2 h-4 w-4" />
                             <span>Settings</span>
                         </CommandItem>
                     </CommandGroup>
                     <CommandGroup heading="Account">
-                        <CommandItem>
+                        <CommandItem className='cursor-pointer'>
                             <LogOut className="mr-2 h-4 w-4" />
                             <span>Logout</span>
                         </CommandItem>

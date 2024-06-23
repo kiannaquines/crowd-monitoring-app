@@ -72,9 +72,9 @@ const ModelAccuracyGraph = () => {
         <LineChart width={500} height={400} data={deviceCountData}>
             <XAxis tickMargin={0} minTickGap={0} dataKey="time" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#ffffff' }}/>
             <YAxis dataKey="score" width={20} tick={{ fontSize: 12, fill: '#ffffff' }} tickLine={false} axisLine={false} tickMargin={0} minTickGap={0}/>
-            <Line type='monotone' dataKey="score" strokeWidth={3} dot={{ stroke: '#EBEBEB', strokeWidth: 4 }} activeDot={true} stroke="#DC2626"/>
-            <Line type='monotone' dataKey="precision" strokeWidth={3} dot={{ stroke: '#EBEBEB', strokeWidth: 4 }} activeDot={true} stroke="#DC2626"/>
-            <Line type='monotone' dataKey="f1" strokeWidth={3} dot={{ stroke: '#EBEBEB', strokeWidth: 4 }} activeDot={true} stroke="#DC2626"/>
+            <Line type='monotone' dataKey="score" strokeWidth={3} dot={{ stroke: '#EBEBEB', strokeWidth: 4 }} activeDot={true} stroke="#E11D48"/>
+            <Line type='monotone' dataKey="precision" strokeWidth={3} dot={{ stroke: '#EBEBEB', strokeWidth: 4 }} activeDot={true} stroke="#E11D48"/>
+            <Line type='monotone' dataKey="f1" strokeWidth={3} dot={{ stroke: '#EBEBEB', strokeWidth: 4 }} activeDot={true} stroke="#E11D48"/>
         </LineChart>
       </ResponsiveContainer>
     </div>
