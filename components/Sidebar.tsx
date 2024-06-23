@@ -21,10 +21,10 @@ import {
 
 const Sidebar = () => {
     return (
-        <div className='fixed flex flex-col gap-4 w-[300px] h-[1006px] p-4'>
+        <div className='fixed flex flex-col gap-4 w-[300px] h-auto p-4 border-r overflow'>
             <UserItem/>
             <div className='grow'>
-            <Command style={{ overflow:'visible', height:'850px' }}>
+            <Command style={{height:'875px', overflow:'auto' }}>
                 <CommandInput placeholder="Search..." />
                 <CommandList style={{ overflow:'visible' }}>
                     <CommandEmpty>Crowd Monitoring System Module Not Found.</CommandEmpty>
