@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card,CardContent } from '@/components/ui/card';
-import { DataTableDemo } from '@/components/Schedule';
+import { ScheduleDataTable } from '@/components/ScheduleTable';
 import { Button } from '@/components/ui/button';
 
 const Schedule = () => {
@@ -18,7 +18,7 @@ const Schedule = () => {
           <div className='flex flex-row justify-between justify-items-center items-center'>
               <h4 className='font-medium'>Available Schedules</h4>
           </div>
-          <DataTableDemo/>
+          <ScheduleDataTable/>
         </CardContent>
       </Card>
       </div>
