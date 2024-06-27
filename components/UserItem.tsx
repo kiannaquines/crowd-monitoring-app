@@ -3,7 +3,7 @@ import React from 'react'
 const UserItem = () => {
   return (
     <div className='flex items-center justify-between gap-2 border rounded-[8px] p-2 shadow-sm'>
-        <div className='avatar rounded-full bg-rose-600 h-10 w-10 text-white flex items-center justify-center'>
+        <div className='avatar rounded-full bg-white h-10 w-10 text-slate-900 font-semibold flex items-center justify-center'>
             <span>KN</span>
         </div>
         <div className='grow'>

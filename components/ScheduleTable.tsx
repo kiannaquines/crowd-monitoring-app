@@ -45,7 +45,7 @@ const data: Schedule[] = [
       id: '1',
       scheduleTitle: "Reference Section Morning Schedule",
       area: "Reference Section",
-      duration: "08:00 am - 12:00 pm",
+      time: "08:00 am - 12:00 pm",
       crowdLevel: 50,
       alertLevel: "Low",
       createdAt: "2024-06-26T09:00:00Z",
@@ -55,7 +55,7 @@ const data: Schedule[] = [
     id: '2',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -65,7 +65,7 @@ const data: Schedule[] = [
     id: '3',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -75,7 +75,7 @@ const data: Schedule[] = [
     id: '4',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -85,7 +85,7 @@ const data: Schedule[] = [
     id: '5',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -95,7 +95,7 @@ const data: Schedule[] = [
     id: '6',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -105,7 +105,7 @@ const data: Schedule[] = [
     id: '7',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -115,7 +115,7 @@ const data: Schedule[] = [
     id: '8',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -125,7 +125,7 @@ const data: Schedule[] = [
     id: '9',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -135,7 +135,7 @@ const data: Schedule[] = [
     id: '10',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -145,7 +145,7 @@ const data: Schedule[] = [
     id: '11',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -155,7 +155,7 @@ const data: Schedule[] = [
     id: '12',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -165,7 +165,7 @@ const data: Schedule[] = [
     id: '13',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -174,7 +174,7 @@ const data: Schedule[] = [
     id: '14',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -185,7 +185,7 @@ const data: Schedule[] = [
     id: '15',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -195,7 +195,7 @@ const data: Schedule[] = [
     id: '16',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -205,7 +205,7 @@ const data: Schedule[] = [
     id: '17',
     scheduleTitle: "Reference Section Morning Schedule",
     area: "Reference Section",
-    duration: "08:00 am - 12:00 pm",
+    time: "08:00 am - 12:00 pm",
     crowdLevel: 50,
     alertLevel: "Low",
     createdAt: "2024-06-26T09:00:00Z",
@@ -217,7 +217,7 @@ export type Schedule = {
     id: string,
     scheduleTitle: string,
     area: string,
-    duration: string,
+    time: string,
     crowdLevel: number,
     alertLevel: string,
     createdAt: string,
@@ -262,7 +262,7 @@ export const columns: ColumnDef<Schedule>[] = [
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Area
+            Section
             <CaretSortIcon className="ml-2 h-4 w-4" />
           </Button>
         )
@@ -270,10 +270,10 @@ export const columns: ColumnDef<Schedule>[] = [
       cell: ({ row }) => <div>{row.getValue("area")}</div>,
     },
     {
-        accessorKey: "duration",
-        header: () => <div className="text-left">Duration</div>,
+        accessorKey: "time",
+        header: () => <div className="text-left">Schedule Time</div>,
         cell: ({ row }) => {
-            return <div className="font-medium">{row.getValue("duration")}</div>
+            return <div className="font-medium">{row.getValue("time")}</div>
     },
     },
     {
@@ -344,17 +344,17 @@ export function ScheduleDataTable() {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter sections..."
+          value={(table.getColumn("area")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("area")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
+              Filters <ChevronDownIcon className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">

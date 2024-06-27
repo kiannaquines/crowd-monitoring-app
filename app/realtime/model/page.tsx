@@ -2,7 +2,7 @@ import React from 'react';
 import {Card,CardContent} from '@/components/ui/card';
 import ModelAccuracyModel from '@/components/ModelAccuracyGraph';
 
-import { DataTableDemo } from '@/components/Schedule';
+import { ModelAccuracyDataTable } from '@/components/ModelAccuracyTable';
 import { Button } from '@/components/ui/button';
 
 const ModelAccuracyRealtime = () => {
@@ -20,9 +20,9 @@ const ModelAccuracyRealtime = () => {
         <Card className='col-span-4 pt-4'>
         <CardContent>
           <div className='flex flex-row justify-between justify-items-center items-center'>
-              <h4 className='font-medium'>Available Schedules</h4>
+              <h4 className='font-medium'>Tracked Devices</h4>
           </div>
-          <DataTableDemo/>
+          <ModelAccuracyDataTable/>
         </CardContent>
       </Card>
       </div>

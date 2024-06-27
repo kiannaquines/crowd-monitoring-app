@@ -52,7 +52,7 @@ const BarGraphToday = () => {
         <BarChart width={500} height={400} data={deviceCountData}>
             <XAxis tickMargin={0} minTickGap={0} dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill:'#ffffff' }}/>
             <YAxis dataKey="deviceCount" width={20} tick={{ fontSize: 12, fill: '#ffffff' }} tickLine={false} axisLine={false} tickMargin={0} minTickGap={0} />
-            <Bar type='monotone' barSize={35} dataKey="deviceCount" fill="#E11D48" radius={[10, 10, 10, 10]}/>
+            <Bar type='monotone' barSize={40} dataKey="deviceCount" fill="#FBFAFB" radius={[5, 5, 0, 0]}/>
         </BarChart>
       </ResponsiveContainer>
     </div>

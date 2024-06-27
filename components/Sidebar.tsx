@@ -68,30 +68,28 @@ const Sidebar = () => {
                             </CommandItem>
                         </Link>
                     </CommandGroup>
-                    <CommandGroup heading="Device">
-                        <Link href="/sections" passHref>
-                            <CommandItem className='cursor-pointer'>
-                                <Unplug className="mr-2 h-4 w-4" />
+                    <CommandGroup heading="Advance Device Configuration">
+                        <CommandItem className='cursor-pointer'>
+                            <Unplug className="mr-2 h-4 w-4" />
+                            <Link href="/devices" passHref>
                                 <span>Device Token</span>
-                            </CommandItem>
-                        </Link>
+                            </Link>
+                        </CommandItem>
+                        <Link href="/devices/configuration">
                         <CommandItem className='cursor-pointer'>
                             <Settings2 className="mr-2 h-4 w-4" />
-                            <span>Configure</span>
+                                <span>Configure</span>
                         </CommandItem>
+                        </Link>
                         <CommandItem className='cursor-pointer'>
                             <Scroll className="mr-2 h-4 w-4" />
                             <span>Logs</span>
                         </CommandItem>
                     </CommandGroup>
-                    <CommandGroup heading="Settings">
+                    <CommandGroup heading="User Profile Settings">
                         <CommandItem className='cursor-pointer'>
                             <User className="mr-2 h-4 w-4" />
                             <span>Profile</span>
-                        </CommandItem>
-                        <CommandItem className='cursor-pointer'>
-                            <Lock className="mr-2 h-4 w-4" />
-                            <span>Privacy</span>
                         </CommandItem>
                         <CommandItem className='cursor-pointer'>
                             <Settings className="mr-2 h-4 w-4" />
