@@ -21,7 +21,7 @@ const RealtimeDashboard = () => {
       <Card className='shadow-sm'>
           <CardContent className='py-3'>
             <div className='flex flex-row justify-between justify-items-center items-center'>
-              <h4 className='font-medium'>Today Visit</h4>
+              <h4 className='font-medium '>Today Visit</h4>
               <Calendar/>
             </div>
             <h1 className='text-2xl font-semibold mt-1'>+1,250</h1>
@@ -64,14 +64,14 @@ const RealtimeDashboard = () => {
         <Card className="col-span-4 row-span-6 shadow-sm">
           <CardContent className='py-3'>
               <h4 className='font-medium'>Visitors Overview</h4>
-              <small className='text-slate-300'>Overall overview in realtime.</small>
+              <small className='text-slate-500'>Overall overview in realtime.</small>
               <BarGraphToday/>
           </CardContent>
         </Card>
         <Card className="col-span-4 row-span-6 shadow-sm">
           <CardContent className='py-3'>
               <h4 className='font-medium'>Section Utilization</h4>
-              <small className='text-slate-300'>Overall section utilization in realtime.</small>
+              <small className='text-slate-500'>Overall section utilization in realtime.</small>
               <UtilizationGraph/>
           </CardContent>
         </Card>

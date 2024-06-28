@@ -1,6 +1,7 @@
 'use client';
 
 import {LineChart, Line, ResponsiveContainer,XAxis, YAxis, Tooltip} from 'recharts';
+import { useTheme } from 'next-themes';
 
 const deviceCountData = [
     {
@@ -66,15 +67,54 @@ const deviceCountData = [
 ];
 
 const ModelAccuracyGraph = () => {
+  const {theme} = useTheme()
+  const isDarkMode = theme === "dark";
+
   return (
     <div className='mt-5' style={{ width: '100%', height: 350 }}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart width={500} height={400} data={deviceCountData}>
-            <XAxis tickMargin={0} minTickGap={0} dataKey="time" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#ffffff' }}/>
-            <YAxis dataKey="score" width={20} tick={{ fontSize: 12, fill: '#ffffff' }} tickLine={false} axisLine={false} tickMargin={0} minTickGap={0}/>
-            <Line type='monotone' dataKey="score" strokeWidth={3} dot={{ stroke: '#EBEBEB', strokeWidth: 4 }} activeDot={true} stroke="#FBFAFB"/>
-            <Line type='monotone' dataKey="precision" strokeWidth={3} dot={{ stroke: '#EBEBEB', strokeWidth: 4 }} activeDot={true} stroke="#FBFAFB"/>
-            <Line type='monotone' dataKey="f1" strokeWidth={3} dot={{ stroke: '#EBEBEB', strokeWidth: 4 }} activeDot={true} stroke="#FBFAFB"/>
+            <XAxis
+              tickMargin={0}
+              minTickGap={0}
+              dataKey="time"
+              axisLine={false}
+              tickLine={false}
+              tick={isDarkMode? {fontSize: 12, fill: '#FBFAFB' }: {fontSize: 12, fill: '#0C0A09' }}
+            />
+            <YAxis
+              dataKey="score"
+              width={20}
+              tick={isDarkMode? {fontSize: 12, fill: '#FBFAFB' }: {fontSize: 12, fill: '#0C0A09' }}
+              tickLine={false}
+              axisLine={false}
+              tickMargin={0}
+              minTickGap={0}
+            />
+            <Line
+              type='monotone'
+              dataKey="score"
+              strokeWidth={3}
+              dot={isDarkMode?{ stroke: '#FBFAFB', strokeWidth: 4 }:{ stroke: '#0C0A09', strokeWidth: 4 }}
+              activeDot={true}
+              stroke={isDarkMode?"#FBFAFB":"#0C0A09"}
+            />
+            <Line
+              type='monotone'
+              dataKey="precision"
+              strokeWidth={3}
+              dot={isDarkMode?{ stroke: '#FBFAFB', strokeWidth: 4 }:{ stroke: '#0C0A09', strokeWidth: 4 }}
+              activeDot={true}
+              stroke={isDarkMode?"#FBFAFB":"#0C0A09"}
+            />
+            <Line
+              type='monotone'
+              dataKey="f1"
+              strokeWidth={3}
+              dot={isDarkMode?{ stroke: '#FBFAFB', strokeWidth: 4 }:{ stroke: '#0C0A09', strokeWidth: 4 }}
+              activeDot={true}
+              stroke={isDarkMode?"#FBFAFB":"#0C0A09"}
+            />
         </LineChart>
       </ResponsiveContainer>
     </div>

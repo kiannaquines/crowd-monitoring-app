@@ -13,7 +13,7 @@ const ModelAccuracyRealtime = () => {
         <Card className="col-span-4 row-span-6 shadow-sm">
           <CardContent className='py-3'>
               <h4 className='font-medium'>Model Accuracy Overview</h4>
-              <small className='text-slate-300'>Overall model accuracy in realtime.</small>
+              <small className='text-slate-500'>Overall model accuracy in realtime.</small>
               <ModelAccuracyModel/>
           </CardContent>
         </Card>
