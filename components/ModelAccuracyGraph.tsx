@@ -1,6 +1,6 @@
 'use client';
 
-import {LineChart, Line, ResponsiveContainer,XAxis, YAxis, Tooltip} from 'recharts';
+import {LineChart, Line, ResponsiveContainer,XAxis, YAxis, Tooltip, CartesianGrid} from 'recharts';
 import { useTheme } from 'next-themes';
 
 const deviceCountData = [
@@ -91,6 +91,7 @@ const ModelAccuracyGraph = () => {
               tickMargin={0}
               minTickGap={0}
             />
+            <CartesianGrid strokeDasharray="3 3" />
             <Line
               type='monotone'
               dataKey="score"

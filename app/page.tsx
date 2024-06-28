@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Building,Calendar,User,Users } from 'lucide-react';
+import { Building,Calendar,User,Users, Activity } from 'lucide-react';
 import BarGraphToday from '../components/BarGraphToday';
 import UtilizationGraph from '../components/UtilizationGraph';
 import Link from 'next/link';
@@ -22,7 +22,7 @@ const HomePage = () => {
           <CardContent className='py-3'>
             <div className='flex flex-row justify-between justify-items-center items-center'>
               <h4 className='font-medium'>Today Visit</h4>
-              <Calendar/>
+              <Activity/>
             </div>
             <h1 className='text-2xl font-semibold mt-1'>+1,250</h1>
             <small className='text-slate-500 text-sm'>Increase +20% last day</small>
@@ -33,7 +33,7 @@ const HomePage = () => {
           <CardContent className='py-3'>
             <div className='flex flex-row justify-between justify-items-center items-center'>
               <h4 className='font-medium'>Last Day Visit</h4>
-              <Calendar/>
+              <Activity/>
             </div>
             <h1 className='text-2xl font-semibold mt-1'>+1,000</h1>
             <small className='text-slate-500 text-sm'>Increase +20% last day</small>
@@ -44,7 +44,7 @@ const HomePage = () => {
           <CardContent className='py-3'>
             <div className='flex flex-row justify-between justify-items-center items-center'>
               <h4 className='font-medium'>Last Week Visit</h4>
-              <Calendar/>
+              <Activity/>
             </div>
             <h1 className='text-2xl font-semibold mt-1'>+1,672</h1>
             <small className='text-slate-500 text-sm'>Increase +20% last day</small>
@@ -55,7 +55,7 @@ const HomePage = () => {
           <CardContent className='py-3'>
             <div className='flex flex-row justify-between justify-items-center items-center'>
               <h4 className='font-medium'>Total Visit</h4>
-              <Calendar/>
+              <Activity/>
             </div>
             <h1 className='text-2xl font-semibold mt-1'>34,000</h1>
             <small className='text-slate-500 text-sm'>Increase +20% last week</small>
@@ -64,7 +64,8 @@ const HomePage = () => {
      
         <Card className="col-span-2 row-span-6 shadow-sm">
           <CardContent className='py-3'>
-            <h4 className='font-medium'>Todays Overview</h4>
+              <h4 className='font-medium'>Todays Overview</h4>
+              <small className='text-slate-500 text-sm'>Overview of hourly activities today</small>
               <BarGraphToday/>
           </CardContent>
         </Card>
@@ -104,6 +105,7 @@ const HomePage = () => {
         <Card className='shadow-sm col-span-2 row-span-6 min-h-[100px]'>
           <CardContent className='py-3'>
             <h4 className='font-medium'>Todays Section Utilization</h4>
+            <small className='text-slate-500 text-sm'>Overview of section utilization today</small>
             <UtilizationGraph/>
           </CardContent>
         </Card>

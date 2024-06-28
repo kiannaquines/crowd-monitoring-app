@@ -1,6 +1,6 @@
 'use client';
 
-import {BarChart,Bar,ResponsiveContainer,XAxis, YAxis, Tooltip} from 'recharts';
+import {BarChart,Bar,ResponsiveContainer,XAxis, YAxis, Tooltip, CartesianGrid} from 'recharts';
 import { useTheme } from 'next-themes';
 
 const deviceCountData = [
@@ -70,6 +70,7 @@ const deviceCountData = [
   }
 ];
 
+  
 const OverViewVisit = () => {
 
   const { theme } = useTheme();
@@ -96,6 +97,7 @@ const OverViewVisit = () => {
               tickLine={false}
               tick={isDarkMode? { fontSize: 12, fill: '#FBFAFB' } : { fontSize: 12, fill: '#0C0A09' }}
             />
+            <CartesianGrid strokeDasharray="3 3" />
             <Bar type='monotone' barSize={40} dataKey="deviceCount" fill={isDarkMode ? '#FBFAFB' : '#0C0A09'} radius={[5, 5, 0, 0]}/>
         </BarChart>
       </ResponsiveContainer>

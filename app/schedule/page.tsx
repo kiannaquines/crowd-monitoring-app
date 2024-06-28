@@ -1,16 +1,18 @@
 import React from 'react'
 import { Card,CardContent } from '@/components/ui/card';
 import { ScheduleDataTable } from '@/components/ScheduleTable';
-import { Button } from '@/components/ui/button';
+import SystemSheet from '@/components/SystemSheet';
 
 const Schedule = () => {
   return (
     <main>
       <div className='flex flex-row justify-items-between justify-between items-center'>
       <h1 className='text-xl font-semibold'>Schedule</h1>
-      <Button>
-        Add Schedule
-      </Button>
+        <SystemSheet
+          buttonName='Add Schedule'
+          sheetTitle='Add New Schedule'
+          sheetDescription='Add your new library schedule'
+        />
       </div>
       <div className='grid grid-cols-4 mt-4'>
       <Card className='col-span-4 pt-4'>

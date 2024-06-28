@@ -1,6 +1,6 @@
 'use client';
 
-import {BarChart, Bar, ResponsiveContainer,XAxis, YAxis, Tooltip} from 'recharts';
+import {BarChart, Bar, ResponsiveContainer,XAxis, YAxis, Tooltip, CartesianGrid} from 'recharts';
 import { useTheme } from 'next-themes';
 
 const deviceCountData = [
@@ -55,6 +55,7 @@ const UtilizationGraph = () => {
               tickMargin={0}
               minTickGap={0} 
             />
+            <CartesianGrid strokeDasharray="3 3" />
             <Bar
               type='monotone'
               barSize={40}

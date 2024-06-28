@@ -16,7 +16,8 @@ import {
     Settings2,
     LogOut,
     Scroll,
-    GanttChart 
+    GanttChart,
+    Activity 
   } from "lucide-react"
 
 const Sidebar = () => {
@@ -57,13 +58,13 @@ const Sidebar = () => {
                     <CommandGroup heading="Realtime Charts">
                         <Link href="/realtime" passHref>
                             <CommandItem className='cursor-pointer'>
-                                <GanttChart className="mr-2 h-4 w-4" />
+                                <Activity className="mr-2 h-4 w-4" />
                                 <span>Realtime Monitoring</span>
                             </CommandItem>
                         </Link>
                         <Link href="/realtime/model" passHref>
                             <CommandItem className='cursor-pointer'>
-                                <GanttChart className="mr-2 h-4 w-4" />
+                                <Activity className="mr-2 h-4 w-4" />
                                 <span>Model Accuracy</span>
                             </CommandItem>
                         </Link>

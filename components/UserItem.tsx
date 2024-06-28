@@ -9,7 +9,9 @@ const UserItem = () => {
   return (
     <div className='flex items-center justify-between gap-2 border rounded-[8px] p-2 shadow-sm'>
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarImage
+            src="https://github.com/shadcn.png"
+          />
           <AvatarFallback>KN</AvatarFallback>
         </Avatar>
         <div className='grow'>

@@ -1,6 +1,6 @@
 'use client';
 
-import {BarChart,Bar,ResponsiveContainer,XAxis, YAxis, Tooltip} from 'recharts';
+import {BarChart,Bar,ResponsiveContainer,XAxis, YAxis, Tooltip, CartesianGrid} from 'recharts';
 import { useTheme } from 'next-themes';
 
 const deviceCountData = [
@@ -18,15 +18,15 @@ const deviceCountData = [
   },
   {
     name: '10:00 am',
-    deviceCount: 67
+    deviceCount: 35
   },
   {
     name: '11:00 am',
-    deviceCount: 80
+    deviceCount: 55
   },
   {
     name: '12:00 pm',
-    deviceCount: 70
+    deviceCount: 30
   },
   {
     name: '1:00 pm',
@@ -42,7 +42,7 @@ const deviceCountData = [
   },
   {
     name: '4:00 pm',
-    deviceCount: 60
+    deviceCount: 24
   }
 ];
 
@@ -72,7 +72,14 @@ const BarGraphToday = () => {
               tickLine={false}
               tick={isDarkMode? { fontSize: 12, fill: '#FBFAFB' } : { fontSize: 12, fill: '#0C0A09' }}
             />
-            <Bar type='monotone' barSize={40} dataKey="deviceCount" fill={isDarkMode ? '#FBFAFB' : '#0C0A09'} radius={[5, 5, 0, 0]}/>
+            <CartesianGrid strokeDasharray="3 3"/>
+            <Bar
+              type='monotone'
+              barSize={40}
+              dataKey="deviceCount"
+              fill={isDarkMode ? '#FBFAFB' : '#0C0A09'}
+              radius={[5, 5, 0, 0]}
+            />
         </BarChart>
       </ResponsiveContainer>
     </div>

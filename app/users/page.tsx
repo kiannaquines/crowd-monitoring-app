@@ -3,25 +3,19 @@
 import React,{useState} from 'react'
 import { Card,CardContent } from '@/components/ui/card';
 import { UserDataTable } from '@/components/UserTable';
-import SystemButton from '@/components/ui/SystemButton';
-import AddUserSheet from '@/components/AddUserSheet';
+import SystemButton from '@/components/SystemButton';
+import SystemSheet from '@/components/SystemSheet';
 
 const UsersPage = () => {
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
-
-  const handleOpenSheet = () => {
-    setIsSheetOpen(true);
-  };
-
-  const handleCloseSheet = () => {
-    setIsSheetOpen(false);
-  };
-
   return (
     <main>
-      <div className='flex flex-row justify-items-between justify-between items-center'>
+      <div className='flex flex-row justify-items-between align-middle justify-between items-center'>
       <h1 className='text-xl font-semibold'>Users</h1>
-        <SystemButton onClick={handleOpenSheet} name='Add User'/>
+        <SystemSheet
+          buttonName='Add User'
+          sheetTitle='Add Your New User'
+          sheetDescription='Add your new user to the system' 
+        />
       </div>
       <div className='grid grid-cols-4 mt-4'>
         <Card className='col-span-4 pt-4'>
@@ -33,7 +27,6 @@ const UsersPage = () => {
           </CardContent>
         </Card>
       </div>
-        <AddUserSheet isOpen={isSheetOpen} onClose={handleCloseSheet}/>
     </main>
   )
 }
