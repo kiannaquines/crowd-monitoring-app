@@ -28,7 +28,7 @@ const Sidebar = () => {
                 <CommandInput placeholder="Search..." />
                 <CommandList style={{ overflow:'visible' }}>
                     <CommandEmpty>Crowd Monitoring System Module Not Found.</CommandEmpty>
-                    <CommandGroup heading="General">
+                    <CommandGroup heading="General Options">
                         <Link href="/" passHref>
                             <CommandItem className='cursor-pointer'>
                                 <LayoutDashboard className="mr-2 h-4 w-4" />

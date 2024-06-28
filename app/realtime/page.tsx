@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Building,Calendar,User,Users } from 'lucide-react';
-import BarGraphToday from '@/components/BarGraphToday';
+import OverViewVisit from '@/components/OverViewVisit';
 import UtilizationGraph from '@/components/UtilizationGraph';
 import ModelAccuracyModel from '@/components/ModelAccuracyGraph';
 import Link from 'next/link';
@@ -65,7 +65,7 @@ const RealtimeDashboard = () => {
           <CardContent className='py-3'>
               <h4 className='font-medium'>Visitors Overview</h4>
               <small className='text-slate-500'>Overall overview in realtime.</small>
-              <BarGraphToday/>
+              <OverViewVisit/>
           </CardContent>
         </Card>
         <Card className="col-span-4 row-span-6 shadow-sm">
