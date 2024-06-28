@@ -178,21 +178,21 @@ export const columns: ColumnDef<ModelAccuracy>[] = [
         accessorKey: "accuracy",
         header: () => <div className="text-left">Accuracy Score</div>,
         cell: ({ row }) => {
-            return <div className="font-medium">{row.getValue("accuracy")}</div>
+            return <div className="font-medium">{row.getValue("accuracy")}%</div>
     },
     },
     {
         accessorKey: "f1",
         header: () => <div className="text-left">F1 Score</div>,
         cell: ({ row }) => {
-            return <div className="font-medium">{row.getValue("f1")}</div>
+            return <div className="font-medium">{row.getValue("f1")}%</div>
     },
     },
     {
         accessorKey: "precision",
         header: () => <div className="text-left">Precision Score</div>,
         cell: ({ row }) => {
-            return <div className="font-medium">{row.getValue("precision")}</div>
+            return <div className="font-medium">{row.getValue("precision")}%</div>
     },
     },
     {
