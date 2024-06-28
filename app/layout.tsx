@@ -22,14 +22,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <ThemeProvider
-       attribute="class"
-       defaultTheme="system"
-       enableSystem
-       disableTransitionOnChange
-      >
+    <html lang="en">
         <body className={`${GeistSans.className} flex items-start justify-between`}>
+          <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+          >
           <div className="min-w-[300px] min-h-[1100px]">
             <Sidebar/>
           </div>
@@ -40,8 +40,8 @@ export default function RootLayout({
               {children}
             </div>
           </main>
+          </ThemeProvider>
         </body>
-      </ThemeProvider>
     </html>
   );
 }
