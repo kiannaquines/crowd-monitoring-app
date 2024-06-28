@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link";
 import {Moon,Menu} from 'lucide-react';
 
+import {ModeToggle} from '@/components/Toggler';
+
 const Header = () => {
     return (
         <header className="flex flex-row justify-items-between justify-between border-b p-4">
@@ -21,9 +23,7 @@ const Header = () => {
                 </Button>
             </div>
             <div className="flex flex-row gap-2">
-            <Button variant="outline" size="icon" className="shadow-sm">
-                <Moon className="h-4 w-4 " />
-            </Button>
+                <ModeToggle/>
             </div>
         </header>
     )
