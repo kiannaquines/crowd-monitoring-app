@@ -9,4 +9,8 @@ git push -u origin %branch_name%
 
 echo You have successfully commit and push the project changes...
 
+timeout /t 3 /nobreak
+
+cls
+
 pause
