@@ -116,7 +116,7 @@ const HomePage = () => {
                 <Users/>
               </div>
               <h1 className='text-2xl font-semibold mt-1'>150</h1>
-              <small className='text-slate-400 text-sm'>Click here for more information.</small>
+              <small className='text-slate-500 text-sm'>More users information.</small>
             </CardContent>
           </Card>
         </Link>
@@ -128,7 +128,7 @@ const HomePage = () => {
                 <Users/>
               </div>
               <h1 className='text-2xl font-semibold mt-1'>10</h1>
-              <small className='text-slate-400 text-sm'>Click here for more information.</small>
+              <small className='text-slate-500 text-sm'>More staff information.</small>
             </CardContent>
           </Card>
         </Link>
@@ -140,7 +140,7 @@ const HomePage = () => {
                 <Users/>
               </div>
               <h1 className='text-2xl font-semibold mt-1'>2</h1>
-              <small className='text-slate-400 text-sm'>Click here for more information.</small>
+              <small className='text-slate-500 text-sm'>More admin information.</small>
             </CardContent>
           </Card>
         </Link>
@@ -152,7 +152,7 @@ const HomePage = () => {
                 <Building/>
               </div>
               <h1 className='text-2xl font-semibold mt-1'>6</h1>
-              <small className='text-slate-400 text-sm'>Click here for more information.</small>
+              <small className='text-slate-500 text-sm'>More staff information.</small>
             </CardContent>
           </Card>
         </Link>

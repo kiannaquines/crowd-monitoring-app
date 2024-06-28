@@ -172,7 +172,7 @@ export const columns: ColumnDef<ModelAccuracy>[] = [
           </Button>
         )
       },
-      cell: ({ row }) => <div className='text-center'>{row.getValue("section")}</div>,
+      cell: ({ row }) => <div className='text-left'>{row.getValue("section")}</div>,
     },
     {
         accessorKey: "accuracy",
