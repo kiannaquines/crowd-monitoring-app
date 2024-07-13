@@ -10,7 +10,7 @@ const UserItem = () => {
     <div className='flex items-center justify-between gap-2 border rounded-[8px] p-2 shadow-sm'>
         <Avatar>
           <AvatarImage
-            src="https://github.com/shadcn.png"
+            src="https://avatars.githubusercontent.com/u/88887528?v=4"
           />
           <AvatarFallback>KN</AvatarFallback>
         </Avatar>
