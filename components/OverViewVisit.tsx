@@ -30,21 +30,23 @@ const OverViewVisit = () => {
     <div className='mt-5' style={{ width: '100%', height: 350 }}>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart width={500} height={400} data={deviceCountData}>
-          {isDarkMode && (
-            <defs>
-              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#fafafa" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#fafafa" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-          )}
+          <defs>
+            <linearGradient id="colorUvDark" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#1e293b" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#1e293b" stopOpacity={0} />
+            </linearGradient>
+            <linearGradient id="colorUvLight" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#f1f5f9" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#f1f5f9" stopOpacity={0} />
+            </linearGradient>
+          </defs>
           <XAxis
             tickMargin={0}
             minTickGap={0}
             dataKey="name"
             axisLine={false}
             tickLine={false}
-            tick={isDarkMode ? { fontSize: 12, fill: '#fafafa' } : { fontSize: 12, fill: '#18181b' }}
+            tick={isDarkMode ? { fontSize: 12, fill: '#f1f5f9' } : { fontSize: 12, fill: '#1e293b' }}
           />
           <YAxis
             tickMargin={0}
@@ -52,15 +54,16 @@ const OverViewVisit = () => {
             width={20}
             axisLine={false}
             tickLine={false}
-            tick={isDarkMode ? { fontSize: 12, fill: '#fafafa' } : { fontSize: 12, fill: '#18181b' }}
+            tick={isDarkMode ? { fontSize: 12, fill: '#f1f5f9' } : { fontSize: 12, fill: '#1e293b' }}
           />
+          <CartesianGrid strokeDasharray="3 3" />
           <Area
             type='monotone'
             dataKey="deviceCount"
-            stroke={isDarkMode ? "#f8fafc" : "#09090b"}
+            stroke={isDarkMode ? "#e2e8f0" : "#1e293b"}
             strokeWidth={3}
             fillOpacity={1}
-            fill={isDarkMode ? "url(#colorUv)" : "#09090b"}
+            fill={isDarkMode ? "url(#colorUvDark)" : "url(#colorUvLight)"}
           />
         </AreaChart>
       </ResponsiveContainer>

@@ -75,9 +75,13 @@ const ModelAccuracyGraph = () => {
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart width={500} height={400} data={deviceCountData}>
           <defs>
-            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#fafafa" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#fafafa" stopOpacity={0} />
+            <linearGradient id="colorUvDark" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#1e293b" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#1e293b" stopOpacity={0} />
+            </linearGradient>
+            <linearGradient id="colorUvLight" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#f1f5f9" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#f1f5f9" stopOpacity={0} />
             </linearGradient>
           </defs>
             <XAxis
@@ -97,13 +101,14 @@ const ModelAccuracyGraph = () => {
               tickMargin={0}
               minTickGap={0}
             />
+            <CartesianGrid strokeDasharray="3 3" />
             <Area
               type='monotone'
               dataKey="f1"
               strokeWidth={3}
-              stroke="#fafafa"
+              stroke={isDarkMode ? "#e2e8f0" : "#1e293b"}
               fillOpacity={1}
-              fill="url(#colorUv)"
+              fill={isDarkMode ? "url(#colorUvDark)" : "url(#colorUvLight)"}
             />
         </AreaChart>
       </ResponsiveContainer>
