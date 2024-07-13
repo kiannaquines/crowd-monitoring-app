@@ -55,6 +55,17 @@ const UtilizationGraph = () => {
             tickMargin={0}
             minTickGap={0} 
           />
+          <CartesianGrid
+              strokeDasharray="3 3"
+              horizontal={true}
+              vertical={false}
+            />
+            <CartesianGrid
+              strokeDasharray="3 3"
+              horizontalCoordinatesGenerator={() => []}
+              verticalCoordinatesGenerator={() => [0, 25, 50, 75, 100]}
+              stroke={isDarkMode ? "#4b5563" : "#e5e7eb"}
+            />
           <Bar
             type='monotone'
             barSize={40}
