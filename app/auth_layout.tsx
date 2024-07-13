@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import { GeistSans } from 'geist/font/sans';
 import "./globals.css";
-import Header from '@/components/Header';
-import Sidebar from '@/components/Sidebar';
-import Footer from '@/components/Footer';
-import Breadcrumbs from "@/components/Breadcrumbs";
 import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Crowd Monitoring System",
-  description: "Artificial Intelligence Driven Crowd Monitoring System",
+  description: "Artificial Intelligence Driven Crowd Monitoring System Auth Page",
 };
 
 export default function RootLayout({
@@ -26,13 +22,8 @@ export default function RootLayout({
         enableSystem
         disableTransitionOnChange
         >
-          <div className="min-w-[300px] min-h-[1100px]">
-            <Sidebar/>
-          </div>
           <main className="w-full h-full overflow-y-auto">
-            <Header/>
             <div className="p-4">
-              <Breadcrumbs/>
               {children}
             </div>
           </main>

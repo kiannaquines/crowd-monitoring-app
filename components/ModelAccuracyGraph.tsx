@@ -1,6 +1,6 @@
 'use client';
 
-import {LineChart, Line, ResponsiveContainer,XAxis, YAxis, Tooltip, CartesianGrid} from 'recharts';
+import {AreaChart, Area, ResponsiveContainer,XAxis, YAxis, Tooltip, CartesianGrid} from 'recharts';
 import { useTheme } from 'next-themes';
 
 const deviceCountData = [
@@ -73,7 +73,13 @@ const ModelAccuracyGraph = () => {
   return (
     <div className='mt-5' style={{ width: '100%', height: 350 }}>
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart width={500} height={400} data={deviceCountData}>
+        <AreaChart width={500} height={400} data={deviceCountData}>
+          <defs>
+            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#fafafa" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#fafafa" stopOpacity={0} />
+            </linearGradient>
+          </defs>
             <XAxis
               tickMargin={0}
               minTickGap={0}
@@ -91,32 +97,15 @@ const ModelAccuracyGraph = () => {
               tickMargin={0}
               minTickGap={0}
             />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Line
-              type='monotone'
-              dataKey="score"
-              strokeWidth={3}
-              dot={isDarkMode?{ stroke: '#FBFAFB', strokeWidth: 4 }:{ stroke: '#0C0A09', strokeWidth: 4 }}
-              activeDot={true}
-              stroke={isDarkMode?"#FBFAFB":"#0C0A09"}
-            />
-            <Line
-              type='monotone'
-              dataKey="precision"
-              strokeWidth={3}
-              dot={isDarkMode?{ stroke: '#FBFAFB', strokeWidth: 4 }:{ stroke: '#0C0A09', strokeWidth: 4 }}
-              activeDot={true}
-              stroke={isDarkMode?"#FBFAFB":"#0C0A09"}
-            />
-            <Line
+            <Area
               type='monotone'
               dataKey="f1"
               strokeWidth={3}
-              dot={isDarkMode?{ stroke: '#FBFAFB', strokeWidth: 4 }:{ stroke: '#0C0A09', strokeWidth: 4 }}
-              activeDot={true}
-              stroke={isDarkMode?"#FBFAFB":"#0C0A09"}
+              stroke="#fafafa"
+              fillOpacity={1}
+              fill="url(#colorUv)"
             />
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );
