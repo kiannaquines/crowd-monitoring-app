@@ -55,13 +55,11 @@ const UtilizationGraph = () => {
               tickMargin={0}
               minTickGap={0} 
             />
-            <CartesianGrid strokeDasharray="3 3" />
             <Bar
               type='monotone'
               barSize={40}
               dataKey="deviceCount"
-              fill={isDarkMode? "#FBFAFB":"#0C0A09"}
-              radius={[5, 5, 0, 0]}
+              fill={isDarkMode? "#facc15":"#0C0A09"}
             />
         </BarChart>
       </ResponsiveContainer>

@@ -72,13 +72,12 @@ const BarGraphToday = () => {
               tickLine={false}
               tick={isDarkMode? { fontSize: 12, fill: '#FBFAFB' } : { fontSize: 12, fill: '#0C0A09' }}
             />
-            <CartesianGrid strokeDasharray="3 3"/>
             <Bar
               type='monotone'
               barSize={40}
               dataKey="deviceCount"
-              fill={isDarkMode ? '#FBFAFB' : '#0C0A09'}
-              radius={[5, 5, 0, 0]}
+              fill={isDarkMode ? '#facc15' : '#0C0A09'}
+              radius={[3,3,0,0]}
             />
         </BarChart>
       </ResponsiveContainer>

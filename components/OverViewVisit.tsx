@@ -1,6 +1,6 @@
 'use client';
 
-import {BarChart,Bar,ResponsiveContainer,XAxis, YAxis, Tooltip, CartesianGrid} from 'recharts';
+import {AreaChart,Area,ResponsiveContainer,XAxis, YAxis} from 'recharts';
 import { useTheme } from 'next-themes';
 
 const deviceCountData = [
@@ -79,7 +79,17 @@ const OverViewVisit = () => {
   return (
     <div className='mt-5' style={{ width: '100%', height: 350 }}>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart width={500} height={400} data={deviceCountData}>
+        <AreaChart width={500} height={400} data={deviceCountData}>
+          <defs>
+            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#facc15" stopOpacity={0.8}/>
+              <stop offset="95%" stopColor="#facc15" stopOpacity={0}/>
+            </linearGradient>
+            <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#facc15" stopOpacity={0.8}/>
+              <stop offset="95%" stopColor="#facc15" stopOpacity={0}/>
+            </linearGradient>
+          </defs>
             <XAxis 
               tickMargin={0}
               minTickGap={0}
@@ -97,9 +107,8 @@ const OverViewVisit = () => {
               tickLine={false}
               tick={isDarkMode? { fontSize: 12, fill: '#FBFAFB' } : { fontSize: 12, fill: '#0C0A09' }}
             />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Bar type='monotone' barSize={40} dataKey="deviceCount" fill={isDarkMode ? '#FBFAFB' : '#0C0A09'} radius={[5, 5, 0, 0]}/>
-        </BarChart>
+            <Area type='monotone' dataKey="deviceCount" fillOpacity={1}/>
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );
