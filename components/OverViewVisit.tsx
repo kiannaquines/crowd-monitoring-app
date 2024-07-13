@@ -56,7 +56,17 @@ const OverViewVisit = () => {
             tickLine={false}
             tick={isDarkMode ? { fontSize: 12, fill: '#f1f5f9' } : { fontSize: 12, fill: '#1e293b' }}
           />
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid
+              strokeDasharray="3 3"
+              horizontal={true}
+              vertical={false}
+            />
+            <CartesianGrid
+              strokeDasharray="3 3"
+              horizontalCoordinatesGenerator={() => []}
+              verticalCoordinatesGenerator={() => [0, 25, 50, 75, 100]}
+              stroke={isDarkMode ? "#4b5563" : "#e5e7eb"}
+            />
           <Area
             type='monotone'
             dataKey="deviceCount"
