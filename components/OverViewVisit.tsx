@@ -30,12 +30,14 @@ const OverViewVisit = () => {
     <div className='mt-5' style={{ width: '100%', height: 350 }}>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart width={500} height={400} data={deviceCountData}>
-          <defs>
-            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={isDarkMode? "#fafafa": "#292929"} stopOpacity={0.8} />
-              <stop offset="95%" stopColor={isDarkMode? "#fafafa": "#292929"} stopOpacity={0} />
-            </linearGradient>
-          </defs>
+          {isDarkMode && (
+            <defs>
+              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#fafafa" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#fafafa" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+          )}
           <XAxis
             tickMargin={0}
             minTickGap={0}
@@ -55,10 +57,10 @@ const OverViewVisit = () => {
           <Area
             type='monotone'
             dataKey="deviceCount"
-            stroke={isDarkMode? "#fafafa": "#bdbdbd"}
+            stroke={isDarkMode ? "#f8fafc" : "#09090b"}
             strokeWidth={3}
             fillOpacity={1}
-            fill="url(#colorUv)"
+            fill={isDarkMode ? "url(#colorUv)" : "#09090b"}
           />
         </AreaChart>
       </ResponsiveContainer>
