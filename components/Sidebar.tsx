@@ -14,12 +14,12 @@ const Sidebar = () => {
             <Command style={{height:'875px', overflow:'auto' }}>
                 <CommandInput placeholder="Search..." />
                 <CommandList style={{ overflow:'visible' }}>
-                    <CommandEmpty>Crowd Monitoring System Module Not Found.</CommandEmpty>
+                    <CommandEmpty>Sorry, Module Not Found.</CommandEmpty>
 
                     <CommandGroup heading="General Options">                   
                     {RouteUrls.map((url, index) => (
                         url.category === 'general' && (
-                            <Link href={url.path} passHref>
+                            <Link key={index} href={url.path} passHref>
                                 <CommandItem className='cursor-pointer' key={index}>
                                     <url.icon className="mr-2 h-4 w-4" />
                                     <span>{url.name}</span>
@@ -32,7 +32,7 @@ const Sidebar = () => {
                     <CommandGroup heading="Realtime Charts">
                     {RouteUrls.map((url, index) => (
                         url.category === 'realtime' && (
-                            <Link href={url.path} passHref>
+                            <Link key={index} href={url.path} passHref>
                                 <CommandItem className='cursor-pointer' key={index}>
                                     <url.icon className="mr-2 h-4 w-4" />
                                     <span>{url.name}</span>
@@ -46,7 +46,7 @@ const Sidebar = () => {
                     {RouteUrls.map((url, index) => (
                         url.category === 'advance' && (
                         
-                            <Link href={url.path} passHref>
+                            <Link key={index} href={url.path} passHref>
                                 <CommandItem className='cursor-pointer' key={index}>
                                     <url.icon className="mr-2 h-4 w-4" />
                                     <span>{url.name}</span>
@@ -60,7 +60,7 @@ const Sidebar = () => {
                     <CommandGroup heading="User Profile Settings">
                     {RouteUrls.map((url, index) => (
                         url.category === 'profile_setting' && (
-                            <Link href={url.path} passHref>
+                            <Link key={index} href={url.path} passHref>
                                 <CommandItem className='cursor-pointer' key={index}>
                                     <url.icon className="mr-2 h-4 w-4" />
                                     <span>{url.name}</span>
@@ -73,7 +73,7 @@ const Sidebar = () => {
                     <CommandGroup heading="Account">
                     {RouteUrls.map((url, index) => (
                         url.category === 'account_setting' && (
-                            <Link href={url.path} passHref>
+                            <Link key={index} href={url.path} passHref>
                                 <CommandItem className='cursor-pointer' key={index}>
                                     <url.icon className="mr-2 h-4 w-4" />
                                     <span>{url.name}</span>

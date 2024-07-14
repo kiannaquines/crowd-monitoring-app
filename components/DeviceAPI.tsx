@@ -91,7 +91,7 @@ const data: DeviceApi[] = [
     }
 ];
 
-export type DeviceApi = {
+type DeviceApi = {
     id: string,
     deviceName: string,
     apiKey: string,

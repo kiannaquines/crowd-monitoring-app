@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import { GeistSans } from 'geist/font/sans';
-import "./globals.css";
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { ThemeProvider } from "@/provider/theme-provider";
+import "./../globals.css";
 
 export const metadata: Metadata = {
   title: "Crowd Monitoring System",
   description: "Artificial Intelligence Driven Crowd Monitoring System",
 };
 
-export default function RootLayout({
+export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
