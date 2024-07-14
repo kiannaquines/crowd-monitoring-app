@@ -4,7 +4,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Building,Users, Activity } from 'lucide-react';
-import BarGraphToday from '@/components/BarGraphToday';
+import BarGraphToday from '@/components/charts/BarGraphToday';
 import UtilizationGraph from '@/components/charts/UtilizationGraph';
 import Link from 'next/link';
 

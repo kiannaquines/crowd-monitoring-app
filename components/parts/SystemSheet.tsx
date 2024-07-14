@@ -7,7 +7,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-import { Button } from './ui/button';
+import { Button } from './../ui/button';
 
 type SystemSheetProps = {
     buttonName: string,

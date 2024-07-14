@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link";
 import {Moon,Menu} from 'lucide-react';
 
-import {ModeToggle} from '@/components/Toggler';
+import {ModeToggle} from '@/components/parts/Toggler';
 
 const Header = () => {
     return (

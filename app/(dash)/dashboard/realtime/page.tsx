@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Building,Calendar,User,Users } from 'lucide-react';
-import OverViewVisit from '@/components/OverViewVisit';
+import OverViewVisit from '@/components/charts/OverViewVisit';
 import UtilizationGraph from '@/components/charts/UtilizationGraph';
 import ModelAccuracyModel from '@/components/charts/ModelAccuracyGraph';
 import Link from 'next/link';

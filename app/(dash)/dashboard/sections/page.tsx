@@ -1,7 +1,7 @@
 import React from "react";
 import { Card,CardContent } from '@/components/ui/card';
-import {SectionDataTable} from '@/components/SectionTable';
-import SystemSheet from "@/components/SystemSheet";
+import {SectionDataTable} from '@/components/tables/SectionTable';
+import SystemSheet from "@/components/parts/SystemSheet";
 
 const Sections = () => {
     return (

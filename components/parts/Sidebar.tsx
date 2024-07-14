@@ -2,8 +2,8 @@
 
 import React from 'react';
 import Link from "next/link";
-import UserItem from '../components/UserItem'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from './ui/command';
+import UserItem from './UserItem'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from './../ui/command';
 import RouteUrls from '@/utils/urls';
 
 const Sidebar = () => {
