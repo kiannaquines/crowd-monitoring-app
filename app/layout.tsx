@@ -3,7 +3,6 @@ import { GeistSans } from 'geist/font/sans';
 import "./globals.css";
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
-import Footer from '@/components/Footer';
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { ThemeProvider } from "@/components/theme-provider";
 
