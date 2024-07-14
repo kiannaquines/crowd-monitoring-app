@@ -2,8 +2,8 @@
 
 import React from 'react'
 import { Card,CardContent } from '@/components/ui/card';
-import {DeviceApiDataTable} from '@/components/DeviceAPI';
-import SystemSheet from '@/components/SystemSheet';
+import {DeviceApiDataTable} from '@/components/tables/DeviceAPI';
+import SystemSheet from '@/components/parts/SystemSheet';
 
 const Devices = () => {
   return (

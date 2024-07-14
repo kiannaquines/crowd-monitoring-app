@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card,CardContent } from '@/components/ui/card';
-import { ScheduleDataTable } from '@/components/ScheduleTable';
-import SystemSheet from '@/components/SystemSheet';
+import { ScheduleDataTable } from '@/components/tables/ScheduleTable';
+import SystemSheet from '@/components/parts/SystemSheet';
 
 const Schedule = () => {
   return (

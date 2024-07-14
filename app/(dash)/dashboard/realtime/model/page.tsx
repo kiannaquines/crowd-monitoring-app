@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card,CardContent} from '@/components/ui/card';
-import ModelAccuracyModel from '@/components/ModelAccuracyGraph';
+import ModelAccuracyModel from '@/components/charts/ModelAccuracyGraph';
 
 import { ModelAccuracyDataTable } from '@/components/ModelAccuracyTable';
 import { Button } from '@/components/ui/button';

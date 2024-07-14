@@ -5,7 +5,7 @@ import {
 } from "@/components/ui/card";
 import { Building,Users, Activity } from 'lucide-react';
 import BarGraphToday from '@/components/BarGraphToday';
-import UtilizationGraph from '@/components/UtilizationGraph';
+import UtilizationGraph from '@/components/charts/UtilizationGraph';
 import Link from 'next/link';
 
 const HomePage = () => {

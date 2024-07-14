@@ -2,9 +2,9 @@
 
 import React,{useState} from 'react'
 import { Card,CardContent } from '@/components/ui/card';
-import { UserDataTable } from '@/components/UserTable';
-import SystemButton from '@/components/SystemButton';
-import SystemSheet from '@/components/SystemSheet';
+import { UserDataTable } from '@/components/tables/UserTable';
+import SystemButton from '@/components/parts/SystemButton';
+import SystemSheet from '@/components/parts/SystemSheet';
 
 const UsersPage = () => {
   return (

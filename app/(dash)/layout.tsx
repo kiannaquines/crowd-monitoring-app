@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { GeistSans } from 'geist/font/sans';
-import Header from '@/components/Header';
-import Sidebar from '@/components/Sidebar';
-import Breadcrumbs from "@/components/Breadcrumbs";
+import Header from '@/components/parts/Header';
+import Sidebar from '@/components/parts/Sidebar';
+import Breadcrumbs from "@/components/parts/Breadcrumbs";
 import { ThemeProvider } from "@/provider/theme-provider";
 import "./../globals.css";
 

@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/card"
 import { Building,Calendar,User,Users } from 'lucide-react';
 import OverViewVisit from '@/components/OverViewVisit';
-import UtilizationGraph from '@/components/UtilizationGraph';
-import ModelAccuracyModel from '@/components/ModelAccuracyGraph';
+import UtilizationGraph from '@/components/charts/UtilizationGraph';
+import ModelAccuracyModel from '@/components/charts/ModelAccuracyGraph';
 import Link from 'next/link';
 
 const RealtimeDashboard = () => {
