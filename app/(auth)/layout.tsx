@@ -5,17 +5,17 @@ import { ThemeProvider } from "@/provider/theme-provider";
 export default function AuthLayout({ children, }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <ThemeProvider
-                attribute="class"
-                defaultTheme="dark"
-                enableSystem
-                disableTransitionOnChange>
-                <body className={`${GeistSans.className}`}>
-                    <main className="w-full h-full overflow-y-auto">
-                        {children}
-                    </main>
-                </body>
-            </ThemeProvider>
+            <body className={`${GeistSans.className}`}>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="dark"
+                    enableSystem
+                    disableTransitionOnChange>
+                        <main className="w-full h-full overflow-y-auto">
+                            {children}
+                        </main>
+                </ThemeProvider>
+            </body>
         </html>
     )
 }

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import {DeviceConfigurationDataTable} from '@/components/DeviceConfiguration';
+import {DeviceConfigurationDataTable} from '@/components/tables/DeviceConfiguration';
 
 const Configuration = () => {
     return (
