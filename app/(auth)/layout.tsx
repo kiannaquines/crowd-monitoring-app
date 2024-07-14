@@ -1,6 +1,7 @@
 import React from "react";
 import { GeistSans } from "geist/font/sans";
 import { ThemeProvider } from "@/provider/theme-provider";
+import './auth.css';
 
 export default function AuthLayout({ children, }: { children: React.ReactNode }) {
     return (
@@ -11,7 +12,7 @@ export default function AuthLayout({ children, }: { children: React.ReactNode })
                     defaultTheme="dark"
                     enableSystem
                     disableTransitionOnChange>
-                        <main className="w-full h-full overflow-y-auto">
+                        <main className="w-100 flex justify-center content-center">
                             {children}
                         </main>
                 </ThemeProvider>
