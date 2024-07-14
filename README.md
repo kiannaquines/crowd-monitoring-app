@@ -24,4 +24,15 @@ The port you want to use must not inused in other program else it will cause an 
 
 ![image](https://github.com/user-attachments/assets/7e0c4dec-bffe-4ba7-a7f9-bf48e52fd211)
 
+![image](https://github.com/user-attachments/assets/e6a7737e-8c2c-48f0-acae-87e880e34b20)
+
+## User Interfaces (Light Mode)
+
+![image](https://github.com/user-attachments/assets/371b05c7-084f-48de-bce3-b9d3fe9de349)
+
+![image](https://github.com/user-attachments/assets/d17de737-c71c-44c1-913e-758a78fd4f2e)
+
+![image](https://github.com/user-attachments/assets/77f0f360-f1cc-4e17-9bc2-bc7409b14bfb)
+
+![image](https://github.com/user-attachments/assets/0496f914-abe6-464e-86ad-a3479a98c4ad)
 
