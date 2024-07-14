@@ -2,14 +2,10 @@ import React from 'react'
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import { Building,Users, Activity } from 'lucide-react';
-import BarGraphToday from '../components/BarGraphToday';
-import UtilizationGraph from '../components/UtilizationGraph';
+import BarGraphToday from '@/components/BarGraphToday';
+import UtilizationGraph from '@/components/UtilizationGraph';
 import Link from 'next/link';
 
 const HomePage = () => {

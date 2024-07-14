@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/provider/theme-provider";
 
 export const metadata: Metadata = {
   title: "Crowd Monitoring System",
