@@ -68,10 +68,10 @@ const UtilizationGraph = () => {
             />
           <Bar
             type='monotone'
-            barSize={40}
+            barSize={25}
             dataKey="deviceCount"
             fill={isDarkMode? "#fafafa": "18181b"}
-            radius={[3,3,0,0]}
+            radius={[3,3,3,3]}
             fillOpacity={1}
           />
         </BarChart>

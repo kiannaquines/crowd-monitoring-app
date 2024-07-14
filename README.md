@@ -1,9 +1,19 @@
 ## Getting Started
 
-First, run the development server:
+Run the development server:
 
 ```bash
 npm run dev
+```
+
+Run the production server:
+
+```bash
+npm run build
+```
+
+```bash
+npm run start
 ```
 
 Open [http://localhost:80](http://localhost:80) with your browser to see the result.

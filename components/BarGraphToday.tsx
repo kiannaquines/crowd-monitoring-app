@@ -61,7 +61,7 @@ const BarGraphToday = () => {
             dataKey="name"
             axisLine={false}
             tickLine={false}
-            tick={isDarkMode? { fontSize: 12, fill: "#fafafa" } : { fontSize: 12, fill: "18181b" }}
+            tick={isDarkMode? { fontSize: 12, fill: "#fafafa" } : { fontSize: 12, fill: "#18181b" }}
           />
           <YAxis
             tickMargin={0}
@@ -70,7 +70,7 @@ const BarGraphToday = () => {
             width={20}
             axisLine={false}
             tickLine={false}
-            tick={isDarkMode? { fontSize: 12, fill: "#fafafa" } : { fontSize: 12, fill: "18181b" }}
+            tick={isDarkMode? { fontSize: 12, fill: "#fafafa" } : { fontSize: 12, fill: "#18181b" }}
           />
           <CartesianGrid
               strokeDasharray="3 3"
@@ -85,10 +85,10 @@ const BarGraphToday = () => {
             />
           <Bar
             type='monotone'
-            barSize={40}
+            barSize={25}
             dataKey="deviceCount"
-            fill={isDarkMode? "#fafafa": "18181b"}
-            radius={[3,3,0,0]}
+            fill={isDarkMode? "#fafafa": "#18181b"}
+            radius={[3,3,3,3]}
             fillOpacity={1}
           />
         </BarChart>

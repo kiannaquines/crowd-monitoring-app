@@ -61,12 +61,12 @@ const HomePage = () => {
             <small className='text-slate-500 text-sm'>Increase +20% last week</small>
           </CardContent>
         </Card>
-     
-        <Card className="col-span-2 row-span-6 shadow-sm">
+
+        <Card className='shadow-sm col-span-2 row-span-6 min-h-[100px]'>
           <CardContent className='py-3'>
-              <h4 className='font-medium'>Todays Overview</h4>
-              <small className='text-slate-500 text-sm'>Overview of hourly activities today</small>
-              <BarGraphToday/>
+            <h4 className='font-medium'>Todays Section Utilization</h4>
+            <small className='text-slate-500 text-sm'>Overview of section utilization today</small>
+            <UtilizationGraph/>
           </CardContent>
         </Card>
         
@@ -102,11 +102,11 @@ const HomePage = () => {
           </CardContent>
         </Card>
 
-        <Card className='shadow-sm col-span-2 row-span-6 min-h-[100px]'>
+        <Card className="col-span-2 row-span-6 shadow-sm">
           <CardContent className='py-3'>
-            <h4 className='font-medium'>Todays Section Utilization</h4>
-            <small className='text-slate-500 text-sm'>Overview of section utilization today</small>
-            <UtilizationGraph/>
+              <h4 className='font-medium'>Todays Overview</h4>
+              <small className='text-slate-500 text-sm'>Overview of hourly activities today</small>
+              <BarGraphToday/>
           </CardContent>
         </Card>
 
