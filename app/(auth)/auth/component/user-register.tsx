@@ -6,10 +6,11 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Icons } from "@/components/ui/icons"
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface UserRegisterFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+export function UserRegisterForm({ className, ...props }: UserRegisterFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
   async function onSubmit(event: React.SyntheticEvent) {
@@ -22,7 +23,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   }
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+    <div className={cn("grid gap-6 max-h-screen", className)} {...props}>
       <form onSubmit={onSubmit}>
         <div className="grid gap-2">
           <div className="grid gap-1">
@@ -40,8 +41,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             />
           </div>
           <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="email">
-              Email
+            <Label className="sr-only" htmlFor="password">
+              Password
             </Label>
             <Input
               id="password"
@@ -54,10 +55,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             />
           </div>
           <Button disabled={isLoading}>
-            {/* {isLoading && (
+            {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )} */}
-            Sign In with Email
+            )}
+            Create my account
           </Button>
         </div>
       </form>
@@ -72,11 +73,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         </div>
       </div>
       <Button variant="outline" type="button" disabled={isLoading}>
-        {/* {isLoading ? (
+        {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
           <Icons.gitHub className="mr-2 h-4 w-4" />
-        )}{" "} */}
+        )}{" "}
         GitHub
       </Button>
     </div>

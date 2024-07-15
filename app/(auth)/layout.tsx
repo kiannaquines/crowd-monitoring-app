@@ -12,7 +12,7 @@ export default function AuthLayout({ children, }: { children: React.ReactNode })
                     defaultTheme="dark"
                     enableSystem
                     disableTransitionOnChange>
-                        <main className="w-100 flex justify-center content-center">
+                        <main className="w-100 justify-center max-h-full content-center">
                             {children}
                         </main>
                 </ThemeProvider>
