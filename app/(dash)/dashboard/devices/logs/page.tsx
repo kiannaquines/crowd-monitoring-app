@@ -1,8 +1,25 @@
 import React from 'react'
+import { Card,CardContent } from '@/components/ui/card';
+import {DeviceApiDataTable} from '@/components/tables/DeviceAPI';
+import DeviceSystemSheet from '@/components/parts/DeviceSystemSheet';
 
 const Logs = () => {
   return (
-    <div>Logs</div>
+    <main>
+      <div className='flex flex-row justify-items-between justify-between items-center'>
+      <h1 className='text-xl font-semibold'>Logs</h1>
+      </div>
+      <div className='grid grid-cols-4 mt-4'>
+      <Card className='col-span-4 pt-4'>
+        <CardContent>
+          <div className='flex flex-row justify-between justify-items-center items-center'>
+              <h4 className='font-medium'>Tracker Logs</h4>
+          </div>
+          <DeviceApiDataTable/>
+        </CardContent>
+      </Card>
+      </div>
+    </main>
   )
 }
 

@@ -65,27 +65,9 @@ const RouteUrls: urls[] = [
     },
     {
         category: 'advance',
-        name: 'Configure',
-        path: '/dashboard/devices/configuration',
-        icon: Settings2,
-    },
-    {
-        category: 'advance',
         name: 'Logs',
         path: '/dashboard/devices/logs',
         icon: Scroll,
-    },
-    {
-        category: 'profile_setting',
-        name: 'Profile',
-        path: '/user/profile',
-        icon: User,
-    },
-    {
-        category: 'profile_setting',
-        name: 'Settings',
-        path: '/dashboard/settings',
-        icon: Settings,
     },
     {
         category: 'account_setting',
