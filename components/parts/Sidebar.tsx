@@ -55,20 +55,6 @@ const Sidebar = () => {
                         )
                     ))}
                     </CommandGroup>
-
-
-                    <CommandGroup heading="User Profile Settings">
-                    {RouteUrls.map((url, index) => (
-                        url.category === 'profile_setting' && (
-                            <Link key={index} href={url.path} passHref>
-                                <CommandItem className='cursor-pointer' key={index}>
-                                    <url.icon className="mr-2 h-4 w-4" />
-                                    <span>{url.name}</span>
-                                </CommandItem>
-                            </Link>
-                        )
-                    ))}
-                    </CommandGroup>
                     
                     <CommandGroup heading="Account">
                     {RouteUrls.map((url, index) => (
