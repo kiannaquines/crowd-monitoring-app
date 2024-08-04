@@ -1,14 +1,14 @@
 import React from "react";
 import { Card,CardContent } from '@/components/ui/card';
 import {SectionDataTable} from '@/components/tables/SectionTable';
-import SystemSheet from "@/components/parts/SystemSheet";
+import SectionSystemSheet from "@/components/parts/SectionSystemSheet";
 
 const Sections = () => {
     return (
       <main>
         <div className='flex flex-row justify-items-between justify-between items-center'>
         <h1 className='text-xl font-semibold'>Sections</h1>
-          <SystemSheet
+          <SectionSystemSheet
             buttonName="Add Section"
             sheetTitle="Add New Library Section"
             sheetDescription="Add new library section to the system"

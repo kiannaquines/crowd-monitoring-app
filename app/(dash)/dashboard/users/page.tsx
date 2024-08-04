@@ -3,15 +3,14 @@
 import React,{useState} from 'react'
 import { Card,CardContent } from '@/components/ui/card';
 import { UserDataTable } from '@/components/tables/UserTable';
-import SystemButton from '@/components/parts/SystemButton';
-import SystemSheet from '@/components/parts/SystemSheet';
+import UserSystemSheet from '@/components/parts/UserSystemSheet';
 
 const UsersPage = () => {
   return (
     <main>
       <div className='flex flex-row justify-items-between align-middle justify-between items-center'>
       <h1 className='text-xl font-semibold'>Users</h1>
-        <SystemSheet
+        <UserSystemSheet
           buttonName='Add User'
           sheetTitle='Add Your New User'
           sheetDescription='Add your new user to the system' 

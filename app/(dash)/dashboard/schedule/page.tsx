@@ -1,14 +1,14 @@
 import React from 'react'
 import { Card,CardContent } from '@/components/ui/card';
 import { ScheduleDataTable } from '@/components/tables/ScheduleTable';
-import SystemSheet from '@/components/parts/SystemSheet';
+import ScheduleSystemSheet from '@/components/parts/ScheduleSystemSheet';
 
 const Schedule = () => {
   return (
     <main>
       <div className='flex flex-row justify-items-between justify-between items-center'>
       <h1 className='text-xl font-semibold'>Schedule</h1>
-        <SystemSheet
+        <ScheduleSystemSheet
           buttonName='Add Schedule'
           sheetTitle='Add New Schedule'
           sheetDescription='Add your new library schedule'
