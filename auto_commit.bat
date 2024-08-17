@@ -1,6 +1,6 @@
 @echo off
 
-set /p commit_message="Enter your commit message: "
+set /p commit_message="Enter your commit message "
 set /p branch_name="Enter your branch name: "
 
 git add .
