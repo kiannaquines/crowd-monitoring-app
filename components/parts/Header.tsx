@@ -9,17 +9,8 @@ const Header = () => {
     return (
         <header className="flex flex-row justify-items-between justify-between border-b p-4">
             <div className="flex justify-items-center justify-center gap-2">
-                <Button variant="ghost">
-                    <Menu className="h4 w-4"/>
-                </Button>
                 <Button>
                     <Link href="/">Overview</Link>
-                </Button>
-                <Button variant="link">
-                    <Link href="/">Sections</Link>
-                </Button>
-                <Button variant="link">
-                    <Link href="/">Schedules</Link>
                 </Button>
             </div>
             <div className="flex flex-row gap-2">
