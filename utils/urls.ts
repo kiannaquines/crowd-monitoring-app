@@ -29,14 +29,14 @@ const RouteUrls: urls[] = [
     },
     {
         category: 'general',
-        name: 'Schedules',
-        path: '/dashboard/schedule',
-        icon: Calendar,
+        name: 'Sections',
+        path: '/dashboard/sections',
+        icon: Building,
     },
     {
         category: 'general',
-        name: 'Sections',
-        path: '/dashboard/sections',
+        name: 'Comments',
+        path: '/dashboard/comments',
         icon: Building,
     },
     {
@@ -46,35 +46,41 @@ const RouteUrls: urls[] = [
         icon: Users,
     },
     {
-        category: 'realtime',
-        name: 'Realtime Monitoring',
-        path: '/dashboard/realtime',
-        icon: Activity,
+        category: 'general',
+        name: 'Categories',
+        path: '/dashboard/category',
+        icon: Users,
     },
-    {
-        category: 'realtime',
-        name: 'Model Accuracy',
-        path: '/dashboard/realtime/model',
-        icon: Activity,
-    },
-    {
-        category: 'advance',
-        name: 'Device Token',
-        path: '/dashboard/devices',
-        icon: Unplug,
-    },
-    {
-        category: 'advance',
-        name: 'Logs',
-        path: '/dashboard/devices/logs',
-        icon: Scroll,
-    },
-    {
-        category: 'account_setting',
-        name: 'Logout',
-        path: '/logout',
-        icon: LogOut,
-    },
+    // {
+    //     category: 'realtime',
+    //     name: 'Realtime Monitoring',
+    //     path: '/dashboard/realtime',
+    //     icon: Activity,
+    // },
+    // {
+    //     category: 'realtime',
+    //     name: 'Model Accuracy',
+    //     path: '/dashboard/realtime/model',
+    //     icon: Activity,
+    // },
+    // {
+    //     category: 'advance',
+    //     name: 'Predictions',
+    //     path: '/dashboard/predictions',
+    //     icon: Unplug,
+    // },
+    // {
+    //     category: 'advance',
+    //     name: 'Devices',
+    //     path: '/dashboard/devices/logs',
+    //     icon: Scroll,
+    // },
+    // {
+    //     category: 'account_setting',
+    //     name: 'Logout',
+    //     path: '/logout',
+    //     icon: LogOut,
+    // },
 ]
 
 export default RouteUrls;

@@ -9,7 +9,7 @@ const deviceCountData = [
     deviceCount: 76
   },
   {
-    name: 'Info Tech',
+    name: 'IT',
     deviceCount: 60
   },
   {
@@ -17,7 +17,7 @@ const deviceCountData = [
     deviceCount: 65
   },
   {
-    name: 'USM Publication',
+    name: 'Publication',
     deviceCount: 70
   },
   {
@@ -35,7 +35,7 @@ const UtilizationGraph = () => {
   const isDarkMode = theme === "dark"
 
   return (
-    <div className='mt-5' style={{ width: '100%', height: 350 }}>
+    <div className='mt-5' style={{ width: '100%', height: 240 }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart width={500} height={400} data={deviceCountData}>
           <XAxis
