@@ -49,13 +49,13 @@ const RouteUrls: urls[] = [
     {
         category: 'advance',
         name: 'Predictions',
-        path: '/dashboard/predictions',
+        path: '/dashboard/prediction',
         icon: Unplug,
     },
     {
         category: 'advance',
         name: 'Track Devices',
-        path: '/dashboard/devices/logs',
+        path: '/dashboard/devices',
         icon: Scroll,
     },
     {

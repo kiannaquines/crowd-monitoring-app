@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   CaretSortIcon,
   ChevronDownIcon,
@@ -51,83 +51,6 @@ export type Section = {
   update_date: string;
 };
 
-export const columns: ColumnDef<Section>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "comment",
-    header: "Comment",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("comment")}</div>
-    ),
-  },
-  {
-    accessorKey: "full_name",
-    header: "Comment by",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("full_name")}</div>
-    ),
-  },
-  {
-    accessorKey: "rating",
-    header: () => <div className="text-left">Rating</div>,
-    cell: ({ row }) => (
-      <div className="font-medium">{row.getValue("rating")}</div>
-    ),
-  },
-  {
-    accessorKey: "date_added",
-    header: () => <div className="text-left">Date Added</div>,
-    cell: ({ row }) => (
-      <div className="font-medium">{new Date(row.getValue("date_added")).toLocaleString()}</div>
-    ),
-  },
-  {
-    accessorKey: "update_date",
-    header: () => <div className="text-left">Update Date</div>,
-    cell: ({ row }) => (
-      <div className="font-medium">{new Date(row.getValue("update_date")).toLocaleString()}</div>
-    ),
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <DotsHorizontalIcon className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem>Edit Section</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>View Section</DropdownMenuItem>
-          <DropdownMenuItem>Remove Section</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
-  },
-];
 
 export function CommentDataTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -138,7 +61,7 @@ export function CommentDataTable() {
 
   const [comments, setComment] = useState<Section[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  
+
   useEffect(() => {
     fetchComments();
   }, []);
@@ -151,12 +74,12 @@ export function CommentDataTable() {
           'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
         },
       });
-  
+
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data: Section[] = await response.json();
-  
+
       setComment(data);
     } catch (error) {
       console.error('Error fetching sections:', error);
@@ -164,6 +87,108 @@ export function CommentDataTable() {
       setLoading(false);
     }
   }
+
+
+  const removeComment = async (commentId: string) => {
+    try {
+      const response = await fetch(`${COMMENTS_URL}/${commentId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      alert('Section removed successfully');
+      setComment((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
+    } catch (error) {
+      console.log('Error removing section:', error);
+    }
+  }
+
+  const columns: ColumnDef<Section>[] = [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: "comment",
+      header: "Comment",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("comment")}</div>
+      ),
+    },
+    {
+      accessorKey: "full_name",
+      header: "Comment by",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("full_name")}</div>
+      ),
+    },
+    {
+      accessorKey: "rating",
+      header: () => <div className="text-left">Rating</div>,
+      cell: ({ row }) => (
+        <div className="font-medium">{row.getValue("rating")}</div>
+      ),
+    },
+    {
+      accessorKey: "date_added",
+      header: () => <div className="text-left">Date Added</div>,
+      cell: ({ row }) => (
+        <div className="font-medium">{new Date(row.getValue("date_added")).toLocaleString()}</div>
+      ),
+    },
+    {
+      accessorKey: "update_date",
+      header: () => <div className="text-left">Update Date</div>,
+      cell: ({ row }) => (
+        <div className="font-medium">{new Date(row.getValue("update_date")).toLocaleString()}</div>
+      ),
+    },
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const comment = row.original;
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <DotsHorizontalIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem>Edit Section</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>View Section</DropdownMenuItem>
+              <DropdownMenuItem className='cursor-pointer' onClick={() => removeComment(comment.id)}>Remove Section</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
+  ];
 
   const table = useReactTable({
     data: comments,
@@ -183,6 +208,8 @@ export function CommentDataTable() {
       rowSelection,
     },
   });
+
+
 
   return (
     <div className="w-full">

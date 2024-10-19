@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ChevronDownIcon,
   DotsHorizontalIcon,
@@ -41,75 +41,11 @@ import {
 import { CATEGORY_URL, AUTHORIZATION_TOKEN } from '@/utils/constants';
 
 export type Category = {
-  id: string;
+  category_id: string;
   category_name: string;
   date_added: string;
   update_date: string;
 };
-
-export const columns: ColumnDef<Category>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "category_name",
-    header: "Category",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("category_name")}</div>
-    ),
-  },
-  {
-    accessorKey: "date_added",
-    header: () => <div className="text-left">Date Added</div>,
-    cell: ({ row }) => (
-      <div className="font-medium">{new Date(row.getValue("date_added")).toLocaleString()}</div>
-    ),
-  },
-  {
-    accessorKey: "update_date",
-    header: () => <div className="text-left">Update Added</div>,
-    cell: ({ row }) => (
-      <div className="font-medium">{new Date(row.getValue("update_date")).toLocaleString()}</div>
-    ),
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <DotsHorizontalIcon className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem>Edit Section</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>View Section</DropdownMenuItem>
-          <DropdownMenuItem>Remove Section</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
-  },
-];
 
 export function CategoryDataTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -144,12 +80,104 @@ export function CategoryDataTable() {
     }
   };
 
+  const removeCategory = async (category_id: string) => {
+    try {
+      const response = await fetch(`${CATEGORY_URL}/?catId=${category_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      alert('Category removed successfully');
+
+      setCategory((prevCategory) => prevCategory.filter((cat) => String(cat.category_id) !== String(category_id)));
+
+    } catch (error) {
+      console.error('Error removing category:', error);
+    }
+  }
+
+
   useEffect(() => {
     fetchCategory();
   }, []);
 
+
+  const columns: ColumnDef<Category>[] = [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: "category_name",
+      header: "Category",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("category_name")}</div>
+      ),
+    },
+    {
+      accessorKey: "date_added",
+      header: () => <div className="text-left">Date Added</div>,
+      cell: ({ row }) => (
+        <div className="font-normal">{new Date(row.getValue("date_added")).toLocaleString()}</div>
+      ),
+    },
+    {
+      accessorKey: "update_date",
+      header: () => <div className="text-left">Update Added</div>,
+      cell: ({ row }) => (
+        <div className="font-normal">{new Date(row.getValue("update_date")).toLocaleString()}</div>
+      ),
+    },
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const category = row.original;
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <DotsHorizontalIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem>Edit Section</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>View Section</DropdownMenuItem>
+              <DropdownMenuItem className='cursor-pointer' onClick={() => removeCategory(category.category_id)}>Remove Section</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )
+      },
+    },
+  ];
+
   const table = useReactTable({
-    data:category,
+    data: category,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
