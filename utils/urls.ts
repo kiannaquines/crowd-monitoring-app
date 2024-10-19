@@ -1,16 +1,11 @@
 import React from "react";
 import {
-    Settings,
-    Calendar,
     LayoutDashboard,
     Building,
-    User,
     Users,
     Unplug,
-    Settings2,
     LogOut,
-    Scroll,
-    Activity 
+    Scroll, 
 } from "lucide-react"
 
 type urls =  {
@@ -51,36 +46,36 @@ const RouteUrls: urls[] = [
         path: '/dashboard/category',
         icon: Users,
     },
-    // {
-    //     category: 'realtime',
-    //     name: 'Realtime Monitoring',
-    //     path: '/dashboard/realtime',
-    //     icon: Activity,
-    // },
-    // {
-    //     category: 'realtime',
-    //     name: 'Model Accuracy',
-    //     path: '/dashboard/realtime/model',
-    //     icon: Activity,
-    // },
-    // {
-    //     category: 'advance',
-    //     name: 'Predictions',
-    //     path: '/dashboard/predictions',
-    //     icon: Unplug,
-    // },
-    // {
-    //     category: 'advance',
-    //     name: 'Devices',
-    //     path: '/dashboard/devices/logs',
-    //     icon: Scroll,
-    // },
-    // {
-    //     category: 'account_setting',
-    //     name: 'Logout',
-    //     path: '/logout',
-    //     icon: LogOut,
-    // },
+    {
+        category: 'advance',
+        name: 'Predictions',
+        path: '/dashboard/predictions',
+        icon: Unplug,
+    },
+    {
+        category: 'advance',
+        name: 'Track Devices',
+        path: '/dashboard/devices/logs',
+        icon: Scroll,
+    },
+    {
+        category: 'account_setting',
+        name: 'Logout',
+        path: '/logout',
+        icon: LogOut,
+    },
+    {
+        category: 'report',
+        name: 'Crowd Density',
+        path: '/dashboard/crowd-density',
+        icon: Scroll,
+    },
+    {
+        category: 'report',
+        name: 'Section Density',
+        path: '/dashboard/section-density',
+        icon: Scroll,
+    },
 ]
 
 export default RouteUrls;

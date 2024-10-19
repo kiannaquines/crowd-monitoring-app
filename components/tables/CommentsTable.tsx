@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   CaretSortIcon,
   ChevronDownIcon,
@@ -40,27 +40,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { AUTHORIZATION_TOKEN, COMMENTS_URL } from "@/utils/constants";
+
 export type Section = {
   id: string;
+  full_name: string;
   comment: string;
   rating: string;
-  section: string;
-  full_name: string;
   date_added: string;
-  date_update: string;
+  update_date: string;
 };
-
-const data: Section[] = [
-  {
-    id: "1",
-    comment: "This is a great section!",
-    rating: "5",
-    section: "Reference",
-    full_name: "Kian Naquines",
-    date_added: "2024-06-26T09:00:00Z",
-    date_update: "2024-06-26T09:00:00Z",
-  },
-];
 
 export const columns: ColumnDef<Section>[] = [
   {
@@ -97,13 +86,6 @@ export const columns: ColumnDef<Section>[] = [
     ),
   },
   {
-    accessorKey: "section",
-    header: "Section",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("section")}</div>
-    ),
-  },
-  {
     accessorKey: "rating",
     header: () => <div className="text-left">Rating</div>,
     cell: ({ row }) => (
@@ -115,6 +97,13 @@ export const columns: ColumnDef<Section>[] = [
     header: () => <div className="text-left">Date Added</div>,
     cell: ({ row }) => (
       <div className="font-medium">{new Date(row.getValue("date_added")).toLocaleString()}</div>
+    ),
+  },
+  {
+    accessorKey: "update_date",
+    header: () => <div className="text-left">Update Date</div>,
+    cell: ({ row }) => (
+      <div className="font-medium">{new Date(row.getValue("update_date")).toLocaleString()}</div>
     ),
   },
   {
@@ -146,8 +135,38 @@ export function CommentDataTable() {
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
+
+  const [comments, setComment] = useState<Section[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(`${COMMENTS_URL}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data: Section[] = await response.json();
+  
+      setComment(data);
+    } catch (error) {
+      console.error('Error fetching sections:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   const table = useReactTable({
-    data,
+    data: comments,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -227,7 +246,7 @@ export function CommentDataTable() {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  No comments found. Please try again later.
                 </TableCell>
               </TableRow>
             )}

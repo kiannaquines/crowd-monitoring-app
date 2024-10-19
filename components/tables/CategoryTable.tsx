@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ChevronDownIcon,
   DotsHorizontalIcon,
@@ -38,24 +38,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { CATEGORY_URL, AUTHORIZATION_TOKEN } from '@/utils/constants';
 
-export type Section = {
+export type Category = {
   id: string;
-  category: string;
+  category_name: string;
   date_added: string;
-  date_update: string;
+  update_date: string;
 };
 
-const data: Section[] = [
-  {
-    id: "1",
-    category: "Free Wifi",
-    date_added: "2024-06-26T09:00:00Z",
-    date_update: "2024-06-26T09:00:00Z",
-  },
-];
-
-export const columns: ColumnDef<Section>[] = [
+export const columns: ColumnDef<Category>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -76,10 +68,10 @@ export const columns: ColumnDef<Section>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "category",
+    accessorKey: "category_name",
     header: "Category",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("category")}</div>
+      <div className="capitalize">{row.getValue("category_name")}</div>
     ),
   },
   {
@@ -90,10 +82,10 @@ export const columns: ColumnDef<Section>[] = [
     ),
   },
   {
-    accessorKey: "date_update",
+    accessorKey: "update_date",
     header: () => <div className="text-left">Update Added</div>,
     cell: ({ row }) => (
-      <div className="font-medium">{new Date(row.getValue("date_update")).toLocaleString()}</div>
+      <div className="font-medium">{new Date(row.getValue("update_date")).toLocaleString()}</div>
     ),
   },
   {
@@ -125,8 +117,39 @@ export function CategoryDataTable() {
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
+
+  const [category, setCategory] = useState<Category[]>([]);
+  const [isLoading, setLoading] = useState(false);
+
+
+  const fetchCategory = async () => {
+    try {
+      const response = await fetch(`${CATEGORY_URL}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data: Category[] = await response.json();
+
+      setCategory(data);
+    } catch (error) {
+      console.error('Error fetching sections:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
+
   const table = useReactTable({
-    data,
+    data:category,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -206,7 +229,7 @@ export function CategoryDataTable() {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  No Categorys found.
                 </TableCell>
               </TableRow>
             )}

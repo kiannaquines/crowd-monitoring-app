@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React, {useState, useEffect, } from 'react'
 import {
     CaretSortIcon,
     ChevronDownIcon,
@@ -39,32 +39,21 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
+import { USERS_URL, AUTHORIZATION_TOKEN } from '@/utils/constants';
 
-const data: Users[] = [
-    {
-        id: "1",
-        emailAddress: "kjgnaquines09@gmail.com",
-        userName: "kjgnaquines09",
-        firstName: "Kian Jearard",
-        lastName: "Naquines",
-        is_verified: true,
-        is_superuser: true,
-        registerDate: "2024-06-26T10:00:00Z",
-        updateDate: "2024-06-26T10:00:00Z"
-    }, 
-];
+
 
 
 export type Users = {
     id: string,
-    emailAddress: string,
-    userName: string,
-    firstName: string,
-    lastName: string,
+    email: string,
+    username: string,
+    first_name: string,
+    last_name: string,
     is_verified: boolean,
     is_superuser: boolean,
-    registerDate: string,
-    updateDate: string,
+    register_date: string,
+    update_date: string,
 }
 
 export const columns: ColumnDef<Users>[] = [
@@ -92,40 +81,40 @@ export const columns: ColumnDef<Users>[] = [
     },
 
     {
-      accessorKey: "firstName",
-      header: "First Name",
+      accessorKey: "first_name",
+      header: "Firstname",
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("firstName")}</div>
+        <div className="capitalize font-semibold">{row.getValue("first_name")}</div>
       ),
     },
 
     {
-      accessorKey: "lastName",
-      header: "Last Name",
-      cell: ({ row }) => <div>{row.getValue("lastName")}</div>,
+      accessorKey: "last_name",
+      header: "Lastname",
+      cell: ({ row }) => <div className='font-semibold'>{row.getValue("last_name")}</div>,
     },
 
     {
-        accessorKey: "userName",
-        header: () => <div className="text-left">User Name</div>,
+        accessorKey: "username",
+        header: () => <div className="text-left">Username</div>,
         cell: ({ row }) => {
-            return <div>{row.getValue("userName")}</div>
+            return <div className='font-semibold'>{row.getValue("username")}</div>
         }
     },
 
     {
-        accessorKey: "emailAddress",
+        accessorKey: "email",
         header: () => <div className="text-left">Email Address</div>,
         cell: ({ row }) => {
-            return <div>{row.getValue("emailAddress")}</div>
+            return <div className='font-semibold'>{row.getValue("email")}</div>
         }
     },
 
     {
-        accessorKey: "registerDate",
+        accessorKey: "register_date",
         header: () => <div className="text-left">Date Joined</div>,
         cell: ({ row }) => {
-            return <div>{row.getValue("registerDate")}</div>
+            return <div className='font-semibold'>{row.getValue("register_date")}</div>
         }
     },
 
@@ -167,9 +156,39 @@ export function UserDataTable() {
     const [columnVisibility, setColumnVisibility] =
       React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
+    
+    const [users, setUsers] = useState<Users[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+
+    const fetchSections = async () => {
+      try {
+        const response = await fetch(`${USERS_URL}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          },
+        });
   
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data: Users[] = await response.json();
+  
+        setUsers(data);
+      } catch (error) {
+        console.error('Error fetching sections:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    useEffect(() => {
+      fetchSections();
+    }, []);
+
+
     const table = useReactTable({
-      data,
+      data: users,
       columns,
       onSortingChange: setSorting,
       onColumnFiltersChange: setColumnFilters,

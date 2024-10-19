@@ -11,42 +11,29 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import FileUploadDropZone from '@/components/parts/Dropzone';
 import { ZONES_URL, AUTHORIZATION_TOKEN, GET_ZONES_URL, } from '@/utils/constants';
 
-type ScheduleSystemSheetProps = {
+type CategorySheetProps = {
     buttonName: string;
     sheetTitle: string;
     sheetDescription: string;
 };
 
-const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
+const CategorySystemSheet: React.FC<CategorySheetProps> = ({
     buttonName,
     sheetTitle,
     sheetDescription,
 }) => {
     const [section, setSection] = useState('');
-    const [description, setDescription] = useState('');
-    const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-
-    const handleDrop = (acceptedFiles: File[]) => {
-        setUploadedFiles(acceptedFiles);
-        console.log(acceptedFiles);
-    };
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
         const formData = new FormData();
         formData.append('name', section);
-        formData.append('description', description);
-        uploadedFiles.forEach((file) => {
-            formData.append('files', file);
-        });
 
         try {
             const response = await fetch(`${ZONES_URL}`, {
@@ -62,7 +49,6 @@ const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
                 alert('Submission successful');
                 setIsOpen(false);
                 setSection('');
-                setDescription('');
 
                 setTimeout(() => {
                     window.location.reload();
@@ -85,7 +71,6 @@ const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
                 },
             });
             const data = await response.json();
-            // Handle fetched sections if needed
         };
 
         fetchSections();
@@ -117,27 +102,10 @@ const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
                             onChange={(e) => setSection(e.target.value)}
                         />
                     </div>
-                    <div className="grid grid-cols-12 items-center gap-4">
-                        <Label htmlFor="description" className="text-left col-span-12">
-                            Description
-                        </Label>
-                        <Textarea
-                            id="description"
-                            cols={30}
-                            className="col-span-12"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
-                    </div>
-
-                    <div className="grid w-full gap-1.5">
-                        <Label>Upload Files</Label>
-                        <FileUploadDropZone onDrop={handleDrop} />
-                    </div>
 
                     <div className="grid grid-cols-12 items-center gap-4 mt-2">
                         <Button type="submit" disabled={isSubmitting} className='col-span-12'>
-                            {isSubmitting ? 'Submitting...' : 'Create Section'}
+                            {isSubmitting ? 'Submitting...' : 'Add Category'}
                         </Button>
                     </div>
                 </form>
@@ -146,4 +114,4 @@ const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
     );
 };
 
-export default ScheduleSystemSheet;
+export default CategorySystemSheet;

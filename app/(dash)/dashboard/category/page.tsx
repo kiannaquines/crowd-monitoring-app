@@ -1,4 +1,4 @@
-import SectionSystemSheet from '@/components/parts/SectionSystemSheet'
+import CategorySystemSheet from '@/components/parts/CategorySheet'
 import { Card, CardContent } from '@/components/ui/card'
 import React from 'react'
 import {CategoryDataTable} from '@/components/tables/CategoryTable'
@@ -8,7 +8,7 @@ const CategoryPage = () => {
     <main>
       <div className='flex flex-row justify-items-between justify-between items-center'>
       <h1 className='text-xl font-semibold'>Category</h1>
-        <SectionSystemSheet
+        <CategorySystemSheet
           buttonName="Add Category"
           sheetTitle="Add New Category"
           sheetDescription="Add new category to the system"

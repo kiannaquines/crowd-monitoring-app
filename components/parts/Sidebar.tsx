@@ -9,67 +9,68 @@ import RouteUrls from '@/utils/urls';
 const Sidebar = () => {
     return (
         <div className='fixed flex flex-col gap-4 w-[300px] h-auto p-4 border-r overflow'>
-            <UserItem/>
+            <UserItem />
             <div className='grow'>
-            <Command style={{height:'875px', overflow:'auto' }}>
-                <CommandInput placeholder="Search..." />
-                <CommandList style={{ overflow:'visible' }}>
-                    <CommandEmpty>Sorry, Module Not Found.</CommandEmpty>
+                <Command style={{ height: '875px', overflow: 'auto' }}>
+                    <CommandInput placeholder="Search..." />
+                    <CommandList style={{ overflow: 'visible' }}>
+                        <CommandEmpty>Sorry, Module Not Found.</CommandEmpty>
 
-                    <CommandGroup heading="General Options">                   
-                    {RouteUrls.map((url, index) => (
-                        url.category === 'general' && (
-                            <Link key={index} href={url.path} passHref>
-                                <CommandItem className='cursor-pointer' key={index}>
-                                    <url.icon className="mr-2 h-4 w-4" />
-                                    <span>{url.name}</span>
-                                </CommandItem>
-                            </Link>
-                        )
-                    ))}
-                    </CommandGroup>
+                        <CommandGroup heading="General Options">
+                            {RouteUrls.map((url, index) => (
+                                url.category === 'general' && (
+                                    <Link key={index} href={url.path} passHref>
+                                        <CommandItem className='cursor-pointer' key={index}>
+                                            <url.icon className="mr-2 h-4 w-4" />
+                                            <span>{url.name}</span>
+                                        </CommandItem>
+                                    </Link>
+                                )
+                            ))}
+                        </CommandGroup>
 
-                    <CommandGroup heading="Realtime Charts">
-                    {RouteUrls.map((url, index) => (
-                        url.category === 'realtime' && (
-                            <Link key={index} href={url.path} passHref>
-                                <CommandItem className='cursor-pointer' key={index}>
-                                    <url.icon className="mr-2 h-4 w-4" />
-                                    <span>{url.name}</span>
-                                </CommandItem>
-                            </Link>
-                        )
-                    ))}
-                    </CommandGroup>
+                        <CommandGroup heading="Crowd Monitoring Result">
+                            {RouteUrls.map((url, index) => (
+                                url.category === 'advance' && (
 
-                    <CommandGroup heading="Advance Device Configuration">
-                    {RouteUrls.map((url, index) => (
-                        url.category === 'advance' && (
-                        
-                            <Link key={index} href={url.path} passHref>
-                                <CommandItem className='cursor-pointer' key={index}>
-                                    <url.icon className="mr-2 h-4 w-4" />
-                                    <span>{url.name}</span>
-                                </CommandItem>
-                            </Link>
-                        )
-                    ))}
-                    </CommandGroup>
-                    
-                    <CommandGroup heading="Account">
-                    {RouteUrls.map((url, index) => (
-                        url.category === 'account_setting' && (
-                            <Link key={index} href={url.path} passHref>
-                                <CommandItem className='cursor-pointer' key={index}>
-                                    <url.icon className="mr-2 h-4 w-4" />
-                                    <span>{url.name}</span>
-                                </CommandItem>
-                            </Link>
-                       )
-                    ))}
-                    </CommandGroup>
-                </CommandList>
-            </Command>
+                                    <Link key={index} href={url.path} passHref>
+                                        <CommandItem className='cursor-pointer' key={index}>
+                                            <url.icon className="mr-2 h-4 w-4" />
+                                            <span>{url.name}</span>
+                                        </CommandItem>
+                                    </Link>
+                                )
+                            ))}
+                        </CommandGroup>
+
+                        <CommandGroup heading="Report">
+                            {RouteUrls.map((url, index) => (
+                                url.category === 'report' && (
+
+                                    <Link key={index} href={url.path} passHref>
+                                        <CommandItem className='cursor-pointer' key={index}>
+                                            <url.icon className="mr-2 h-4 w-4" />
+                                            <span>{url.name}</span>
+                                        </CommandItem>
+                                    </Link>
+                                )
+                            ))}
+                        </CommandGroup>
+
+                        <CommandGroup heading="Account">
+                            {RouteUrls.map((url, index) => (
+                                url.category === 'account_setting' && (
+                                    <Link key={index} href={url.path} passHref>
+                                        <CommandItem className='cursor-pointer' key={index}>
+                                            <url.icon className="mr-2 h-4 w-4" />
+                                            <span>{url.name}</span>
+                                        </CommandItem>
+                                    </Link>
+                                )
+                            ))}
+                        </CommandGroup>
+                    </CommandList>
+                </Command>
 
             </div>
         </div>

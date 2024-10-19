@@ -1,11 +1,11 @@
 "use client";
 
-import React from 'react'
+import React, { useState, useEffect, FormEvent } from 'react';
 import {
   CaretSortIcon,
   ChevronDownIcon,
   DotsHorizontalIcon,
-} from "@radix-ui/react-icons"
+} from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -17,10 +17,10 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -29,8 +29,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -38,166 +38,327 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { Badge } from "@/components/ui/badge"
 
-const data: Section[] = [
-  {
-    id: "1",
-    name: "Reference",
-    description: "The Reference Section in the library is designed to provide access to a variety of resources such as encyclopedias, dictionaries, atlases, and almanacs, which offer quick facts, definitions, and background information on various subjects. These materials are typically not available for borrowing and are meant for in-library use to support research, study, and fact-checking.",
-    total_visits: '123',
-    categories: ["Relax","Study","With Desk","Free Wifi"],
-    date_added: "2024-06-26T09:00:00Z",
-    date_update: "2024-06-26T09:00:00Z",
-  },
-  {
-    id: "2",
-    name: "IT",
-    description: "The Information Technology Section in the library offers resources and materials related to computing, software development, networking, and cybersecurity. It provides access to books, research papers, and digital resources for IT professionals, students, and enthusiasts seeking to expand their knowledge in technology and innovation.",
-    total_visits: '78',
-    categories: ["Relax","Study","With Desk","Free Wifi"],
-    date_added: "2024-06-26T10:00:00Z",
-    date_update: "2024-06-26T09:00:00Z",
-  },
-  {
-    id: "3",
-    name: "Serial",
-    description: "The Serials Section in the library is dedicated to materials and publications related to Philippine history, culture, and heritage. This collection includes books, manuscripts, periodicals, and other resources written by Filipino authors or about the Philippines. The section serves as an essential resource for students, researchers, and anyone interested in the rich cultural and historical heritage of the country.",
-    total_visits: '90',
-    categories: ["Relax","Study","With Desk","Free Wifi"],
-    date_added: "2024-06-26T11:00:00Z",
-    date_update: "2024-06-26T09:00:00Z",
-  },
-  {
-    id: "4",
-    name: "Medical",
-    description: "The Medical Section in the library is dedicated to materials and publications related to Philippine history, culture, and heritage. This collection includes books, manuscripts, periodicals, and other resources written by Filipino authors or about the Philippines. The section serves as an essential resource for students, researchers, and anyone interested in the rich cultural and historical heritage of the country.",
-    total_visits: '65',
-    categories: ["Relax","Study","With Desk","Free Wifi"],
-    date_added: "2024-06-26T12:00:00Z",
-    date_update: "2024-06-26T09:00:00Z",
-  },
-  {
-    id: "5",
-    name: "Filipiniana",
-    description: "The Filipiniana Section in the library is dedicated to materials and publications related to Philippine history, culture, and heritage. This collection includes books, manuscripts, periodicals, and other resources written by Filipino authors or about the Philippines. The section serves as an essential resource for students, researchers, and anyone interested in the rich cultural and historical heritage of the country.",
-    total_visits: '45',
-    categories: ["Relax","Study","With Desk","Free Wifi"],
-    date_added: "2024-06-26T13:00:00Z",
-    date_update: "2024-06-26T09:00:00Z",
-  },
-  {
-    id: "6",
-    name: "Publication",
-    description: "The Publication Section in the library is dedicated to providing access to a wide range of printed and digital publications, including academic journals, books, magazines, and research papers. It serves as a vital resource for students, researchers, and professionals seeking reliable references and scholarly content.",
-    total_visits: '56',
-    categories: ["Relax","Study","With Desk","Free Wifi"],
-    date_added: "2024-06-26T14:00:00Z",
-    date_update: "2024-06-26T09:00:00Z",
-  }
-];
+import { AUTHORIZATION_TOKEN, GET_ZONES_URL, ZONES_URL, ZONE_UPLOAD_URL } from "@/utils/constants";
+import { Textarea } from '../ui/textarea';
+import FileUploadDropZone from '../parts/Dropzone';
+import { Label } from '../ui/label';
 
+
+type ImageUrl = {
+  id: number;
+  image_url: string;
+};
+
+type Category = {
+  id: number;
+  category_name: string;
+};
 
 export type Section = {
-  id: string,
-  name: string,
-  description: string,
-  total_visits: string,
-  categories: string[],
-  date_added: string,
-  date_update: string,
-}
+  id: string;
+  name: string;
+  description: string;
+  image_url: ImageUrl[];
+  categories: Category[];
+  date_added: string;
+  update_date: string;
+};
 
-export const columns: ColumnDef<Section>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "name",
-    header: "Section",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("name")}</div>
-    ),
-  },
-  {
-    accessorKey: "total_visits",
-    header: () => <div className="text-left">Total Visits</div>,
-    cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("total_visits")}</div>
-    },
-  },
-  {
-    accessorKey: "date_added",
-    header: () => <div className="text-left">Date Added</div>,
-    cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("date_added")}</div>
-    },
-  },
-  {
-    accessorKey: "date_update",
-    header: () => <div className="text-left">Date Updated</div>,
-    cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("date_update")}</div>
-    },
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const section = row.original;
+const SectionDetailsSheet: React.FC<{
+  section: Section | null;
+  onClose: () => void;
+  isEditing: boolean;
+  onSave: (updatedSection: Section) => void;
+}> = ({ section, onClose, isEditing, onSave }) => {
+  if (!section) return null;
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit Section</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View Section</DropdownMenuItem>
-            <DropdownMenuItem>Remove Section</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
-];
+  const [name, setName] = useState(section.name);
+  const [description, setDescription] = useState(section.description);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    setName(section.name);
+    setDescription(section.description);
+  }, [section]);
+
+  const handleDrop = (acceptedFiles: File[]) => {
+    setUploadedFiles(acceptedFiles);
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('description', description);
+    uploadedFiles.forEach((file) => {
+      formData.append('files', file);
+    });
+
+    try {
+      const response = await fetch(`${ZONES_URL}${section.id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        const updatedSection: Section = {
+          ...section,
+          name,
+          description,
+          update_date: new Date().toISOString(),
+        };
+        onSave(updatedSection); // Call onSave with the updated section
+        alert('Submission successful');
+        onClose();
+      } else {
+        alert('Submission failed');
+      }
+    } catch (error) {
+      alert('Error submitting form');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const sectionDetails = [
+    { field: "ID", value: section.id },
+    { field: "Name", value: section.name },
+    { field: "Description", value: section.description },
+    { field: "Categories", value: section.categories.map(cat => <Badge key={cat.id} variant="outline" className='ml-2'>{cat.category_name}</Badge>) },
+    { field: "Date Added", value: new Date(section.date_added).toLocaleString() },
+    { field: "Last Updated", value: new Date(section.update_date).toLocaleString() },
+  ];
+
+  return (
+    <Sheet open={!!section} onOpenChange={onClose}>
+      <SheetContent className="overflow-y-auto w-[600px] sm:w-[800px]">
+        <SheetHeader>
+          <SheetTitle>{isEditing ? "Edit Section" : "Section Details"}</SheetTitle>
+          <SheetDescription>{section.name} section details</SheetDescription>
+        </SheetHeader>
+
+        <div className="mt-6">
+          {isEditing ? (
+            <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+              <div className="grid grid-cols-12 items-center gap-4">
+                <Label htmlFor="section" className="text-left col-span-12">Section</Label>
+                <Input
+                  id="section"
+                  className="col-span-12"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="grid grid-cols-12 items-center gap-4">
+                <Label htmlFor="description" className="text-left col-span-12">Description</Label>
+                <Textarea
+                  id="description"
+                  cols={30}
+                  className="col-span-12"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
+
+              <div className="grid w-full gap-1.5">
+                <Label>Upload Files</Label>
+                <FileUploadDropZone onDrop={handleDrop} />
+              </div>
+
+              <div className="grid grid-cols-12 items-center gap-4 mt-2">
+                <Button type="submit" disabled={isSubmitting} className='col-span-12'>
+                  {isSubmitting ? 'Submitting...' : 'Save Changes'}
+                </Button>
+              </div>
+            </form>
+          ) : (
+            <Table>
+              <TableBody>
+                {sectionDetails.map((detail) => (
+                  <TableRow key={detail.field}>
+                    <TableCell className="font-semibold">{detail.field}</TableCell>
+                    <TableCell>{detail.value}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </div>
+        {!isEditing && section.image_url && section.image_url.length > 0 && (
+          <div className="mt-6">
+            <h3 className="text-lg font-semibold mb-2">Images</h3>
+            <div className="grid grid-cols-2 gap-4">
+              {section.image_url.map((image) => (
+                <img
+                  key={image.id}
+                  src={`${ZONE_UPLOAD_URL}${image.image_url}`}
+                  alt={`Section image ${image.id}`}
+                  className="w-full h-auto object-cover rounded-md"
+                />
+              ))}
+            </div>
+          </div>
+        )}
+      </SheetContent>
+    </Sheet>
+  );
+};
 
 export function SectionDataTable() {
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
-  )
+  );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
+    React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [sections, setSections] = useState<Section[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [selectedSection, setSelectedSection] = useState<Section | null>(null);
+
+  const fetchSections = async () => {
+    try {
+      const response = await fetch(`${GET_ZONES_URL}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data: Section[] = await response.json();
+
+      setSections(data);
+    } catch (error) {
+      console.error('Error fetching sections:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removeSection = async (sectionId: string) => {
+    try {
+      const response = await fetch(`${ZONES_URL}${sectionId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      await response.json();
+      alert('Section removed successfully');
+
+      setSections((prevSections) => prevSections.filter(section => section.id !== sectionId));
+    } catch (error) {
+      console.error('Error removing section:', error);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchSections();
+  }, []);
+
+  const columns: ColumnDef<Section>[] = [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: "name",
+      header: "Section",
+      cell: ({ row }) => (
+        <div className="font-medium capitalize">{row.getValue("name")}</div>
+      ),
+    },
+    {
+      accessorKey: "date_added",
+      header: () => <div className="text-left">Date Added</div>,
+      cell: ({ row }) => (
+        <div className="font-medium">{new Date(row.getValue("date_added")).toLocaleString()}</div>
+      ),
+    },
+    {
+      accessorKey: "update_date",
+      header: () => <div className="text-left">Date Updated</div>,
+      cell: ({ row }) => (
+        <div className="font-medium">{new Date(row.getValue("update_date")).toLocaleString()}</div>
+      ),
+    },
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const section = row.original;
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <DotsHorizontalIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem className="cursor-pointer"
+                onClick={() => {
+                  setSelectedSection(section);
+                  setIsEditing(true);
+                }}>Edit Section</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className='cursor-pointer' onClick={() => setSelectedSection(section)}>View Section</DropdownMenuItem>
+              <DropdownMenuItem className='cursor-pointer' onClick={() => removeSection(section.id)}>
+                Remove Section
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
+  ];
 
   const table = useReactTable({
-    data,
+    data: sections,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -213,7 +374,7 @@ export function SectionDataTable() {
       columnVisibility,
       rowSelection,
     },
-  })
+  });
 
   return (
     <div className="w-full">
@@ -236,20 +397,18 @@ export function SectionDataTable() {
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
+              .map((column) => (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  className="capitalize"
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) =>
+                    column.toggleVisibility(!!value)
+                  }
+                >
+                  {column.id}
+                </DropdownMenuCheckboxItem>
+              ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -258,18 +417,16 @@ export function SectionDataTable() {
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                    </TableHead>
-                  )
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
@@ -296,7 +453,7 @@ export function SectionDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No sections found. Please add sections to see the table.
                 </TableCell>
               </TableRow>
             )}
@@ -327,6 +484,22 @@ export function SectionDataTable() {
           </Button>
         </div>
       </div>
+      <SectionDetailsSheet
+        section={selectedSection}
+        onClose={() => {
+          setSelectedSection(null);
+          setIsEditing(false);
+        }}
+        isEditing={isEditing}
+        onSave={(updatedSection) => {
+          setSections((prevSections) =>
+            prevSections.map((section) =>
+              section.id === updatedSection.id ? updatedSection : section
+            )
+          );
+          setIsEditing(false);
+        }}
+      />
     </div>
-  )
+  );
 }

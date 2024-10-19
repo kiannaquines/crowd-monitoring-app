@@ -32,7 +32,7 @@ const UserSystemSheet: React.FC<UserSystemSheetProps> = ({ buttonName, sheetTitl
                     {buttonName}
                 </Button>
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className='overflow-y-auto'>
                 <SheetHeader>
                     <SheetTitle>{sheetTitle}</SheetTitle>
                     <SheetDescription>
@@ -42,13 +42,13 @@ const UserSystemSheet: React.FC<UserSystemSheetProps> = ({ buttonName, sheetTitl
                 <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-12 items-center gap-4">
                         <Label htmlFor="name" className="text-left col-span-12">
-                            First Name
+                            Firstname
                         </Label>
                         <Input id="name" className="col-span-12" />
                     </div>
                     <div className="grid grid-cols-12 items-center gap-4">
                         <Label htmlFor="name" className="text-left col-span-12">
-                            Last Name
+                            Lastname
                         </Label>
                         <Input id="name" className="col-span-12" />
                     </div>
@@ -86,14 +86,13 @@ const UserSystemSheet: React.FC<UserSystemSheetProps> = ({ buttonName, sheetTitl
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="admin">Administrator</SelectItem>
-                                <SelectItem value="staff">Staff</SelectItem>
                                 <SelectItem value="user">User</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
                     <div className="grid grid-cols-12 items-center gap-4 mt-2">
                         <Button className='col-span-12'>
-                            Create User
+                            Add User
                         </Button>
                     </div>
                 </div>
