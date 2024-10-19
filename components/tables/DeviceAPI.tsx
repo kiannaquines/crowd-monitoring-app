@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CaretSortIcon,
   ChevronDownIcon,
@@ -39,98 +39,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
-const data: TrackDevices[] = [
-  {
-    id: "1",
-    device_addr: "00:00:00:00:00:00",
-    is_randomized: true,
-    estimated_count: "23",
-    first_seen: "10/19/2024, 12:00:00 PM",
-    last_seen: "10/19/2024, 12:00:00 PM",
-    scanned_minutes: "10"
-  }
-];
+import { DEVICES_URL, AUTHORIZATION_TOKEN } from '@/utils/constants';
 
 type TrackDevices = {
   id: string,
   device_addr: string,
+  date_detected: string,
   is_randomized: boolean,
-  estimated_count: string,
-  first_seen: string,
-  last_seen: string,
-  scanned_minutes: string,
+  device_power: string,
+  frame_type: string,
+  zone: string,
+  processed: boolean,
 }
-
-export const columns: ColumnDef<TrackDevices>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "device_addr",
-    header: "MAC Address",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("device_addr")}</div>
-    ),
-  },
-  {
-    accessorKey: "is_randomized",
-    header: () => <div className="text-left">Administered</div>,
-    cell: ({ row }) => (
-      <div>{row.getValue("is_randomized") ? "Yes" : "No"}</div>
-    ),
-  },
-  {
-    accessorKey: "estimated_count",
-    header: () => <div className="text-left">Estimate</div>,
-
-    cell: ({ row }) => {
-      return <div className="font-normal">{row.getValue("estimated_count")}</div>
-    },
-  },
-  {
-    accessorKey: "first_seen",
-    header: () => <div className="text-left">First Seen</div>,
-    cell: ({ row }) => {
-      return <div className="font-normal">{new Date(row.getValue("first_seen")).toTimeString().split(' ')[0]}</div>
-    },
-  },
-  {
-    accessorKey: "last_seen",
-    header: () => <div className="text-left">Last Seen</div>,
-    cell: ({ row }) => {
-      return <div className="font-normal">{new Date(row.getValue("last_seen")).toTimeString().split(' ')[0]}</div>
-    },
-
-  },
-  {
-    accessorKey: "scanned_minutes",
-    header: () => <div className="text-left">Scanned Minutes</div>,
-    cell: ({ row }) => {
-      return <div className="font-normal">{row.getValue("scanned_minutes")}</div>
-    },
-
-  }
-]
 
 
 export function DeviceApiDataTable() {
@@ -141,9 +61,100 @@ export function DeviceApiDataTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+  const [devices, setDevices] = useState<TrackDevices[]>([])
 
+  const fetchDevices = async () => {
+    try {
+      const response = await fetch(`${DEVICES_URL}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data: TrackDevices[] = await response.json();
+      setDevices(data);
+
+    } catch (error) {
+      console.log('Error removing section:', error);
+    }
+  }
+
+
+  useEffect(() => {
+    fetchDevices();
+  }, []);
+
+  const columns: ColumnDef<TrackDevices>[] = [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: "device_addr",
+      header: "MAC Address",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("device_addr")}</div>
+      ),
+    },
+    {
+      accessorKey: "zone",
+      header: () => <div className="text-left">Section</div>,
+      cell: ({ row }) => {
+        return <div className="font-normal">{row.getValue("zone")}</div>
+      },
+  
+    },
+    {
+      accessorKey: "is_randomized",
+      header: () => <div className="text-left">Administered</div>,
+      cell: ({ row }) => (
+        <div>{row.getValue("is_randomized") ? "Yes" : "No"}</div>
+      ),
+    },
+    {
+      accessorKey: "date_detected",
+      header: () => <div className="text-left">Date Detected</div>,
+  
+      cell: ({ row }) => {
+        return <div className="font-normal">{row.getValue("date_detected")}</div>
+      },
+    },
+    {
+      accessorKey: "frame_type",
+      header: () => <div className="text-left">Frame</div>,
+      cell: ({ row }) => {
+        return <div className="font-normal">{row.getValue("frame_type")}</div>
+      },
+    }
+  ]
+
+  
   const table = useReactTable({
-    data,
+    data:devices,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -242,7 +253,7 @@ export function DeviceApiDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No Device's found.
                 </TableCell>
               </TableRow>
             )}

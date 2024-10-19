@@ -63,19 +63,7 @@ const RouteUrls: urls[] = [
         name: 'Logout',
         path: '/logout',
         icon: LogOut,
-    },
-    {
-        category: 'report',
-        name: 'Crowd Density',
-        path: '/dashboard/crowd-density',
-        icon: Scroll,
-    },
-    {
-        category: 'report',
-        name: 'Section Density',
-        path: '/dashboard/section-density',
-        icon: Scroll,
-    },
+    }
 ]
 
 export default RouteUrls;

@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     CaretSortIcon,
     ChevronDownIcon,
@@ -39,78 +39,18 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { AUTHORIZATION_TOKEN, PREDICTION_URL } from '@/utils/constants'
 
-
-const data: ModelAccuracy[] = [
-    {
-        id: '1',
-        section: 'Reference Section',
-        score: '90.68',
-        date_predicted: "2024-06-26T09:30:00Z"
-    }
-]
-
-
-export type ModelAccuracy = {
+export type PredictionData = {
     id: string,
-    section: string,
+    zone_name: string,
+    estimated_count: string,
     score: string,
+    first_seen: string,
+    last_seen: string,
     date_predicted: string,
 }
 
-
-export const columns: ColumnDef<ModelAccuracy>[] = [
-    {
-        id: "select",
-        header: ({ table }) => (
-            <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && "indeterminate")
-                }
-                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                aria-label="Select all"
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-    },
-    {
-        accessorKey: "section",
-        header: "Section",
-        cell: ({ row }) => (
-            <div className="capitalize">{row.getValue("section")}</div>
-        ),
-    },
-    {
-        accessorKey: "score",
-        header: () => <div className="text-left">Silhouett Score</div>,
-        cell: ({ row }) => {
-            return <div className="font-medium">{row.getValue("score")}%</div>
-        },
-    },
-    {
-        accessorKey: "date_predicted",
-        header: () => <div className="text-left">Predicted Date</div>,
-        cell: ({ row }) => {
-            return <div className="font-medium">{new Date(row.getValue("date_predicted")).toLocaleDateString()}</div>
-        },
-    },
-    {
-        accessorKey: "date_predicted",
-        header: () => <div className="text-left">Predicted Time</div>,
-        cell: ({ row }) => {
-            return <div className="font-medium">{new Date(row.getValue("date_predicted")).toLocaleTimeString()}</div>
-        },
-    },
-]
 export function PredictionDataTable() {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -120,8 +60,97 @@ export function PredictionDataTable() {
         React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
 
+    const [prediction, setPrediction] = useState<PredictionData[]>([])
+    const fetchPrediction = async () => {
+        try {
+            const response = await fetch(`${PREDICTION_URL}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data: PredictionData[] = await response.json();
+            setPrediction(data);
+
+        } catch (error) {
+            console.log('Error removing section:', error);
+        }
+    }
+
+
+    useEffect(() => {
+        fetchPrediction();
+    }, []);
+
+
+    const columns: ColumnDef<PredictionData>[] = [
+        {
+            id: "select",
+            header: ({ table }) => (
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && "indeterminate")
+                    }
+                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                    aria-label="Select all"
+                />
+            ),
+            cell: ({ row }) => (
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            ),
+            enableSorting: false,
+            enableHiding: false,
+        },
+        {
+            accessorKey: "zone_name",
+            header: "Section",
+            cell: ({ row }) => (
+                <div className="capitalize">{row.getValue("zone_name")}</div>
+            ),
+        },
+        {
+            accessorKey: "score",
+            header: () => <div className="text-left">Silhouett Score</div>,
+            cell: ({ row }) => {
+                return <div className="font-medium">{row.getValue("score")}%</div>
+            },
+        },
+        {
+            accessorKey: "estimated_count",
+            header: () => <div className="text-left">Crowd Count</div>,
+            cell: ({ row }) => {
+                return <div className="font-medium">{row.getValue("estimated_count")}</div>
+            },
+        },
+        {
+            accessorKey: "first_seen",
+            header: () => <div className="text-left">First Seen</div>,
+            cell: ({ row }) => {
+                return <div className="font-medium">{new Date(row.getValue("first_seen")).toLocaleString()}</div>
+            },
+        },
+        {
+            accessorKey: "last_seen",
+            header: () => <div className="text-left">Last Seen</div>,
+            cell: ({ row }) => {
+                return <div className="font-medium">{new Date(row.getValue("last_seen")).toLocaleString()}</div>
+            },
+        },
+    ];
+
     const table = useReactTable({
-        data,
+        data: prediction,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
