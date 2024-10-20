@@ -4,19 +4,16 @@ import React from 'react'
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { BarGraphToday } from '@/components/charts/BarGraphToday';
 
-import { SectionUtilizationComparisonChart } from '@/components/charts/SectionUtilizationComparisonChart';
 import { VisitorsCount } from '@/components/charts/VisitorsCount';
-import { LiveChartDevices } from '@/components/charts/LiveChartDevices';
 
 import { TOTAL_USERS_COUNT_URL, AUTHORIZATION_TOKEN, TOTAL_STAFF_COUNT_URL, TOTAL_ADMIN_COUNT_URL, TODAY_COUNT_URL, LASTDAY_COUNT_URL, LASTWEEK_COUNT_URL, LASTMONTH_COUNT_URL } from '@/utils/constants';
-import { GradientChart } from '@/components/charts/GradientChart';
+import { TimeSeriesChart } from '@/components/charts/TimeSeries';
 
 const HomePage = () => {
 
@@ -270,8 +267,7 @@ const HomePage = () => {
           </CardFooter>
         </Card>
 
-        <GradientChart />
-        <LiveChartDevices />
+        <TimeSeriesChart/>
 
         <VisitorsCount type="Today" visitors={totalToday} />
         <VisitorsCount type="Last Day" visitors={totalLastDay} />

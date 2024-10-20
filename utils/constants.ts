@@ -1,4 +1,4 @@
-const API_URL = "http://10.0.0.179:5000";
+const API_URL = "http://10.0.0.179:5002";
 
 const API_VERSION = "v1";
 

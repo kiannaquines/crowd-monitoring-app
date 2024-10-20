@@ -52,6 +52,7 @@ import { AUTHORIZATION_TOKEN, GET_ZONES_URL, ZONES_URL, ZONE_UPLOAD_URL } from "
 import { Textarea } from '../ui/textarea';
 import FileUploadDropZone from '../parts/Dropzone';
 import { Label } from '../ui/label';
+import Link from 'next/link';
 
 
 type ImageUrl = {
@@ -350,9 +351,11 @@ export function SectionDataTable() {
               <DropdownMenuItem className='cursor-pointer' onClick={() => removeSection(section.id)}>
                 Remove Section
               </DropdownMenuItem>
-              <DropdownMenuItem className='cursor-pointer'>
-               Details
-              </DropdownMenuItem>
+              <Link href='/dashboard/sections/section'>
+                <DropdownMenuItem className='cursor-pointer'>
+                  Details
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuContent>
           </DropdownMenu>
         );
