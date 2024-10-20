@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ZONES_URL, AUTHORIZATION_TOKEN, GET_ZONES_URL, } from '@/utils/constants';
+import { AUTHORIZATION_TOKEN, CATEGORY_URL, } from '@/utils/constants';
 
 type CategorySheetProps = {
     buttonName: string;
@@ -25,23 +25,23 @@ const CategorySystemSheet: React.FC<CategorySheetProps> = ({
     sheetTitle,
     sheetDescription,
 }) => {
-    const [section, setSection] = useState('');
+    const [categoryName, setSection] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        const formData = new FormData();
-        formData.append('name', section);
+       
 
         try {
-            const response = await fetch(`${ZONES_URL}`, {
+            const response = await fetch(`${CATEGORY_URL}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+                    'Content-Type': 'application/json'
                 },
-                body: formData,
+                body: JSON.stringify({ category_name: categoryName }),
             });
 
             if (response.ok) {
@@ -62,20 +62,6 @@ const CategorySystemSheet: React.FC<CategorySheetProps> = ({
             setIsSubmitting(false);
         }
     };
-
-    useEffect(() => {
-        const fetchSections = async () => {
-            const response = await fetch(GET_ZONES_URL, {
-                headers: {
-                    'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
-                },
-            });
-            const data = await response.json();
-        };
-
-        fetchSections();
-    }, []);
-
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
@@ -92,13 +78,13 @@ const CategorySystemSheet: React.FC<CategorySheetProps> = ({
                 </SheetHeader>
                 <form onSubmit={handleSubmit} className="grid gap-4 py-4">
                     <div className="grid grid-cols-12 items-center gap-4">
-                        <Label htmlFor="section" className="text-left col-span-12">
-                            Section
+                        <Label htmlFor="category" className="text-left col-span-12">
+                            Category
                         </Label>
                         <Input
-                            id="section"
+                            id="category"
                             className="col-span-12"
-                            value={section}
+                            value={categoryName}
                             onChange={(e) => setSection(e.target.value)}
                         />
                     </div>

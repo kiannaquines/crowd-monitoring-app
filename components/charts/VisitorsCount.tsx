@@ -48,7 +48,7 @@ export function VisitorsCount({ type, visitors }: VisitorsCountProps) {
       <CardHeader>
                 <CardTitle>{type}</CardTitle>
                 <CardDescription>
-                    {visitors} unique visitors today.
+                    {visitors} visitors today.
                 </CardDescription>
             </CardHeader>
       <CardContent className="flex-1 pb-0">
@@ -84,7 +84,7 @@ export function VisitorsCount({ type, visitors }: VisitorsCountProps) {
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-foreground text-4xl font-bold"
+                          className="fill-foreground text-2xl font-bold"
                         >
                           {visitors}
                         </tspan>

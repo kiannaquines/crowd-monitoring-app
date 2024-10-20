@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import {
   CaretSortIcon,
   ChevronDownIcon,
@@ -41,8 +41,10 @@ import {
 } from "@/components/ui/table";
 
 import { AUTHORIZATION_TOKEN, COMMENTS_URL } from "@/utils/constants";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet';
+import { Label } from '../ui/label';
 
-export type Section = {
+export type Comment = {
   id: string;
   full_name: string;
   comment: string;
@@ -52,6 +54,111 @@ export type Section = {
 };
 
 
+const CommentEditViewSheet: React.FC<{
+  comment: Comment | null;
+  onClose: () => void;
+  isEditing: boolean;
+  onSave: (updatedSection: Comment) => void;
+}> = ({ comment, onClose, isEditing, onSave }) => {
+  if (!comment) return null;
+
+  const [commentText, setCommentText] = useState(comment.comment);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    setCommentText(comment.comment);
+  }, [comment]);
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`${COMMENTS_URL}/${comment.id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          comment: commentText,
+        }),
+      });
+
+      console.log(response);
+
+      if (response.ok) {
+        const updatedCategory: Comment = {
+          ...comment,
+          comment: commentText,
+          update_date: new Date().toISOString(),
+        };
+        onSave(updatedCategory);
+        alert('Submission successful');
+        onClose();
+      } else {
+        alert('Submission failed');
+      }
+    } catch (error) {
+      alert('Error submitting form');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const sectionDetails = [
+    { field: "ID", value: comment.id },
+    { field: "Comment", value: comment.comment },
+    { field: "Date Added", value: new Date(comment.date_added).toLocaleString() },
+    { field: "Last Updated", value: new Date(comment.update_date).toLocaleString() },
+  ];
+
+  return (
+    <Sheet open={!!comment} onOpenChange={onClose}>
+      <SheetContent className="overflow-y-auto w-[600px] sm:w-[800px]">
+        <SheetHeader>
+          <SheetTitle>{isEditing ? "Edit Comment" : "Comment Details"}</SheetTitle>
+        </SheetHeader>
+
+        <div className="mt-6">
+          {isEditing ? (
+            <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+              <div className="grid grid-cols-12 items-center gap-4">
+                <Label htmlFor="comment" className="text-left col-span-12">Comment</Label>
+                <Input
+                  id="comment"
+                  className="col-span-12"
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                />
+              </div>
+              <div className="grid grid-cols-12 items-center gap-4 mt-2">
+                <Button type="submit" disabled={isSubmitting} className='col-span-12'>
+                  {isSubmitting ? 'Submitting...' : 'Save Changes'}
+                </Button>
+              </div>
+            </form>
+          ) : (
+            <Table>
+              <TableBody>
+                {sectionDetails.map((detail) => (
+                  <TableRow key={detail.field}>
+                    <TableCell className="font-semibold">{detail.field}</TableCell>
+                    <TableCell>{detail.value}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+
+
+
 export function CommentDataTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -59,7 +166,9 @@ export function CommentDataTable() {
   const [rowSelection, setRowSelection] = React.useState({});
 
 
-  const [comments, setComment] = useState<Section[]>([]);
+  const [selectedComment, setSelectedComment] = useState<Comment | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -78,9 +187,9 @@ export function CommentDataTable() {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      const data: Section[] = await response.json();
+      const data: Comment[] = await response.json();
 
-      setComment(data);
+      setComments(data);
     } catch (error) {
       console.error('Error fetching sections:', error);
     } finally {
@@ -103,13 +212,23 @@ export function CommentDataTable() {
       }
 
       alert('Section removed successfully');
-      setComment((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
+      setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
     } catch (error) {
       console.log('Error removing section:', error);
     }
   }
 
-  const columns: ColumnDef<Section>[] = [
+  const handleEditClick = (comment: Comment) => {
+    setSelectedComment(comment);
+    setIsEditing(true);
+  };
+
+  const handleViewClick = (comment: Comment) => {
+    setSelectedComment(comment);
+    setIsEditing(false);
+  };
+
+  const columns: ColumnDef<Comment>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -179,10 +298,10 @@ export function CommentDataTable() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem>Edit Section</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleEditClick(comment)}>Edit</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>View Section</DropdownMenuItem>
-              <DropdownMenuItem className='cursor-pointer' onClick={() => removeComment(comment.id)}>Remove Section</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleViewClick(comment)}>View</DropdownMenuItem>
+              <DropdownMenuItem className='cursor-pointer' onClick={() => removeComment(comment.id)}>Remove</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -303,6 +422,23 @@ export function CommentDataTable() {
           </Button>
         </div>
       </div>
+      <CommentEditViewSheet
+        comment={selectedComment}
+        onClose={() => {
+          setSelectedComment(null);
+          setIsEditing(false);
+        }}
+        isEditing={isEditing}
+        onSave={(updatedCategory) => {
+          setComments((prevComments) =>
+            prevComments.map((c) =>
+              c.id === updatedCategory.id ? updatedCategory : c
+            )
+          );
+          setIsEditing(false);
+          setSelectedComment(null);
+        }}
+      />
     </div>
   );
 }

@@ -350,6 +350,9 @@ export function SectionDataTable() {
               <DropdownMenuItem className='cursor-pointer' onClick={() => removeSection(section.id)}>
                 Remove Section
               </DropdownMenuItem>
+              <DropdownMenuItem className='cursor-pointer'>
+               Details
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );

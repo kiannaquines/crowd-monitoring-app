@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import {
   ChevronDownIcon,
   DotsHorizontalIcon,
@@ -39,6 +39,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { CATEGORY_URL, AUTHORIZATION_TOKEN } from '@/utils/constants';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet';
+import { Label } from '../ui/label';
 
 export type Category = {
   category_id: string;
@@ -47,12 +49,117 @@ export type Category = {
   update_date: string;
 };
 
+
+const CategoryEditViewSheet: React.FC<{
+  category: Category | null;
+  onClose: () => void;
+  isEditing: boolean;
+  onSave: (updatedSection: Category) => void;
+}> = ({ category, onClose, isEditing, onSave }) => {
+  if (!category) return null;
+
+  const [category_name, setCategory] = useState(category.category_name);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    setCategory(category.category_name);
+  }, [category]);
+
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`${CATEGORY_URL}/?category_id=${category.category_id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          category_name:category_name,
+        }),
+      });
+
+      if (response.ok) {
+        const updatedCategory: Category = {
+          ...category,
+          category_name,
+          update_date: new Date().toISOString(),
+        };
+        onSave(updatedCategory);
+        alert('Submission successful');
+        onClose();
+      } else {
+        alert('Submission failed');
+      }
+    } catch (error) {
+      alert('Error submitting form');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const sectionDetails = [
+    { field: "ID", value: category.category_id },
+    { field: "Name", value: category.category_name },
+    { field: "Date Added", value: new Date(category.date_added).toLocaleString() },
+    { field: "Last Updated", value: new Date(category.update_date).toLocaleString() },
+  ];
+
+  return (
+    <Sheet open={!!category} onOpenChange={onClose}>
+      <SheetContent className="overflow-y-auto w-[600px] sm:w-[800px]">
+        <SheetHeader>
+          <SheetTitle>{isEditing ? "Edit Category" : "Category Details"}</SheetTitle>
+          <SheetDescription>{category.category_name} category details</SheetDescription>
+        </SheetHeader>
+
+        <div className="mt-6">
+          {isEditing ? (
+            <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+              <div className="grid grid-cols-12 items-center gap-4">
+                <Label htmlFor="section" className="text-left col-span-12">Section</Label>
+                <Input
+                  id="section"
+                  className="col-span-12"
+                  value={category_name}
+                  onChange={(e) => setCategory(e.target.value)}
+                />
+              </div>
+              <div className="grid grid-cols-12 items-center gap-4 mt-2">
+                <Button type="submit" disabled={isSubmitting} className='col-span-12'>
+                  {isSubmitting ? 'Submitting...' : 'Save Changes'}
+                </Button>
+              </div>
+            </form>
+          ) : (
+            <Table>
+              <TableBody>
+                {sectionDetails.map((detail) => (
+                  <TableRow key={detail.field}>
+                    <TableCell className="font-semibold">{detail.field}</TableCell>
+                    <TableCell>{detail.value}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+
 export function CategoryDataTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
   const [category, setCategory] = useState<Category[]>([]);
   const [isLoading, setLoading] = useState(false);
@@ -165,10 +272,13 @@ export function CategoryDataTable() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem>Edit Section</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => {
+                setSelectedCategory(category);
+                setIsEditing(true);
+              }}>Edit</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>View Section</DropdownMenuItem>
-              <DropdownMenuItem className='cursor-pointer' onClick={() => removeCategory(category.category_id)}>Remove Section</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setSelectedCategory(category)}>View</DropdownMenuItem>
+              <DropdownMenuItem className='cursor-pointer' onClick={() => removeCategory(category.category_id)}>Remove</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )
@@ -287,6 +397,22 @@ export function CategoryDataTable() {
           </Button>
         </div>
       </div>
+      <CategoryEditViewSheet
+        category={selectedCategory}
+        onClose={() => {
+          setSelectedCategory(null);
+          setIsEditing(false);
+        }}
+        isEditing={isEditing}
+        onSave={(updatedCategory) => {
+          setCategory((prevCategory) =>
+            prevCategory.map((category) =>
+              category.category_id === updatedCategory.category_id ? updatedCategory : category
+            )
+          );
+          setIsEditing(false);
+        }}
+      />
     </div>
   );
 }

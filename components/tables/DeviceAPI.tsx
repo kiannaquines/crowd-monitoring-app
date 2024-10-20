@@ -140,7 +140,7 @@ export function DeviceApiDataTable() {
       header: () => <div className="text-left">Date Detected</div>,
   
       cell: ({ row }) => {
-        return <div className="font-normal">{row.getValue("date_detected")}</div>
+        return <div className="font-normal">{new Date(row.getValue("date_detected")).toLocaleString()}</div>
       },
     },
     {

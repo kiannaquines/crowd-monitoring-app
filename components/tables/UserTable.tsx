@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, } from 'react'
+import React, { useState, useEffect, FormEvent } from 'react'
 import {
-  CaretSortIcon,
   ChevronDownIcon,
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons"
@@ -39,7 +38,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { USERS_URL, DELETE_USERS_URL, AUTHORIZATION_TOKEN } from '@/utils/constants';
+import { USERS_URL, DELETE_USERS_URL, UPDATE_USERS_URL, AUTHORIZATION_TOKEN } from '@/utils/constants';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet';
+import { Label } from '../ui/label';
 
 
 
@@ -57,6 +58,157 @@ export type Users = {
 }
 
 
+const UsersEditViewSheet: React.FC<{
+  users: Users | null;
+  onClose: () => void;
+  isEditing: boolean;
+  onSave: (updatedUsers: Users) => void;
+}> = ({ users, onClose, isEditing, onSave }) => {
+  if (!users) return null;
+
+  const [first_name, setFirstname] = useState(users.first_name);
+  const [last_name, setLastname] = useState(users.last_name);
+  const [username, setUsername] = useState(users.username);
+  const [email, setEmail] = useState(users.email);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    setFirstname(users.first_name);
+    setLastname(users.last_name);
+    setUsername(users.username);
+    setEmail(users.email);
+  }, [users]);
+
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+  
+    try {
+      const response = await fetch(`${UPDATE_USERS_URL}/?user_id=${users.id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username:username,
+          first_name:first_name,
+          last_name:last_name,
+          email:email,
+        }),
+      });
+
+      if (response.ok) {
+        const updatedUsers: Users = {
+          ...users,
+          first_name,
+          last_name,
+          username,
+          email,
+          is_verified: users.is_verified,
+          is_superuser: users.is_superuser,
+          register_date: users.register_date,
+          update_date: new Date().toISOString(),
+        };
+        onSave(updatedUsers);
+        alert('Submission successful');
+        onClose();
+      } else {
+        alert('Submission failed');
+      }
+    } catch (error) {
+      alert('Error submitting form');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const sectionDetails = [
+    { field: "ID", value: users.id },
+    { field: "Firstname", value: users.first_name },
+    { field: "Lastname", value: users.last_name },
+    { field: "Email Address", value: users.email },
+    { field: "Username", value: users.username },
+    { field: "Date Added", value: new Date(users.register_date).toLocaleString() },
+    { field: "Last Updated", value: new Date(users.update_date).toLocaleString() },
+  ];
+
+  return (
+    <Sheet open={!!users} onOpenChange={onClose}>
+      <SheetContent className="overflow-y-auto w-[600px] sm:w-[800px]">
+        <SheetHeader>
+          <SheetTitle>{isEditing ? "Edit User" : "User's Details"}</SheetTitle>
+          <SheetDescription>{users.first_name} {users.last_name} user details</SheetDescription>
+        </SheetHeader>
+
+        <div className="mt-6">
+          {isEditing ? (
+            <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+              <div className="grid grid-cols-12 items-center gap-4">
+                <Label htmlFor="first_name" className="text-left col-span-12">Firstname</Label>
+                <Input
+                  id="first_name"
+                  className="col-span-12"
+                  value={first_name}
+                  onChange={(e) => setFirstname(e.target.value)}
+                />
+              </div>
+
+              <div className="grid grid-cols-12 items-center gap-4">
+                <Label htmlFor="last_name" className="text-left col-span-12">Lastname</Label>
+                <Input
+                  id="last_name"
+                  className="col-span-12"
+                  value={last_name}
+                  onChange={(e) => setLastname(e.target.value)}
+                />
+              </div>
+
+              <div className="grid grid-cols-12 items-center gap-4">
+                <Label htmlFor="username" className="text-left col-span-12">Username</Label>
+                <Input
+                  id="username"
+                  className="col-span-12"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+
+              <div className="grid grid-cols-12 items-center gap-4">
+                <Label htmlFor="email" className="text-left col-span-12">Email Address</Label>
+                <Input
+                  id="email"
+                  className="col-span-12"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+
+              <div className="grid grid-cols-12 items-center gap-4 mt-2">
+                <Button type="submit" disabled={isSubmitting} className='col-span-12'>
+                  {isSubmitting ? 'Submitting...' : 'Save Changes'}
+                </Button>
+              </div>
+            </form>
+          ) : (
+            <Table>
+              <TableBody>
+                {sectionDetails.map((detail) => (
+                  <TableRow key={detail.field}>
+                    <TableCell className="font-semibold">{detail.field}</TableCell>
+                    <TableCell>{detail.value}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
 export function UserDataTable() {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -68,13 +220,15 @@ export function UserDataTable() {
 
   const [users, setUsers] = useState<Users[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
+  const [selectedUser, setSelectedUser] = useState<Users | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
   const fetchSections = async () => {
     try {
       const response = await fetch(`${USERS_URL}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Content-Type': 'application/json',
         },
       });
 
@@ -176,7 +330,7 @@ export function UserDataTable() {
       accessorKey: "register_date",
       header: () => <div className="text-left">Date Joined</div>,
       cell: ({ row }) => {
-        return <div className='font-normal'>{row.getValue("register_date")}</div>
+        return <div className='font-normal'>{new Date(row.getValue("register_date")).toLocaleString()}</div>
       }
     },
 
@@ -196,11 +350,23 @@ export function UserDataTable() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem>
-                Edit Schedule
+              <DropdownMenuItem
+                onClick={() => {
+                  setSelectedUser(users);
+                  setIsEditing(true);
+                }}
+              >
+                Edit
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>View Schedule</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setSelectedUser(users);
+                  setIsEditing(false);
+                }}
+              >
+                View
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={() => removeUser(users.id)}>Remove Schedule</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -227,9 +393,6 @@ export function UserDataTable() {
       rowSelection,
     },
   })
-
-
-
 
   return (
     <div className="w-full">
@@ -312,7 +475,7 @@ export function UserDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No user's found.
                 </TableCell>
               </TableRow>
             )}
@@ -343,6 +506,23 @@ export function UserDataTable() {
           </Button>
         </div>
       </div>
+      <UsersEditViewSheet
+        users={selectedUser !== undefined ? selectedUser : null}
+        onClose={() => {
+          setSelectedUser(null);
+          setIsEditing(false);
+        }}
+        isEditing={isEditing}
+        onSave={(updatedUsers) => {
+          setUsers((prevUsers) =>
+            prevUsers.map((user) =>
+              user.id === updatedUsers.id ? updatedUsers : user
+            )
+          );
+          setIsEditing(false);
+          setSelectedUser(null);
+        }}
+      />
     </div>
   )
 }
