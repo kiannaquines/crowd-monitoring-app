@@ -105,12 +105,14 @@ const CommentEditViewSheet: React.FC<{
         onClose();
       } else {
         toast({
+          variant: "destructive",
           title: "Something went wrong",
           description: "There was an error updating the comment",
         })
       }
     } catch (error) {
       toast({
+        variant: "destructive",
         title: "Something went wrong",
         description: "There was an error updating the comment",
       })
@@ -205,6 +207,7 @@ export function CommentDataTable() {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: "Something went wrong",
           description: "There was an error fetching comments",
         })
@@ -214,6 +217,7 @@ export function CommentDataTable() {
       setComments(data);
     } catch (error) {
       toast({
+        variant: "destructive",
         title: "Something went wrong",
         description: "There was an error fetching comments",
       })
@@ -238,6 +242,7 @@ export function CommentDataTable() {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: "Something went wrong",
           description: "There was an error removing the comment",
         })
@@ -250,6 +255,7 @@ export function CommentDataTable() {
       setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
     } catch (error) {
       toast({
+        variant: "destructive",
         title: "Something went wrong",
         description: "There was an error removing the comment",
       })

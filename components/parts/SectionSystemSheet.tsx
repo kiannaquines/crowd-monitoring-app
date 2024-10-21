@@ -81,6 +81,7 @@ const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
                 }, 2000,);
             } else {
                 toast({
+                    variant: "destructive",
                     title: 'Something went wrong',
                     description: 'Failed to create schedule system',
                     duration: 3000,
@@ -88,6 +89,7 @@ const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
             }
         } catch (error) {
             toast({
+                variant: "destructive",
                 title: 'Something went wrong',
                 description: 'Failed to create schedule system',
                 duration: 3000,

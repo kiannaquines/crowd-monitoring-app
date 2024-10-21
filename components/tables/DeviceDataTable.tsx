@@ -80,6 +80,7 @@ export function DeviceDataTable() {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: "Something went wrong",
           description: "Error removing section",
         })
@@ -90,6 +91,7 @@ export function DeviceDataTable() {
 
     } catch (error) {
       toast({
+        variant: "destructive",
         title: "Something went wrong",
         description: "Error removing section",
       })

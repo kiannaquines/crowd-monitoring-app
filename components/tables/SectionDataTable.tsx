@@ -138,12 +138,14 @@ const SectionDetailsSheet: React.FC<{
         onClose();
       } else {
         toast({
+          variant: "destructive",
           title: 'Something went wrong',
           description: 'There was an error while updating section.',
         })
       }
     } catch (error) {
       toast({
+        variant: "destructive",
         title: 'Something went wrong',
         description: 'There was an error while updating section.',
       })
@@ -267,6 +269,7 @@ export function SectionDataTable() {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: 'Something went wrong',
           description: 'There was an error while fetching sections.',
         })
@@ -276,6 +279,7 @@ export function SectionDataTable() {
       setSections(data);
     } catch (error) {
       toast({
+        variant: "destructive",
         title: 'Something went wrong',
         description: 'There was an error while fetching sections.',
       })
@@ -299,6 +303,7 @@ export function SectionDataTable() {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: 'Something went wrong',
           description: 'There was an error while removing sections.',
         })
@@ -312,6 +317,7 @@ export function SectionDataTable() {
       setSections((prevSections) => prevSections.filter(section => section.id !== sectionId));
     } catch (error) {
       toast({
+        variant: "destructive",
         title: 'Something went wrong',
         description: 'There was an error while removing sections.',
       })

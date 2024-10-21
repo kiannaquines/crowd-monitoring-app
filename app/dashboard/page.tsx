@@ -48,6 +48,7 @@ const HomePage = () => {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: 'Failed to fetch total users',
           description: 'Please check your internet connection or try again later.',
         })
@@ -57,6 +58,7 @@ const HomePage = () => {
       setTotalUsers(data.count);
     } catch (error) {
       toast({
+        variant: "destructive",
         title: 'Failed to fetch total users',
         description: 'Please check your internet connection or try again later.',
       })
@@ -76,6 +78,7 @@ const HomePage = () => {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: 'Failed to fetch total staff',
           description: 'Please check your internet connection or try again later.',
         })
@@ -84,7 +87,11 @@ const HomePage = () => {
       const data = await response.json();
       setTotalStaff(data.count);
     } catch (error) {
-      console.error('Error fetching total staff:', error);
+      toast({
+        variant: "destructive",
+        title: 'Failed to fetch total staff',
+        description: 'Please check your internet connection or try again later.',
+      })
       setTotalStaff(0);
     }
   }
@@ -101,6 +108,7 @@ const HomePage = () => {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: 'Failed to fetch total admin',
           description: 'Please check your internet connection or try again later.',
         })
@@ -109,7 +117,11 @@ const HomePage = () => {
       const data = await response.json();
       setTotalAdmin(data.count);
     } catch (error) {
-      console.error('Error fetching total staff:', error);
+      toast({
+        variant: "destructive",
+        title: 'Failed to fetch total admin',
+        description: 'Please check your internet connection or try again later.',
+      })
       setTotalAdmin(0);
     }
   }
@@ -126,6 +138,7 @@ const HomePage = () => {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: 'Failed to fetch total section',
           description: 'There was an error fetching total section.',
         })
@@ -139,6 +152,7 @@ const HomePage = () => {
       setTotalSection(data.count);
     } catch (error) {
       toast({
+        variant: "destructive",
         title: 'Failed to fetch total section',
         description: 'There was an error fetching total section.',
       })
@@ -157,13 +171,18 @@ const HomePage = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        toast({
+          variant: "destructive",
+          title: 'Failed to fetch today count',
+          description: 'There was an error fetching today count.',
+        })
       }
 
       const data = await response.json();
       setTotalToday(data.count);
     } catch (error) {
       toast({
+        variant: "destructive",
         title: 'Failed to fetch today count',
         description: 'There was an error fetching today count.',
       })
@@ -183,6 +202,7 @@ const HomePage = () => {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: 'Failed to fetch last day count',
           description: 'There was an error fetching last day count.',
         })
@@ -191,7 +211,11 @@ const HomePage = () => {
       const data = await response.json();
       setTotalLastDay(data.count);
     } catch (error) {
-      console.error('Error fetching total staff:', error);
+      toast({
+        variant: "destructive",
+        title: 'Failed to fetch last day count',
+        description: 'There was an error fetching last day count.',
+      })
       setTotalLastDay(0);
     }
   }
@@ -208,6 +232,7 @@ const HomePage = () => {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: 'Failed to fetch last week count',
           description: 'There was an error fetching last week count.',
         })
@@ -217,6 +242,7 @@ const HomePage = () => {
       setTotalLastWeek(data.count);
     } catch (error) {
       toast({
+        variant: "destructive",
         title: 'Failed to fetch last week count',
         description: 'There was an error fetching last week count.',
       })
@@ -237,6 +263,7 @@ const HomePage = () => {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: 'Failed to fetch last month count',
           description: 'There was an error fetching last month count.',
         })
@@ -246,6 +273,7 @@ const HomePage = () => {
       setTotalLastMonth(data.count);
     } catch (error) {
       toast({
+        variant: "destructive",
         title: 'Failed to fetch last month count',
         description: 'There was an error fetching last month count.',
       })

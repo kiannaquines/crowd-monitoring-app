@@ -50,8 +50,8 @@ const UserSystemSheet: React.FC<UserSystemSheetProps> = ({ buttonName, sheetTitl
 
 
         if (!response.ok) {
-            alert('Failed to add user');
             toast({
+                variant: "destructive",
                 title: "Something went wrong",
                 description: "Failed to add user, please try again later.",
             })

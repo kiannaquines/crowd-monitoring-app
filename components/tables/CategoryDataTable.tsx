@@ -91,8 +91,6 @@ const CategoryEditViewSheet: React.FC<{
         window.location.href = '/'
       }
 
-      const message = await response.json();
-
       if (response.ok) {
 
         const updatedCategory: Category = {
@@ -108,12 +106,14 @@ const CategoryEditViewSheet: React.FC<{
         onClose();
       } else {
         toast({
+          variant: "destructive",
           title: "Something went wrong",
           description: 'An error occurred while updating the category',
         })
       }
     } catch (error) {
       toast({
+        variant: "destructive",
         title: "Something went wrong",
         description: "Error occurred while updating the category",
       })
@@ -206,6 +206,7 @@ export function CategoryDataTable() {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: "Something went wrong",
           description: message.detail,
         });
@@ -217,6 +218,7 @@ export function CategoryDataTable() {
 
     } catch (error) {
       toast({
+        variant: "destructive",
         title: "Something went wrong",
         description: 'Error fetching category',
       });
@@ -244,13 +246,14 @@ export function CategoryDataTable() {
 
       if (!response.ok) {
         toast({
+          variant: "destructive",
           title: "Something went wrong",
           description: message.detail,
         })
       } else {
         toast({
           title: "Success",
-          description: message.message,
+          description: "You have successfully removed the category",
         })
       }
 
@@ -258,6 +261,7 @@ export function CategoryDataTable() {
 
     } catch (error) {
       toast({
+        variant: "destructive",
         title: "Something went wrong",
         description: 'Error removing category',
       })

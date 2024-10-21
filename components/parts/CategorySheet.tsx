@@ -62,6 +62,7 @@ const CategorySystemSheet: React.FC<CategorySheetProps> = ({
                 }, 2000,);
             } else {
                 toast({
+                    variant: "destructive",
                     title: 'Failed to submit category',
                     description: 'An error occurred while trying to add your category.',
                     duration: 3000,
@@ -69,6 +70,7 @@ const CategorySystemSheet: React.FC<CategorySheetProps> = ({
             }
         } catch (error) {
             toast({
+                variant: "destructive",
                 title: 'Failed to submit category',
                 description: 'An error occurred while trying to add your category.',
                 duration: 3000,

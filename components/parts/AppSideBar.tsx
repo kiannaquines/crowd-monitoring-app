@@ -28,6 +28,7 @@ import UserItem from "./UserItem";
 import { USER_INFO_URL } from '@/utils/constants';
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation';
+import { useToast } from "@/hooks/use-toast";
 
 const items = [
   {
@@ -89,7 +90,7 @@ export function AppSideBar() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const router = useRouter();
-
+  const {toast } = useToast();
   const accessToken = Cookies.get('bearer')
 
   const fetchUser = async () => {
@@ -106,7 +107,11 @@ export function AppSideBar() {
       setFullName(fullname);
       setEmail(user.email)
     } catch (error) {
-      console.error('Error fetching user:', error);
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+        description: 'Failed to fetch user details',
+      })
     }
   }
 

@@ -79,6 +79,7 @@ export function PredictionDataTable() {
 
             if (!response.ok) {
                 toast({
+                    variant: "destructive",
                     title: "Something went wrong",
                     description: "There was an error fetching the prediction data",
                 })
@@ -89,6 +90,7 @@ export function PredictionDataTable() {
 
         } catch (error) {
             toast({
+                variant: "destructive",
                 title: "Something went wrong",
                 description: "There was an error fetching the prediction data",
             })
