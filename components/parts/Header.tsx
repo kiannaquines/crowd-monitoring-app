@@ -1,14 +1,21 @@
+'use client'
+
 import React from "react";
 import { Button } from "@/components/ui/button"
 import Link from "next/link";
-import {Moon,Menu} from 'lucide-react';
-
+import {Menu} from 'lucide-react';
 import {ModeToggle} from '@/components/parts/Toggler';
+import { useSidebar } from "@/components/ui/sidebar"
 
 const Header = () => {
+
+    const { toggleSidebar } = useSidebar()
     return (
         <header className="flex flex-row justify-items-between justify-between border-b p-4">
             <div className="flex justify-items-center justify-center gap-2">
+                <Button onClick={toggleSidebar} variant="outline">
+                    <Menu size="24px"/>
+                </Button>
                 <Button>
                     <Link href="/">Overview</Link>
                 </Button>

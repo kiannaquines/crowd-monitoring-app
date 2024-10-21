@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { AreaChart, Area, CartesianGrid, XAxis, YAxis } from "recharts"
 
 import {
   Card,
@@ -16,8 +16,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-
-export const description = "An interactive bar chart"
 
 interface TimeSeriesData {
   count: number;
@@ -78,8 +76,7 @@ export function TimeSeriesChart() {
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
         >
-          <BarChart
-            accessibilityLayer
+          <AreaChart
             data={chartData}
             margin={{
               left: 12,
@@ -107,6 +104,7 @@ export function TimeSeriesChart() {
                 <ChartTooltipContent
                   className="w-[150px]"
                   nameKey="views"
+                  indicator="line"
                   labelFormatter={(value) => {
                     return new Date(value).toLocaleTimeString("en-US", {
                       hour: "2-digit",
@@ -116,8 +114,21 @@ export function TimeSeriesChart() {
                 />
               }
             />
-            <Bar dataKey="count" fill={chartConfig.count.color} radius={8}/>
-          </BarChart>
+            <Area
+              type="monotone"
+              dataKey="count"
+              stroke={chartConfig.count.color}
+              strokeWidth={2}
+              fillOpacity={0.4}
+              fill={`url(#fillCount)`}
+            />
+            <defs>
+              <linearGradient id="fillCount" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor={chartConfig.count.color} stopOpacity={0.8} />
+                <stop offset="95%" stopColor={chartConfig.count.color} stopOpacity={0.1} />
+              </linearGradient>
+            </defs>
+          </AreaChart>
         </ChartContainer>
       </CardContent>
     </Card>

@@ -13,7 +13,7 @@ import { BarGraphToday } from '@/components/charts/BarGraphToday';
 import { VisitorsCount } from '@/components/charts/VisitorsCount';
 
 import { TOTAL_USERS_COUNT_URL, AUTHORIZATION_TOKEN, TOTAL_STAFF_COUNT_URL, TOTAL_ADMIN_COUNT_URL, TODAY_COUNT_URL, LASTDAY_COUNT_URL, LASTWEEK_COUNT_URL, LASTMONTH_COUNT_URL } from '@/utils/constants';
-import { TimeSeriesChart } from '@/components/charts/TimeSeries';
+import { TimeSeriesChart } from '@/components/charts/TimeSeriesChart';
 
 const HomePage = () => {
 

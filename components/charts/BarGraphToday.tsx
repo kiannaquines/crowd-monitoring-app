@@ -83,9 +83,9 @@ export function BarGraphToday() {
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              content={<ChartTooltipContent indicator="line" />}
             />
-            <Bar dataKey="count" fill="var(--color-desktop)" radius={8}>
+            <Bar dataKey="count" fill="var(--color-desktop)" radius={5}>
               <LabelList
                 dataKey="count"
                 position="top"
