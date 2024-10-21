@@ -18,8 +18,10 @@ const Header = () => {
                 </Button>
             </div>
             <div className="flex flex-row gap-2">
-                <Button>
-                    <Link href="/">Reload</Link>
+                <Button onClick={() => {
+                    window.location.reload();
+                }}>
+                    Reload
                 </Button>
                 <ModeToggle />
             </div>
