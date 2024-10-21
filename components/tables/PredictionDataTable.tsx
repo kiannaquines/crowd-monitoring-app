@@ -123,28 +123,28 @@ export function PredictionDataTable() {
             accessorKey: "score",
             header: () => <div className="text-left">Silhouett Score</div>,
             cell: ({ row }) => {
-                return <div className="font-medium">{row.getValue("score")}%</div>
+                return <div className="font-normal">{row.getValue("score")}%</div>
             },
         },
         {
             accessorKey: "estimated_count",
             header: () => <div className="text-left">Crowd Count</div>,
             cell: ({ row }) => {
-                return <div className="font-medium">{row.getValue("estimated_count")}</div>
+                return <div className="font-normal">{row.getValue("estimated_count")}</div>
             },
         },
         {
             accessorKey: "first_seen",
             header: () => <div className="text-left">First Seen</div>,
             cell: ({ row }) => {
-                return <div className="font-medium">{new Date(row.getValue("first_seen")).toLocaleString()}</div>
+                return <div className="font-normal">{new Date(row.getValue("first_seen")).toLocaleString()}</div>
             },
         },
         {
             accessorKey: "last_seen",
             header: () => <div className="text-left">Last Seen</div>,
             cell: ({ row }) => {
-                return <div className="font-medium">{new Date(row.getValue("last_seen")).toLocaleString()}</div>
+                return <div className="font-normal">{new Date(row.getValue("last_seen")).toLocaleString()}</div>
             },
         },
     ];

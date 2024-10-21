@@ -59,7 +59,7 @@ export function BarGraphToday() {
     <Card className="shadow-sm col-span-1 md:col-span-4 row-span-2">
       <CardHeader>
         <CardTitle>Section Utilization</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>Shows the utilization of library sections</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[200px] w-full">

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card,CardContent } from '@/components/ui/card';
-import {SectionDataTable} from '@/components/tables/SectionTable';
+import {SectionDataTable} from '@/components/tables/SectionDataTable';
 import SectionSystemSheet from "@/components/parts/SectionSystemSheet";
 
 const Sections = () => {

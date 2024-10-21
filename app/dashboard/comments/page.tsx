@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card'
 import React from 'react'
-import {CommentDataTable} from '@/components/tables/CommentsTable'
+import {CommentDataTable} from '@/components/tables/CommentsDataTable'
 
 const CommentsPage = () => {
   return (

@@ -266,13 +266,12 @@ const HomePage = () => {
             <p>Total sections available</p>
           </CardFooter>
         </Card>
-
-        <TimeSeriesChart/>
-
         <VisitorsCount type="Today" visitors={totalToday} />
         <VisitorsCount type="Last Day" visitors={totalLastDay} />
         <VisitorsCount type="Last Week" visitors={totalLastWeek} />
         <VisitorsCount type="Last Month" visitors={totalLastMonth} />
+        <TimeSeriesChart />
+
         <BarGraphToday />
       </div>
     </main>

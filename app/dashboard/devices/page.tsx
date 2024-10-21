@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Card,CardContent } from '@/components/ui/card';
-import {DeviceApiDataTable} from '@/components/tables/DeviceAPI';
+import {DeviceDataTable} from '@/components/tables/DeviceDataTable';
 
 const Devices = () => {
   return (
@@ -16,7 +16,7 @@ const Devices = () => {
           <div className='flex flex-row justify-between justify-items-center items-center'>
               <h4 className='font-medium'>Device Track History</h4>
           </div>
-          <DeviceApiDataTable/>
+          <DeviceDataTable/>
         </CardContent>
       </Card>
       </div>

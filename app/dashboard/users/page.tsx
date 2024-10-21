@@ -1,8 +1,8 @@
 'use client'
 
-import React,{useState} from 'react'
+import React from 'react'
 import { Card,CardContent } from '@/components/ui/card';
-import { UserDataTable } from '@/components/tables/UserTable';
+import { UserDataTable } from '@/components/tables/UserDataTable';
 import UserSystemSheet from '@/components/parts/UserSystemSheet';
 
 const UsersPage = () => {

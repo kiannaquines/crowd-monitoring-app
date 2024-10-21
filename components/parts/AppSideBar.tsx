@@ -1,6 +1,16 @@
+'use client';
 
-import { useEffect, useState } from "react";
-import { Calendar, ChevronUp, Home, Inbox, MoreHorizontal, Plus, Search, Settings } from "lucide-react";
+import React, { useMemo, useEffect, useState } from 'react';
+import Link from 'next/link';
+import {
+  ChevronUp,
+  MoreHorizontal,
+  LayoutDashboard,
+  Building,
+  Users,
+  Unplug,
+  Scroll,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -13,16 +23,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from "../ui/dropdown-menu";
-import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import {
-  LayoutDashboard,
-  Building,
-  Users,
-  Unplug,
-  LogOut,
-  Scroll,
-} from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import UserItem from "./UserItem";
 
 const items = [
@@ -37,6 +38,9 @@ const items = [
     title: "Sections",
     url: "/dashboard/sections",
     icon: Building,
+    actions: [
+      { title: "Add Section", url: "/dashboard/section" }
+    ],
   },
   {
     group: 'General',
@@ -49,12 +53,19 @@ const items = [
     title: "Users",
     url: "/dashboard/users",
     icon: Users,
+    actions: [
+      { title: "Add User", url: "/dashboard/section" }
+    ],
   },
   {
     group: 'Model Result',
     title: "Predictions",
     url: "/dashboard/prediction",
     icon: Unplug,
+    actions: [
+      { title: "Generate Report", url: "/dashboard/section" },
+      { title: "Generate Users", url: "/dashboard/section" }
+    ],
   },
   {
     group: 'Model Result',
@@ -64,88 +75,93 @@ const items = [
   },
 ];
 
-export function AppSidebar() {
+export function AppSideBar() {
+  const [isClient, setIsClient] = useState(false);
 
-  const groupedItems = items.reduce((acc, item) => {
-    if (!acc[item.group]) {
-      acc[item.group] = [];
-    }
-    acc[item.group].push(item);
-    return acc;
-  }, {} as Record<string, typeof items>);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const groupedItems = useMemo(() => {
+    return items.reduce((acc, item) => {
+      if (!acc[item.group]) {
+        acc[item.group] = [];
+      }
+      acc[item.group].push(item);
+      return acc;
+    }, {} as Record<string, typeof items>);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
-    <>
-      <Sidebar>
-        <SidebarContent>
-          <div className="p-2">
-            <UserItem />
-          </div>
-          {Object.entries(groupedItems).map(([group, items]) => (
-            <SidebarGroup key={group}>
-              <SidebarGroupLabel>{group}</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {items.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild isActive>
-                        <a href={item.url}>
-                          <item.icon />
-                          <span>{item.title}</span>
-                        </a>
-                      </SidebarMenuButton>
+    <Sidebar>
+      <SidebarContent>
+        <div className="p-2">
+          <UserItem />
+        </div>
+        {Object.entries(groupedItems).map(([group, items]) => (
+          <SidebarGroup key={group}>
+            <SidebarGroupLabel>{group}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <Link href={item.url}>
+                        <item.icon className="mr-2 h-4 w-4" />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                    {item.actions && item.actions.length > 0 && (
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <SidebarMenuAction>
-                            <MoreHorizontal />
+                            <MoreHorizontal className="h-4 w-4" />
                           </SidebarMenuAction>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent side="right" align="start">
-                          <DropdownMenuItem>
-                            <span>Edit Project</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <span>Delete Project</span>
-                          </DropdownMenuItem>
+                          {item.actions.map((action) => (
+                            <DropdownMenuItem key={action.title}>
+                              <Link href={action.url}>
+                                {action.title}
+                              </Link>
+                            </DropdownMenuItem>
+                          ))}
                         </DropdownMenuContent>
                       </DropdownMenu>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          ))}
-        </SidebarContent>
-        <SidebarFooter>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton>
-                    Kian Naquines
-                    <ChevronUp className="ml-auto" />
-                  </SidebarMenuButton>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  side="top"
-                  className="w-[--radix-popper-anchor-width]"
-                >
-                  <DropdownMenuItem>
-                    <span>Account</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <span>Billing</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <span>Sign out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarFooter>
-      </Sidebar>
-
-    </>
+                    )}
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
+      </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton>
+                  Kian Naquines
+                  <ChevronUp className="ml-auto h-4 w-4" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                side="top"
+                className="w-[--radix-popper-anchor-width]"
+              >
+                <DropdownMenuItem>
+                  <span>Sign out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </Sidebar>
   );
 }

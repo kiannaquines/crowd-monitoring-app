@@ -1,7 +1,7 @@
 import CategorySystemSheet from '@/components/parts/CategorySheet'
 import { Card, CardContent } from '@/components/ui/card'
 import React from 'react'
-import {CategoryDataTable} from '@/components/tables/CategoryTable'
+import {CategoryDataTable} from '@/components/tables/CategoryDataTable'
 
 const CategoryPage = () => {
   return (
