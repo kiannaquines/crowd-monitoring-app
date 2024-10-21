@@ -5,14 +5,17 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { BarGraphToday } from '@/components/charts/BarGraphToday';
-
 import { VisitorsCount } from '@/components/charts/VisitorsCount';
-
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
 import { TOTAL_USERS_COUNT_URL, TOTAL_STAFF_COUNT_URL, TOTAL_ADMIN_COUNT_URL, TODAY_COUNT_URL, LASTDAY_COUNT_URL, LASTWEEK_COUNT_URL, LASTMONTH_COUNT_URL } from '@/utils/constants';
 import { TimeSeriesChart } from '@/components/charts/TimeSeriesChart';
 import Cookies from 'js-cookie';
@@ -296,8 +299,15 @@ const HomePage = () => {
     <main>
       <h1 className='text-xl font-semibold'>Crowd Monitoring Overview</h1>
 
-      <div className='grid grid-cols-1 md:grid-cols-4 mt-4 gap-4'>
-        <Card className='shadow-sm cursor-pointer'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-4 gap-4'>
+
+        <VisitorsCount type="Today" visitors={totalToday} />
+        <VisitorsCount type="Last Day" visitors={totalLastDay} />
+        <VisitorsCount type="Last Week" visitors={totalLastWeek} />
+        <VisitorsCount type="Last Month" visitors={totalLastMonth} />
+
+        <TimeSeriesChart />
+        <Card className='shadow-sm cursor-pointer w-full'>
           <CardHeader className="items-start pb-4">
             <CardTitle>Users</CardTitle>
             <CardDescription>Show total users</CardDescription>
@@ -307,7 +317,7 @@ const HomePage = () => {
           </CardContent>
         </Card>
 
-        <Card className='shadow-sm cursor-pointer'>
+        <Card className='shadow-sm cursor-pointer w-full'>
           <CardHeader className="items-start pb-4">
             <CardTitle>Staff</CardTitle>
             <CardDescription>Show total staff</CardDescription>
@@ -317,7 +327,7 @@ const HomePage = () => {
           </CardContent>
         </Card>
 
-        <Card className='shadow-sm cursor-pointer'>
+        <Card className='shadow-sm cursor-pointer w-full'>
           <CardHeader className="items-start pb-4">
             <CardTitle>Admin</CardTitle>
             <CardDescription>Show total users</CardDescription>
@@ -327,7 +337,7 @@ const HomePage = () => {
           </CardContent>
         </Card>
 
-        <Card className='shadow-sm cursor-pointer'>
+        <Card className='shadow-sm cursor-pointer w-full'>
           <CardHeader className="items-start pb-4">
             <CardTitle>Sections</CardTitle>
             <CardDescription>Show total sections</CardDescription>
@@ -337,11 +347,6 @@ const HomePage = () => {
           </CardContent>
         </Card>
 
-        <VisitorsCount type="Today" visitors={totalToday} />
-        <VisitorsCount type="Last Day" visitors={totalLastDay} />
-        <VisitorsCount type="Last Week" visitors={totalLastWeek} />
-        <VisitorsCount type="Last Month" visitors={totalLastMonth} />
-        <TimeSeriesChart />
 
         <BarGraphToday />
       </div>
