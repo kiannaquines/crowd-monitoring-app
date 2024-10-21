@@ -309,22 +309,41 @@ export function CommentDataTable() {
     {
       accessorKey: "rating",
       header: () => <div className="text-left">Rating</div>,
-      cell: ({ row }) => (
-        <div className="font-medium">{row.getValue("rating")}</div>
-      ),
+      cell: ({ row }) => {
+        const rating = row.getValue("rating") as number;
+    
+        const renderStars = (rating: number) => {
+          const totalStars = 5; 
+          const filledStars = Math.round(rating);
+    
+          return (
+            <div className="flex">
+              {[...Array(totalStars)].map((_, index) => (
+                <span key={index}>
+                  {index < filledStars ? (
+                    <span className="text-yellow-500">★</span>
+                  ) : (
+                    <span className="text-gray-400">☆</span>
+                  )}
+                </span>
+              ))}
+            </div>
+          );
+        };
+    
+        return (
+          <div className="font-medium">
+            {renderStars(rating)}
+          </div>
+        );
+      },
     },
+    
     {
       accessorKey: "date_added",
       header: () => <div className="text-left">Date Added</div>,
       cell: ({ row }) => (
         <div className="font-medium">{new Date(row.getValue("date_added")).toLocaleString()}</div>
-      ),
-    },
-    {
-      accessorKey: "update_date",
-      header: () => <div className="text-left">Update Date</div>,
-      cell: ({ row }) => (
-        <div className="font-medium">{new Date(row.getValue("update_date")).toLocaleString()}</div>
       ),
     },
     {
