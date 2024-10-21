@@ -38,7 +38,7 @@ import {
 } from "@/components/ui/table"
 import { PREDICTION_URL } from '@/utils/constants'
 import Cookies from 'js-cookie'
-
+import { useToast } from '@/hooks/use-toast'
 export type PredictionData = {
     id: string,
     zone_name: string,
@@ -59,7 +59,7 @@ export function PredictionDataTable() {
     const [rowSelection, setRowSelection] = React.useState({})
 
     const [prediction, setPrediction] = useState<PredictionData[]>([])
-
+    const { toast } = useToast();
 
     const accessToken = Cookies.get('bearer')
 
@@ -74,14 +74,20 @@ export function PredictionDataTable() {
             });
 
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                toast({
+                    title: "Something went wrong",
+                    description: "There was an error fetching the prediction data",
+                })
             }
 
             const data: PredictionData[] = await response.json();
             setPrediction(data);
 
         } catch (error) {
-            console.log('Error removing section:', error);
+            toast({
+                title: "Something went wrong",
+                description: "There was an error fetching the prediction data",
+            })
         }
     }
 

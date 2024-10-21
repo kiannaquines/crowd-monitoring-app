@@ -42,6 +42,7 @@ import { CATEGORY_URL } from '@/utils/constants';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet';
 import { Label } from '../ui/label';
 import Cookies from 'js-cookie'
+import { useToast } from '@/hooks/use-toast';
 
 export type Category = {
   category_id: string;
@@ -58,6 +59,7 @@ const CategoryEditViewSheet: React.FC<{
   onSave: (updatedSection: Category) => void;
 }> = ({ category, onClose, isEditing, onSave }) => {
   if (!category) return null;
+  const { toast } = useToast()
 
   const [category_name, setCategory] = useState(category.category_name);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -85,20 +87,32 @@ const CategoryEditViewSheet: React.FC<{
         }),
       });
 
+      const message = await response.json();
+
       if (response.ok) {
+
         const updatedCategory: Category = {
           ...category,
           category_name,
           update_date: new Date().toISOString(),
         };
         onSave(updatedCategory);
-        alert('Submission successful');
+        toast({
+          title: "Success",
+          description: "You have successfully updated the category",
+        })
         onClose();
       } else {
-        alert('Submission failed');
+        toast({
+          title: "Something went wrong",
+          description: 'An error occurred while updating the category',
+        })
       }
     } catch (error) {
-      alert('Error submitting form');
+      toast({
+        title: "Something went wrong",
+        description: "Error occurred while updating the category",
+      })
     } finally {
       setIsSubmitting(false);
     }
@@ -169,7 +183,7 @@ export function CategoryDataTable() {
 
   const [category, setCategory] = useState<Category[]>([]);
   const [isLoading, setLoading] = useState(false);
-
+  const { toast } = useToast()
 
   const fetchCategory = async () => {
     try {
@@ -180,18 +194,29 @@ export function CategoryDataTable() {
         },
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data: Category[] = await response.json();
+      const message = await response.json();
 
+      if (!response.ok) {
+        toast({
+          title: "Something went wrong",
+          description: message.detail,
+        });
+        return;
+      }
+
+      const data: Category[] = message;
       setCategory(data);
+
     } catch (error) {
-      console.error('Error fetching sections:', error);
+      toast({
+        title: "Something went wrong",
+        description: 'Error fetching category',
+      });
     } finally {
       setLoading(false);
     }
   };
+
 
   const removeCategory = async (category_id: string) => {
     try {
@@ -203,16 +228,27 @@ export function CategoryDataTable() {
         },
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      const message = await response.json()
 
-      alert('Category removed successfully');
+      if (!response.ok) {
+        toast({
+          title: "Something went wrong",
+          description: message.detail,
+        })
+      } else {
+        toast({
+          title: "Success",
+          description: message.message,
+        })
+      }
 
       setCategory((prevCategory) => prevCategory.filter((cat) => String(cat.category_id) !== String(category_id)));
 
     } catch (error) {
-      console.error('Error removing category:', error);
+      toast({
+        title: "Something went wrong",
+        description: 'Error removing category',
+      })
     }
   }
 
@@ -373,7 +409,7 @@ export function CategoryDataTable() {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No Categorys found.
+                  No Categories found.
                 </TableCell>
               </TableRow>
             )}

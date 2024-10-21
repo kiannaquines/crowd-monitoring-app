@@ -16,6 +16,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+import Cookies from "js-cookie";
+import { PER_HOUR } from "@/utils/constants"
+import { useToast } from "@/hooks/use-toast";
 
 interface TimeSeriesData {
   count: number;
@@ -33,18 +36,31 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function TimeSeriesChart() {
+
+  const accessToken = Cookies.get('bearer')
+
   const [chartData, setChartData] = React.useState<TimeSeriesData[]>([]);
   const [total, setTotal] = React.useState(0);
-
+  const { toast } = useToast()
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5002/api/v1/time-series/per-hour/visitors');
+        const response = await fetch(`${PER_HOUR}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
         const data = await response.json();
         setChartData(data);
         setTotal(data.reduce((acc: number, curr: TimeSeriesData) => acc + curr.count, 0));
       } catch (error) {
-        console.error("Error fetching data:", error);
+        toast({
+          title: "Error fetching section time series data",
+          description: "There was an error fetching the time series data",
+          duration: 5000,
+        })
       }
     };
 

@@ -38,6 +38,7 @@ import {
 } from "@/components/ui/table"
 import { DEVICES_URL } from '@/utils/constants';
 import Cookies from 'js-cookie'
+import { useToast } from '@/hooks/use-toast';
 
 type TrackDevices = {
   id: string,
@@ -60,7 +61,7 @@ export function DeviceDataTable() {
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
   const [devices, setDevices] = useState<TrackDevices[]>([])
-
+  const { toast } = useToast();
   const accessToken = Cookies.get('bearer')
 
   const fetchDevices = async () => {
@@ -74,14 +75,20 @@ export function DeviceDataTable() {
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        toast({
+          title: "Something went wrong",
+          description: "Error removing section",
+        })
       }
 
       const data: TrackDevices[] = await response.json();
       setDevices(data);
 
     } catch (error) {
-      console.log('Error removing section:', error);
+      toast({
+        title: "Something went wrong",
+        description: "Error removing section",
+      })
     }
   }
 

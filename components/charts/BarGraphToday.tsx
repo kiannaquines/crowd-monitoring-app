@@ -18,7 +18,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import {SECTION_UTILIZATION_URL, AUTHORIZATION_TOKEN} from "@/utils/constants";
+import {SECTION_UTILIZATION_URL} from "@/utils/constants";
+import Cookies from "js-cookie";
+import { useToast } from "@/hooks/use-toast";
 
 interface SectionUtilization {
   section_name: string;
@@ -33,21 +35,27 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function BarGraphToday() {
-  const [chartData, setChartData] = useState<SectionUtilization[]>([]);
 
+  const accessToken = Cookies.get('bearer')
+  const [chartData, setChartData] = useState<SectionUtilization[]>([]);
+  const { toast } = useToast()
   const fetchSectionUtilization = async () => {
     try {
       const response = await fetch(`${SECTION_UTILIZATION_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         }
       });
       const data = await response.json();
       setChartData(data);
     } catch (error) {
-      console.error("Error fetching section utilization data:", error);
+      toast({
+        title: "Error fetching section utilization data",
+        description: "There was an error fetching the section utilization data",
+        duration: 5000,
+      })
     }
   };
 

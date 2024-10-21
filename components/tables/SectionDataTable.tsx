@@ -54,7 +54,7 @@ import FileUploadDropZone from '../parts/Dropzone';
 import { Label } from '../ui/label';
 import Link from 'next/link';
 import Cookies from 'js-cookie'
-
+import { useToast } from '@/hooks/use-toast'
 
 type ImageUrl = {
   id: number;
@@ -90,7 +90,7 @@ const SectionDetailsSheet: React.FC<{
   const [description, setDescription] = useState(section.description);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const { toast } = useToast();
   useEffect(() => {
     setName(section.name);
     setDescription(section.description);
@@ -127,13 +127,22 @@ const SectionDetailsSheet: React.FC<{
           update_date: new Date().toISOString(),
         };
         onSave(updatedSection);
-        alert('Submission successful');
+        toast({
+          title: 'Section Details Updated',
+          description: 'Section details have been updated successfully.',
+        })
         onClose();
       } else {
-        alert('Submission failed');
+        toast({
+          title: 'Something went wrong',
+          description: 'There was an error while updating section.',
+        })
       }
     } catch (error) {
-      alert('Error submitting form');
+      toast({
+        title: 'Something went wrong',
+        description: 'There was an error while updating section.',
+      })
     } finally {
       setIsSubmitting(false);
     }
@@ -235,6 +244,7 @@ export function SectionDataTable() {
   const [sections, setSections] = useState<Section[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
+  const { toast } = useToast();
 
   const accessToken = Cookies.get('bearer')
 
@@ -248,13 +258,19 @@ export function SectionDataTable() {
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        toast({
+          title: 'Something went wrong',
+          description: 'There was an error while fetching sections.',
+        })
       }
       const data: Section[] = await response.json();
 
       setSections(data);
     } catch (error) {
-      console.error('Error fetching sections:', error);
+      toast({
+        title: 'Something went wrong',
+        description: 'There was an error while fetching sections.',
+      })
     } finally {
       setLoading(false);
     }
@@ -270,14 +286,23 @@ export function SectionDataTable() {
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        toast({
+          title: 'Something went wrong',
+          description: 'There was an error while removing sections.',
+        })
       }
       await response.json();
-      alert('Section removed successfully');
+      toast({
+        title: 'Section Removed',
+        description: 'Section has been removed successfully.',
+      })
 
       setSections((prevSections) => prevSections.filter(section => section.id !== sectionId));
     } catch (error) {
-      console.error('Error removing section:', error);
+      toast({
+        title: 'Something went wrong',
+        description: 'There was an error while removing sections.',
+      })
     }
   };
 

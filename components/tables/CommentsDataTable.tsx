@@ -44,6 +44,7 @@ import { COMMENTS_URL } from "@/utils/constants";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet';
 import { Label } from '../ui/label';
 import Cookies from 'js-cookie'
+import { useToast } from '@/hooks/use-toast';
 
 export type Comment = {
   id: string;
@@ -62,6 +63,7 @@ const CommentEditViewSheet: React.FC<{
   onSave: (updatedSection: Comment) => void;
 }> = ({ comment, onClose, isEditing, onSave }) => {
   if (!comment) return null;
+  const { toast } = useToast()
 
   const accessToken = Cookies.get('bearer')
 
@@ -96,13 +98,22 @@ const CommentEditViewSheet: React.FC<{
           update_date: new Date().toISOString(),
         };
         onSave(updatedCategory);
-        alert('Submission successful');
+        toast({
+          title: "Success",
+          description: "Comment updated successfully",
+        })
         onClose();
       } else {
-        alert('Submission failed');
+        toast({
+          title: "Something went wrong",
+          description: "There was an error updating the comment",
+        })
       }
     } catch (error) {
-      alert('Error submitting form');
+      toast({
+        title: "Something went wrong",
+        description: "There was an error updating the comment",
+      })
     } finally {
       setIsSubmitting(false);
     }
@@ -173,6 +184,7 @@ export function CommentDataTable() {
   const [isEditing, setIsEditing] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const { toast } = useToast()
 
   useEffect(() => {
     fetchComments();
@@ -188,13 +200,19 @@ export function CommentDataTable() {
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        toast({
+          title: "Something went wrong",
+          description: "There was an error fetching comments",
+        })
       }
       const data: Comment[] = await response.json();
 
       setComments(data);
     } catch (error) {
-      console.error('Error fetching sections:', error);
+      toast({
+        title: "Something went wrong",
+        description: "There was an error fetching comments",
+      })
     } finally {
       setLoading(false);
     }
@@ -211,13 +229,22 @@ export function CommentDataTable() {
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        toast({
+          title: "Something went wrong",
+          description: "There was an error removing the comment",
+        })
       }
 
-      alert('Section removed successfully');
+      toast({
+        title: "Success",
+        description: "You have successfully removed the comment",
+      })
       setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
     } catch (error) {
-      console.log('Error removing section:', error);
+      toast({
+        title: "Something went wrong",
+        description: "There was an error removing the comment",
+      })
     }
   }
 

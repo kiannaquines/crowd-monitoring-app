@@ -23,7 +23,6 @@ function FileUploadDropZone({ onDrop, className = '' }: FileUploadDropZoneProps)
     }
   });
 
-  // Cleanup function to revoke object URLs
   useEffect(() => {
     return () => previews.forEach(preview => URL.revokeObjectURL(preview));
   }, [previews]);

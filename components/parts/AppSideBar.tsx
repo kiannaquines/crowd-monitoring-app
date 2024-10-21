@@ -86,7 +86,9 @@ const items = [
 export function AppSideBar() {
   const [isClient, setIsClient] = useState(false);
   const [fullName, setFullName] = useState('');
-  const accessToken = Cookies.get('bearer')
+  const [email, setEmail] = useState('');
+
+   const accessToken = Cookies.get('bearer')
 
   const fetchUser = async () => {
     try {
@@ -100,6 +102,7 @@ export function AppSideBar() {
       const fullname = `${user.first_name} ${user.last_name}`;
 
       setFullName(fullname);
+      setEmail(user.email)
     } catch (error) {
       console.error('Error fetching user:', error);
     }
@@ -128,7 +131,7 @@ export function AppSideBar() {
     <Sidebar>
       <SidebarContent>
         <div className="p-2">
-          <UserItem />
+          <UserItem name={fullName} email={email} />
         </div>
         {Object.entries(groupedItems).map(([group, items]) => (
           <SidebarGroup key={group}>

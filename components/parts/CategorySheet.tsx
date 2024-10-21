@@ -12,8 +12,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { AUTHORIZATION_TOKEN, CATEGORY_URL, } from '@/utils/constants';
+import { CATEGORY_URL, } from '@/utils/constants';
 import Cookies from 'js-cookie';
+import { useToast } from "@/hooks/use-toast";
 
 type CategorySheetProps = {
     buttonName: string;
@@ -30,13 +31,11 @@ const CategorySystemSheet: React.FC<CategorySheetProps> = ({
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
+    const { toast } = useToast();
 
-    
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        
-        
         try {
             const accessToken = Cookies.get('bearer')
             const response = await fetch(`${CATEGORY_URL}`, {
@@ -50,7 +49,11 @@ const CategorySystemSheet: React.FC<CategorySheetProps> = ({
 
             if (response.ok) {
                 const result = await response.json();
-                alert('Submission successful');
+                toast({
+                    title: 'Category submitted successfully',
+                    description: 'Your category has been added.',
+                    duration: 3000,
+                })
                 setIsOpen(false);
                 setSection('');
 
@@ -58,10 +61,18 @@ const CategorySystemSheet: React.FC<CategorySheetProps> = ({
                     window.location.reload();
                 }, 2000,);
             } else {
-                alert('Submission failed');
+                toast({
+                    title: 'Failed to submit category',
+                    description: 'An error occurred while trying to add your category.',
+                    duration: 3000,
+                })
             }
         } catch (error) {
-            alert('Error submitting form');
+            toast({
+                title: 'Failed to submit category',
+                description: 'An error occurred while trying to add your category.',
+                duration: 3000,
+            })
         } finally {
             setIsSubmitting(false);
         }

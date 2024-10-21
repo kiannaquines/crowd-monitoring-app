@@ -14,8 +14,9 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import FileUploadDropZone from '@/components/parts/Dropzone';
-import { ZONES_URL, AUTHORIZATION_TOKEN, GET_ZONES_URL, } from '@/utils/constants';
+import { ZONES_URL, GET_ZONES_URL, } from '@/utils/constants';
 import Cookies from 'js-cookie'
+import { useToast } from '@/hooks/use-toast';
 
 type ScheduleSystemSheetProps = {
     buttonName: string;
@@ -30,7 +31,7 @@ const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
 }) => {
 
     const accessToken = Cookies.get('bearer')
-
+    const { toast } = useToast();
 
     const [section, setSection] = useState('');
     const [description, setDescription] = useState('');
@@ -64,7 +65,13 @@ const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
 
             if (response.ok) {
                 const result = await response.json();
-                alert('Submission successful');
+
+                toast({
+                    title: 'Success',
+                    description: 'New schedule system created successfully',
+                    duration: 3000,
+                })
+
                 setIsOpen(false);
                 setSection('');
                 setDescription('');
@@ -73,10 +80,18 @@ const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
                     window.location.reload();
                 }, 2000,);
             } else {
-                alert('Submission failed');
+                toast({
+                    title: 'Something went wrong',
+                    description: 'Failed to create schedule system',
+                    duration: 3000,
+                })
             }
         } catch (error) {
-            alert('Error submitting form');
+            toast({
+                title: 'Something went wrong',
+                description: 'Failed to create schedule system',
+                duration: 3000,
+            })
         } finally {
             setIsSubmitting(false);
         }

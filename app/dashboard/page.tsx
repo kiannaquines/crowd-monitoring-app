@@ -12,10 +12,13 @@ import { BarGraphToday } from '@/components/charts/BarGraphToday';
 
 import { VisitorsCount } from '@/components/charts/VisitorsCount';
 
-import { TOTAL_USERS_COUNT_URL, AUTHORIZATION_TOKEN, TOTAL_STAFF_COUNT_URL, TOTAL_ADMIN_COUNT_URL, TODAY_COUNT_URL, LASTDAY_COUNT_URL, LASTWEEK_COUNT_URL, LASTMONTH_COUNT_URL } from '@/utils/constants';
+import { TOTAL_USERS_COUNT_URL, TOTAL_STAFF_COUNT_URL, TOTAL_ADMIN_COUNT_URL, TODAY_COUNT_URL, LASTDAY_COUNT_URL, LASTWEEK_COUNT_URL, LASTMONTH_COUNT_URL } from '@/utils/constants';
 import { TimeSeriesChart } from '@/components/charts/TimeSeriesChart';
+import Cookies from 'js-cookie';
 
 const HomePage = () => {
+
+  const accessToken = Cookies.get('bearer')
 
   const [totalUsers, setTotalUsers] = React.useState(0);
   const [totalStaff, setTotalStaff] = React.useState(0);
@@ -31,7 +34,7 @@ const HomePage = () => {
       const response = await fetch(`${TOTAL_USERS_COUNT_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -53,7 +56,7 @@ const HomePage = () => {
       const response = await fetch(`${TOTAL_STAFF_COUNT_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -75,7 +78,7 @@ const HomePage = () => {
       const response = await fetch(`${TOTAL_ADMIN_COUNT_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -97,7 +100,7 @@ const HomePage = () => {
       const response = await fetch(`${TOTAL_ADMIN_COUNT_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -119,7 +122,7 @@ const HomePage = () => {
       const response = await fetch(`${TODAY_COUNT_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -141,7 +144,7 @@ const HomePage = () => {
       const response = await fetch(`${LASTDAY_COUNT_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -163,7 +166,7 @@ const HomePage = () => {
       const response = await fetch(`${LASTWEEK_COUNT_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -186,7 +189,7 @@ const HomePage = () => {
       const response = await fetch(`${LASTMONTH_COUNT_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });

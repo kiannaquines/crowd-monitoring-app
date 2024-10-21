@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ADD_USERS_URL, USERS_URL } from '@/utils/constants';
 import Cookies from 'js-cookie';
+import { useToast } from '@/hooks/use-toast';
 
 type UserSystemSheetProps = {
     buttonName: string,
@@ -26,6 +27,7 @@ const UserSystemSheet: React.FC<UserSystemSheetProps> = ({ buttonName, sheetTitl
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const { toast } = useToast();
 
     const addUser = async () => {
 
@@ -49,10 +51,17 @@ const UserSystemSheet: React.FC<UserSystemSheetProps> = ({ buttonName, sheetTitl
 
         if (!response.ok) {
             alert('Failed to add user');
+            toast({
+                title: "Something went wrong",
+                description: "Failed to add user, please try again later.",
+            })
             return;
         }
 
-        alert('User added successfully');
+        toast({
+            title: "User added successfully",
+            description: "User added successfully.",
+        })
 
         setTimeout(function () {
             window.location.reload();

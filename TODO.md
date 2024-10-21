@@ -2,6 +2,10 @@
 
 1. CRUD in Sections - DONE
 2. CRUD in Comment - DONE
-3. CRUD in Users - CONE
+3. CRUD in Users - DONE
 4. CRUD in Categories - DONE
-5. Dashboard Real-time Data - IN PROGRESS
+5. Dashboard Real-time Data - DONE
+
+6. MESSAGES - IN PROGRESS
+7. SECTION MORE INFO ABOUT VISITORS - IN PROGRESS
+8. GENERATE REPORT - IN PROGRESS

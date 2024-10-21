@@ -30,6 +30,9 @@ export const LASTMONTH_COUNT_URL = `${API_ENDPOINT}/visitors/count/last-month`;
 export const SECTION_UTILIZATION_URL = `${API_ENDPOINT}/section/utilization`;
 export const SECTION_VS_SECTION_UTILIZATION_URL = `${API_ENDPOINT}/section/utilization/sections/percentage`;
 
+// per hour
+export const PER_HOUR = `${API_ENDPOINT}/time-series/per-hour/visitors`;
+
 
 // AUTH URLS
 export const LOGIN_URL = `${API_ENDPOINT}/auth/login`;

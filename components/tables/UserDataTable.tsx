@@ -42,7 +42,7 @@ import { USERS_URL, DELETE_USERS_URL, UPDATE_USERS_URL } from '@/utils/constants
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet';
 import { Label } from '../ui/label';
 import Cookies from 'js-cookie'
-
+import { useToast } from '@/hooks/use-toast'
 
 
 
@@ -66,6 +66,7 @@ const UsersEditViewSheet: React.FC<{
   onSave: (updatedUsers: Users) => void;
 }> = ({ users, onClose, isEditing, onSave }) => {
   if (!users) return null;
+  const { toast } = useToast();
 
   const accessToken = Cookies.get('bearer')
 
@@ -116,13 +117,22 @@ const UsersEditViewSheet: React.FC<{
           update_date: new Date().toISOString(),
         };
         onSave(updatedUsers);
-        alert('Submission successful');
+        toast({
+          title: "Success",
+          description: 'User details updated successfully',
+        })
         onClose();
       } else {
-        alert('Submission failed');
+        toast({
+          title: "Something went wrong",
+          description: 'Failed to update user details',
+        })
       }
     } catch (error) {
-      alert('Error submitting form');
+      toast({
+        title: "Something went wrong",
+        description: 'Failed to update user details',
+      })
     } finally {
       setIsSubmitting(false);
     }
@@ -221,6 +231,7 @@ export function UserDataTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+  const { toast } = useToast();
 
   const accessToken = Cookies.get('bearer')
   const [users, setUsers] = useState<Users[]>([]);
@@ -238,18 +249,23 @@ export function UserDataTable() {
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        toast({
+          title: "Something went wrong",
+          description: 'Failed to fetch user data',
+        })
       }
       const data: Users[] = await response.json();
 
       setUsers(data);
     } catch (error) {
-      console.error('Error fetching sections:', error);
+      toast({
+        title: "Something went wrong",
+        description: 'Failed to fetch user data',
+      })
     } finally {
       setLoading(false);
     }
   };
-
 
   const removeUser = async (userId: string) => {
     try {
@@ -262,13 +278,22 @@ export function UserDataTable() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to delete user');
+        toast({
+          title: "Something went wrong",
+          description: 'Failed to remove user',
+        })
       }
 
-      alert('User removed successfully');
+      toast({
+        title: "User Removed",
+        description: 'User removed successfully',
+      })
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
     } catch (error) {
-      console.error('Error deleting user:', error);
+      toast({
+        title: "Something went wrong",
+        description: 'Failed to remove user',
+      })
     }
   }
 
