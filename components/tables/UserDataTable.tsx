@@ -38,7 +38,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { USERS_URL, DELETE_USERS_URL, UPDATE_USERS_URL, AUTHORIZATION_TOKEN } from '@/utils/constants';
+import { USERS_URL, DELETE_USERS_URL, UPDATE_USERS_URL } from '@/utils/constants';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet';
 import { Label } from '../ui/label';
 import Cookies from 'js-cookie'
@@ -222,6 +222,7 @@ export function UserDataTable() {
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
+  const accessToken = Cookies.get('bearer')
   const [users, setUsers] = useState<Users[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedUser, setSelectedUser] = useState<Users | null>(null);
@@ -231,7 +232,7 @@ export function UserDataTable() {
       const response = await fetch(`${USERS_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -255,7 +256,7 @@ export function UserDataTable() {
       const response = await fetch(`${DELETE_USERS_URL}/?user_id=${userId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });

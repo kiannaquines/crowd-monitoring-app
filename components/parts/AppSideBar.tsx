@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/sidebar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import UserItem from "./UserItem";
+import { USER_INFO_URL } from '@/utils/constants';
+import Cookies from 'js-cookie'
 
 const items = [
   {
@@ -83,9 +85,29 @@ const items = [
 
 export function AppSideBar() {
   const [isClient, setIsClient] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const accessToken = Cookies.get('bearer')
+
+  const fetchUser = async () => {
+    try {
+      const response = await fetch(`${USER_INFO_URL}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      });
+      const user = await response.json();
+      const fullname = `${user.first_name} ${user.last_name}`;
+
+      setFullName(fullname);
+    } catch (error) {
+      console.error('Error fetching user:', error);
+    }
+  }
 
   useEffect(() => {
     setIsClient(true);
+    fetchUser();
   }, []);
 
   const groupedItems = useMemo(() => {
@@ -152,7 +174,7 @@ export function AppSideBar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  Kian Naquines
+                  {fullName}
                   <ChevronUp className="ml-auto h-4 w-4" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>

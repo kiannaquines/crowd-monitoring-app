@@ -8,19 +8,14 @@ export const PROFILE_UPLOAD_URL = `${API_URL}/static/profile`;
 
 export const GET_ZONES_URL = `${API_ENDPOINT}/web/zones/all`;
 export const ZONES_URL = `${API_ENDPOINT}/zones/`;
-
 export const USERS_URL = `${API_ENDPOINT}/users/list`;
 export const UPDATE_USERS_URL = `${API_ENDPOINT}/users/edit`;
 export const DELETE_USERS_URL = `${API_ENDPOINT}/users/remove`;
 export const ADD_USERS_URL = `${API_ENDPOINT}/users/add`;
-
 export const CATEGORY_URL = `${API_ENDPOINT}/category`;
-
 export const COMMENTS_URL = `${API_ENDPOINT}/comments`;
 export const DEVICES_URL = `${API_ENDPOINT}/devices`;
 export const PREDICTION_URL = `${API_ENDPOINT}/predictions`;
-
-
 
 // COUNT URLS
 export const TOTAL_USERS_COUNT_URL = `${API_ENDPOINT}/detail/count/users`;
@@ -41,6 +36,9 @@ export const LOGIN_URL = `${API_ENDPOINT}/auth/login`;
 export const REGISTER_URL = `${API_ENDPOINT}/auth/register`;
 export const VERIFICATION_URL = `${API_ENDPOINT}/auth/register/verify`;
 
-export const AUTHORIZATION_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJramduYXF1aW5lcyIsInZlcmlmaWVkIjp0cnVlLCJpc19zdXBlcnVzZXIiOnRydWUsImV4cCI6MTcyOTU5MTI3M30.8pTmzIMnta9VvCw6cM2Fp4hZv46WpXM2ipZ2MzhQlHo';
+
+// USER AUTH
+
+export const USER_INFO_URL = `${API_ENDPOINT}/users/me`
 
 

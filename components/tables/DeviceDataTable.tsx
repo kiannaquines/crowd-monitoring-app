@@ -36,7 +36,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { DEVICES_URL, AUTHORIZATION_TOKEN } from '@/utils/constants';
+import { DEVICES_URL } from '@/utils/constants';
 import Cookies from 'js-cookie'
 
 type TrackDevices = {

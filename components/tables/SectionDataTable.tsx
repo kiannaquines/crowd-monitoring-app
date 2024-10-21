@@ -48,7 +48,7 @@ import {
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge"
 
-import { AUTHORIZATION_TOKEN, GET_ZONES_URL, ZONES_URL, ZONE_UPLOAD_URL } from "@/utils/constants";
+import { GET_ZONES_URL, ZONES_URL, ZONE_UPLOAD_URL } from "@/utils/constants";
 import { Textarea } from '../ui/textarea';
 import FileUploadDropZone from '../parts/Dropzone';
 import { Label } from '../ui/label';
@@ -236,12 +236,14 @@ export function SectionDataTable() {
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
 
+  const accessToken = Cookies.get('bearer')
+
   const fetchSections = async () => {
     try {
       const response = await fetch(`${GET_ZONES_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
         },
       });
 
@@ -263,7 +265,7 @@ export function SectionDataTable() {
       const response = await fetch(`${ZONES_URL}${sectionId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
         },
       });
 

@@ -40,7 +40,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { AUTHORIZATION_TOKEN, COMMENTS_URL } from "@/utils/constants";
+import { COMMENTS_URL } from "@/utils/constants";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet';
 import { Label } from '../ui/label';
 import Cookies from 'js-cookie'
@@ -88,7 +88,6 @@ const CommentEditViewSheet: React.FC<{
         }),
       });
 
-      console.log(response);
 
       if (response.ok) {
         const updatedCategory: Comment = {
@@ -168,6 +167,7 @@ export function CommentDataTable() {
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
+  const accessToken = Cookies.get('bearer')
 
   const [selectedComment, setSelectedComment] = useState<Comment | null>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -183,7 +183,7 @@ export function CommentDataTable() {
       const response = await fetch(`${COMMENTS_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
         },
       });
 
@@ -206,7 +206,7 @@ export function CommentDataTable() {
       const response = await fetch(`${COMMENTS_URL}/${commentId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
         },
       });
 

@@ -38,7 +38,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CATEGORY_URL, AUTHORIZATION_TOKEN } from '@/utils/constants';
+import { CATEGORY_URL } from '@/utils/constants';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet';
 import { Label } from '../ui/label';
 import Cookies from 'js-cookie'
@@ -157,6 +157,9 @@ const CategoryEditViewSheet: React.FC<{
 
 
 export function CategoryDataTable() {
+
+  const accessToken = Cookies.get('bearer')
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -173,7 +176,7 @@ export function CategoryDataTable() {
       const response = await fetch(`${CATEGORY_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
         },
       });
 
@@ -195,7 +198,7 @@ export function CategoryDataTable() {
       const response = await fetch(`${CATEGORY_URL}/?catId=${category_id}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });

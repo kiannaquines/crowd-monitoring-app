@@ -36,7 +36,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { AUTHORIZATION_TOKEN, PREDICTION_URL } from '@/utils/constants'
+import { PREDICTION_URL } from '@/utils/constants'
 import Cookies from 'js-cookie'
 
 export type PredictionData = {
