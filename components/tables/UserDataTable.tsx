@@ -104,6 +104,10 @@ const UsersEditViewSheet: React.FC<{
         }),
       });
 
+      if (response.status === 401) {
+        window.location.href = '/'
+      }
+
       if (response.ok) {
         const updatedUsers: Users = {
           ...users,
@@ -116,23 +120,31 @@ const UsersEditViewSheet: React.FC<{
           register_date: users.register_date,
           update_date: new Date().toISOString(),
         };
+
         onSave(updatedUsers);
+
         toast({
           title: "Success",
           description: 'User details updated successfully',
         })
+
         onClose();
+
       } else {
+
         toast({
           title: "Something went wrong",
           description: 'Failed to update user details',
         })
+
       }
     } catch (error) {
+
       toast({
         title: "Something went wrong",
         description: 'Failed to update user details',
       })
+
     } finally {
       setIsSubmitting(false);
     }
@@ -248,6 +260,10 @@ export function UserDataTable() {
         },
       });
 
+      if (response.status === 401) {
+        window.location.href = '/'
+      }
+
       if (!response.ok) {
         toast({
           title: "Something went wrong",
@@ -276,6 +292,10 @@ export function UserDataTable() {
           'Content-Type': 'application/json',
         },
       });
+
+      if (response.status === 401) {
+        window.location.href = '/'
+      }
 
       if (!response.ok) {
         toast({

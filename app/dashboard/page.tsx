@@ -4,6 +4,7 @@ import React from 'react'
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -15,6 +16,7 @@ import { VisitorsCount } from '@/components/charts/VisitorsCount';
 import { TOTAL_USERS_COUNT_URL, TOTAL_STAFF_COUNT_URL, TOTAL_ADMIN_COUNT_URL, TODAY_COUNT_URL, LASTDAY_COUNT_URL, LASTWEEK_COUNT_URL, LASTMONTH_COUNT_URL } from '@/utils/constants';
 import { TimeSeriesChart } from '@/components/charts/TimeSeriesChart';
 import Cookies from 'js-cookie';
+import { useToast } from "@/hooks/use-toast";
 
 const HomePage = () => {
 
@@ -28,6 +30,7 @@ const HomePage = () => {
   const [totalLastDay, setTotalLastDay] = React.useState(0);
   const [totalLastWeek, setTotalLastWeek] = React.useState(0);
   const [totalLastMonth, setTotalLastMonth] = React.useState(0);
+  const { toast } = useToast()
 
   const fetchTotalUsers = async () => {
     try {
@@ -39,14 +42,24 @@ const HomePage = () => {
         },
       });
 
+      if (response.status === 401) {
+        window.location.href = '/'
+      }
+
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        toast({
+          title: 'Failed to fetch total users',
+          description: 'Please check your internet connection or try again later.',
+        })
       }
 
       const data = await response.json();
       setTotalUsers(data.count);
     } catch (error) {
-      console.error('Error fetching total users:', error);
+      toast({
+        title: 'Failed to fetch total users',
+        description: 'Please check your internet connection or try again later.',
+      })
       setTotalUsers(0);
     }
   }
@@ -62,7 +75,10 @@ const HomePage = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        toast({
+          title: 'Failed to fetch total staff',
+          description: 'Please check your internet connection or try again later.',
+        })
       }
 
       const data = await response.json();
@@ -84,7 +100,10 @@ const HomePage = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        toast({
+          title: 'Failed to fetch total admin',
+          description: 'Please check your internet connection or try again later.',
+        })
       }
 
       const data = await response.json();
@@ -106,13 +125,23 @@ const HomePage = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        toast({
+          title: 'Failed to fetch total section',
+          description: 'There was an error fetching total section.',
+        })
+      }
+
+      if (response.status === 401) {
+        window.location.href = '/';
       }
 
       const data = await response.json();
       setTotalSection(data.count);
     } catch (error) {
-      console.error('Error fetching total staff:', error);
+      toast({
+        title: 'Failed to fetch total section',
+        description: 'There was an error fetching total section.',
+      })
       setTotalSection(0);
     }
   }
@@ -134,7 +163,10 @@ const HomePage = () => {
       const data = await response.json();
       setTotalToday(data.count);
     } catch (error) {
-      console.error('Error fetching total staff:', error);
+      toast({
+        title: 'Failed to fetch today count',
+        description: 'There was an error fetching today count.',
+      })
       setTotalToday(0);
     }
   }
@@ -150,7 +182,10 @@ const HomePage = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        toast({
+          title: 'Failed to fetch last day count',
+          description: 'There was an error fetching last day count.',
+        })
       }
 
       const data = await response.json();
@@ -172,13 +207,19 @@ const HomePage = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        toast({
+          title: 'Failed to fetch last week count',
+          description: 'There was an error fetching last week count.',
+        })
       }
 
       const data = await response.json();
       setTotalLastWeek(data.count);
     } catch (error) {
-      console.error('Error fetching total staff:', error);
+      toast({
+        title: 'Failed to fetch last week count',
+        description: 'There was an error fetching last week count.',
+      })
       setTotalLastWeek(0);
     }
   }
@@ -195,13 +236,19 @@ const HomePage = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        toast({
+          title: 'Failed to fetch last month count',
+          description: 'There was an error fetching last month count.',
+        })
       }
 
       const data = await response.json();
       setTotalLastMonth(data.count);
     } catch (error) {
-      console.error('Error fetching total staff:', error);
+      toast({
+        title: 'Failed to fetch last month count',
+        description: 'There was an error fetching last month count.',
+      })
       setTotalLastMonth(0);
     }
   }
@@ -225,50 +272,43 @@ const HomePage = () => {
         <Card className='shadow-sm cursor-pointer'>
           <CardHeader className="items-start pb-4">
             <CardTitle>Users</CardTitle>
+            <CardDescription>Show total users</CardDescription>
           </CardHeader>
           <CardContent className='py-3'>
             <h1 className='text-6xl font-semibold mt-1'>{totalUsers}</h1>
           </CardContent>
-          <CardFooter className='items-start'>
-            <p>Total active users available</p>
-          </CardFooter>
         </Card>
 
         <Card className='shadow-sm cursor-pointer'>
           <CardHeader className="items-start pb-4">
             <CardTitle>Staff</CardTitle>
+            <CardDescription>Show total staff</CardDescription>
           </CardHeader>
           <CardContent className='py-3'>
             <h1 className='text-6xl font-semibold mt-1'>{totalStaff}</h1>
           </CardContent>
-          <CardFooter className='items-start'>
-            <p>Total staff users available</p>
-          </CardFooter>
         </Card>
 
         <Card className='shadow-sm cursor-pointer'>
           <CardHeader className="items-start pb-4">
             <CardTitle>Admin</CardTitle>
+            <CardDescription>Show total users</CardDescription>
           </CardHeader>
           <CardContent className='py-3'>
             <h1 className='text-6xl font-semibold mt-1'>{totalAdmin}</h1>
           </CardContent>
-          <CardFooter className='items-start'>
-            <p>Total super users available</p>
-          </CardFooter>
         </Card>
 
         <Card className='shadow-sm cursor-pointer'>
           <CardHeader className="items-start pb-4">
             <CardTitle>Sections</CardTitle>
+            <CardDescription>Show total sections</CardDescription>
           </CardHeader>
           <CardContent className='py-3'>
             <h1 className='text-6xl font-semibold mt-1'>{totalSection}</h1>
           </CardContent>
-          <CardFooter className='items-start'>
-            <p>Total sections available</p>
-          </CardFooter>
         </Card>
+
         <VisitorsCount type="Today" visitors={totalToday} />
         <VisitorsCount type="Last Day" visitors={totalLastDay} />
         <VisitorsCount type="Last Week" visitors={totalLastWeek} />

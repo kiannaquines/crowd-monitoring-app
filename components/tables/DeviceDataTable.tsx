@@ -74,6 +74,10 @@ export function DeviceDataTable() {
         },
       });
 
+      if (response.status === 401) {
+        window.location.href = '/'
+      }
+
       if (!response.ok) {
         toast({
           title: "Something went wrong",

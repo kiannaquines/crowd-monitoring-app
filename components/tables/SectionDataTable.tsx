@@ -119,6 +119,10 @@ const SectionDetailsSheet: React.FC<{
         body: formData,
       });
 
+      if (response.status === 401) {
+        window.location.href = '/'
+      }
+
       if (response.ok) {
         const updatedSection: Section = {
           ...section,
@@ -257,6 +261,10 @@ export function SectionDataTable() {
         },
       });
 
+      if (response.status === 401) {
+        window.location.href = '/'
+      }
+
       if (!response.ok) {
         toast({
           title: 'Something went wrong',
@@ -284,6 +292,10 @@ export function SectionDataTable() {
           'Authorization': `Bearer ${accessToken}`,
         },
       });
+
+      if (response.status === 401) {
+        window.location.href = '/'
+      }
 
       if (!response.ok) {
         toast({

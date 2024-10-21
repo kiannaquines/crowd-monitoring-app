@@ -199,6 +199,10 @@ export function CommentDataTable() {
         },
       });
 
+      if (response.status === 401) {
+        window.location.href = '/'
+      }
+
       if (!response.ok) {
         toast({
           title: "Something went wrong",
@@ -227,6 +231,10 @@ export function CommentDataTable() {
           'Authorization': `Bearer ${accessToken}`,
         },
       });
+
+      if (response.status === 401) {
+        window.location.href = '/'
+      }
 
       if (!response.ok) {
         toast({

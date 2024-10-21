@@ -27,6 +27,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import UserItem from "./UserItem";
 import { USER_INFO_URL } from '@/utils/constants';
 import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation';
 
 const items = [
   {
@@ -41,7 +42,7 @@ const items = [
     url: "/dashboard/sections",
     icon: Building,
     actions: [
-      { title: "Add Section", url: "/dashboard/section" }
+      { title: "Add Section", url: "/dashboard/sections" }
     ],
   },
   {
@@ -87,8 +88,9 @@ export function AppSideBar() {
   const [isClient, setIsClient] = useState(false);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const router = useRouter();
 
-   const accessToken = Cookies.get('bearer')
+  const accessToken = Cookies.get('bearer')
 
   const fetchUser = async () => {
     try {
@@ -122,6 +124,12 @@ export function AppSideBar() {
       return acc;
     }, {} as Record<string, typeof items>);
   }, []);
+
+
+  const logout = () => {
+    Cookies.remove('bearer');
+    window.location.href = '/';
+  }
 
   if (!isClient) {
     return null;
@@ -185,7 +193,7 @@ export function AppSideBar() {
                 side="top"
                 className="w-[--radix-popper-anchor-width]"
               >
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={logout}>
                   <span>Sign out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>

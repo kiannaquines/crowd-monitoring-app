@@ -87,6 +87,10 @@ const CategoryEditViewSheet: React.FC<{
         }),
       });
 
+      if (response.status === 401) {
+        window.location.href = '/'
+      }
+
       const message = await response.json();
 
       if (response.ok) {
@@ -194,6 +198,10 @@ export function CategoryDataTable() {
         },
       });
 
+      if (response.status === 401) {
+        window.location.href = '/'
+      }
+
       const message = await response.json();
 
       if (!response.ok) {
@@ -227,6 +235,10 @@ export function CategoryDataTable() {
           'Content-Type': 'application/json',
         },
       });
+
+      if (response.status === 401) {
+        window.location.href = '/'
+      }
 
       const message = await response.json()
 

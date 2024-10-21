@@ -54,7 +54,7 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
   
         toast({
           title: "Success",
-          description: successMessage.message,
+          description: 'You have successfully logged in.',
           action: <ToastAction altText="OK">OK</ToastAction>,
         });
   
