@@ -49,6 +49,12 @@ const items = [
     icon: LayoutDashboard,
   },
   {
+    group: 'General',
+    title: "Category",
+    url: "/dashboard/category",
+    icon: LayoutDashboard,
+  },
+  {
     group: 'Authentication',
     title: "Users",
     url: "/dashboard/users",

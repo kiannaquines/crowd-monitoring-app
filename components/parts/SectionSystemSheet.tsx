@@ -15,6 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import FileUploadDropZone from '@/components/parts/Dropzone';
 import { ZONES_URL, AUTHORIZATION_TOKEN, GET_ZONES_URL, } from '@/utils/constants';
+import Cookies from 'js-cookie'
 
 type ScheduleSystemSheetProps = {
     buttonName: string;
@@ -27,6 +28,10 @@ const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
     sheetTitle,
     sheetDescription,
 }) => {
+
+    const accessToken = Cookies.get('bearer')
+
+
     const [section, setSection] = useState('');
     const [description, setDescription] = useState('');
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -35,7 +40,6 @@ const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
 
     const handleDrop = (acceptedFiles: File[]) => {
         setUploadedFiles(acceptedFiles);
-        console.log(acceptedFiles);
     };
 
     const handleSubmit = async (e: FormEvent) => {
@@ -48,11 +52,12 @@ const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
             formData.append('files', file);
         });
 
+
         try {
             const response = await fetch(`${ZONES_URL}`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+                    'Authorization': `Bearer ${accessToken}`,
                 },
                 body: formData,
             });
@@ -81,11 +86,10 @@ const ScheduleSystemSheet: React.FC<ScheduleSystemSheetProps> = ({
         const fetchSections = async () => {
             const response = await fetch(GET_ZONES_URL, {
                 headers: {
-                    'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+                    'Authorization': `Bearer ${accessToken}`,
                 },
             });
             const data = await response.json();
-            // Handle fetched sections if needed
         };
 
         fetchSections();

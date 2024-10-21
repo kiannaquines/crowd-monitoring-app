@@ -25,9 +25,6 @@ import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
@@ -40,6 +37,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { AUTHORIZATION_TOKEN, PREDICTION_URL } from '@/utils/constants'
+import Cookies from 'js-cookie'
 
 export type PredictionData = {
     id: string,
@@ -61,12 +59,16 @@ export function PredictionDataTable() {
     const [rowSelection, setRowSelection] = React.useState({})
 
     const [prediction, setPrediction] = useState<PredictionData[]>([])
+
+
+    const accessToken = Cookies.get('bearer')
+
     const fetchPrediction = async () => {
         try {
             const response = await fetch(`${PREDICTION_URL}`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+                    'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
                 },
             });

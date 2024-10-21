@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AUTHORIZATION_TOKEN, CATEGORY_URL, } from '@/utils/constants';
+import Cookies from 'js-cookie';
 
 type CategorySheetProps = {
     buttonName: string;
@@ -29,16 +30,19 @@ const CategorySystemSheet: React.FC<CategorySheetProps> = ({
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
+
+    
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-       
-
+        
+        
         try {
+            const accessToken = Cookies.get('bearer')
             const response = await fetch(`${CATEGORY_URL}`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+                    'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ category_name: categoryName }),

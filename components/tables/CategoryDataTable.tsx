@@ -41,6 +41,7 @@ import {
 import { CATEGORY_URL, AUTHORIZATION_TOKEN } from '@/utils/constants';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet';
 import { Label } from '../ui/label';
+import Cookies from 'js-cookie'
 
 export type Category = {
   category_id: string;
@@ -61,6 +62,8 @@ const CategoryEditViewSheet: React.FC<{
   const [category_name, setCategory] = useState(category.category_name);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const accessToken = Cookies.get('bearer')
+
   useEffect(() => {
     setCategory(category.category_name);
   }, [category]);
@@ -74,11 +77,11 @@ const CategoryEditViewSheet: React.FC<{
       const response = await fetch(`${CATEGORY_URL}/?category_id=${category.category_id}`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          category_name:category_name,
+          category_name: category_name,
         }),
       });
 

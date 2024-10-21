@@ -43,6 +43,7 @@ import {
 import { AUTHORIZATION_TOKEN, COMMENTS_URL } from "@/utils/constants";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet';
 import { Label } from '../ui/label';
+import Cookies from 'js-cookie'
 
 export type Comment = {
   id: string;
@@ -62,6 +63,8 @@ const CommentEditViewSheet: React.FC<{
 }> = ({ comment, onClose, isEditing, onSave }) => {
   if (!comment) return null;
 
+  const accessToken = Cookies.get('bearer')
+
   const [commentText, setCommentText] = useState(comment.comment);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -77,7 +80,7 @@ const CommentEditViewSheet: React.FC<{
       const response = await fetch(`${COMMENTS_URL}/${comment.id}`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({

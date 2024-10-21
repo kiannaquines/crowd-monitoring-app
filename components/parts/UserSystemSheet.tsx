@@ -10,7 +10,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ADD_USERS_URL, AUTHORIZATION_TOKEN, USERS_URL } from '@/utils/constants';
+import { ADD_USERS_URL, USERS_URL } from '@/utils/constants';
+import Cookies from 'js-cookie';
 
 type UserSystemSheetProps = {
     buttonName: string,
@@ -27,42 +28,35 @@ const UserSystemSheet: React.FC<UserSystemSheetProps> = ({ buttonName, sheetTitl
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const addUser = async () => {
-        console.log({
-            firstname,
-            lastname,
-            email,
-            username,
-            password,
-            confirmPassword,
-        });
 
+        const accessToken = Cookies.get('bearer')
         const response = await fetch(`${ADD_USERS_URL}`, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+                'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                first_name:firstname,
-                last_name:lastname,
-                email:email,
-                username:username,
-                password:password,
+                first_name: firstname,
+                last_name: lastname,
+                email: email,
+                username: username,
+                password: password,
                 confirm_password: confirmPassword,
             })
         })
 
 
-        if (!response.ok){
+        if (!response.ok) {
             alert('Failed to add user');
             return;
         }
 
         alert('User added successfully');
-        
-        setTimeout(function(){
+
+        setTimeout(function () {
             window.location.reload();
-        },2000);
+        }, 2000);
 
         setFirstname('');
         setLastname('');

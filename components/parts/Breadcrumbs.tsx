@@ -1,4 +1,6 @@
-import React from 'react'
+'use client';
+
+import React from 'react';
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -6,26 +8,46 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-  } from "@/components/ui/breadcrumb"
-  
+} from "@/components/ui/breadcrumb";
+import { usePathname } from 'next/navigation';
+
 const Breadcrumbs = () => {
+  const pathname = usePathname();
+  const pathSegments = pathname.split('/').filter(Boolean);
+
+  const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
+  const breadcrumbItems = pathSegments.map((segment, index) => {
+    const href = '/' + pathSegments.slice(0, index + 1).join('/');
+    const isLast = index === pathSegments.length - 1;
+
+    return (
+      <React.Fragment key={href}>
+        <BreadcrumbItem>
+          {isLast ? (
+            <BreadcrumbPage>{capitalize(segment)}</BreadcrumbPage>
+          ) : (
+            <BreadcrumbLink href={href}>
+              {capitalize(segment)}
+            </BreadcrumbLink>
+          )}
+        </BreadcrumbItem>
+        {!isLast && <BreadcrumbSeparator />}
+      </React.Fragment>
+    );
+  });
+
   return (
     <Breadcrumb className='mb-3'>
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/components">Schedules</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>Schedule</BreadcrumbPage>
-        </BreadcrumbItem>
+        {pathSegments.length > 0 && <BreadcrumbSeparator />}
+        {breadcrumbItems}
       </BreadcrumbList>
     </Breadcrumb>
-  )
-}
+  );
+};
 
-export default Breadcrumbs
+export default Breadcrumbs;

@@ -53,6 +53,7 @@ import { Textarea } from '../ui/textarea';
 import FileUploadDropZone from '../parts/Dropzone';
 import { Label } from '../ui/label';
 import Link from 'next/link';
+import Cookies from 'js-cookie'
 
 
 type ImageUrl = {
@@ -83,6 +84,8 @@ const SectionDetailsSheet: React.FC<{
 }> = ({ section, onClose, isEditing, onSave }) => {
   if (!section) return null;
 
+  const accessToken = Cookies.get('bearer')
+
   const [name, setName] = useState(section.name);
   const [description, setDescription] = useState(section.description);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -111,7 +114,7 @@ const SectionDetailsSheet: React.FC<{
       const response = await fetch(`${ZONES_URL}${section.id}`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
         },
         body: formData,
       });
@@ -123,7 +126,7 @@ const SectionDetailsSheet: React.FC<{
           description,
           update_date: new Date().toISOString(),
         };
-        onSave(updatedSection); // Call onSave with the updated section
+        onSave(updatedSection);
         alert('Submission successful');
         onClose();
       } else {
@@ -308,21 +311,21 @@ export function SectionDataTable() {
       accessorKey: "name",
       header: "Section",
       cell: ({ row }) => (
-        <div className="font-medium capitalize">{row.getValue("name")}</div>
+        <div className="font-normal capitalize">{row.getValue("name")}</div>
       ),
     },
     {
       accessorKey: "date_added",
       header: () => <div className="text-left">Date Added</div>,
       cell: ({ row }) => (
-        <div className="font-medium">{new Date(row.getValue("date_added")).toLocaleString()}</div>
+        <div className="font-normal">{new Date(row.getValue("date_added")).toLocaleString()}</div>
       ),
     },
     {
       accessorKey: "update_date",
       header: () => <div className="text-left">Date Updated</div>,
       cell: ({ row }) => (
-        <div className="font-medium">{new Date(row.getValue("update_date")).toLocaleString()}</div>
+        <div className="font-normal">{new Date(row.getValue("update_date")).toLocaleString()}</div>
       ),
     },
     {

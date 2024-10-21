@@ -37,6 +37,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { DEVICES_URL, AUTHORIZATION_TOKEN } from '@/utils/constants';
+import Cookies from 'js-cookie'
 
 type TrackDevices = {
   id: string,
@@ -60,12 +61,14 @@ export function DeviceDataTable() {
   const [rowSelection, setRowSelection] = React.useState({})
   const [devices, setDevices] = useState<TrackDevices[]>([])
 
+  const accessToken = Cookies.get('bearer')
+
   const fetchDevices = async () => {
     try {
       const response = await fetch(`${DEVICES_URL}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -123,7 +126,7 @@ export function DeviceDataTable() {
       cell: ({ row }) => {
         return <div className="font-normal">{row.getValue("zone")}</div>
       },
-  
+
     },
     {
       accessorKey: "is_randomized",
@@ -135,7 +138,7 @@ export function DeviceDataTable() {
     {
       accessorKey: "date_detected",
       header: () => <div className="text-left">Date Detected</div>,
-  
+
       cell: ({ row }) => {
         return <div className="font-normal">{new Date(row.getValue("date_detected")).toLocaleString()}</div>
       },
@@ -149,9 +152,9 @@ export function DeviceDataTable() {
     }
   ]
 
-  
+
   const table = useReactTable({
-    data:devices,
+    data: devices,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

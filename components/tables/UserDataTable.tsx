@@ -41,6 +41,7 @@ import {
 import { USERS_URL, DELETE_USERS_URL, UPDATE_USERS_URL, AUTHORIZATION_TOKEN } from '@/utils/constants';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet';
 import { Label } from '../ui/label';
+import Cookies from 'js-cookie'
 
 
 
@@ -66,6 +67,9 @@ const UsersEditViewSheet: React.FC<{
 }> = ({ users, onClose, isEditing, onSave }) => {
   if (!users) return null;
 
+  const accessToken = Cookies.get('bearer')
+
+
   const [first_name, setFirstname] = useState(users.first_name);
   const [last_name, setLastname] = useState(users.last_name);
   const [username, setUsername] = useState(users.username);
@@ -83,19 +87,19 @@ const UsersEditViewSheet: React.FC<{
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-  
+
     try {
       const response = await fetch(`${UPDATE_USERS_URL}/?user_id=${users.id}`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${AUTHORIZATION_TOKEN}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username:username,
-          first_name:first_name,
-          last_name:last_name,
-          email:email,
+          username: username,
+          first_name: first_name,
+          last_name: last_name,
+          email: email,
         }),
       });
 
