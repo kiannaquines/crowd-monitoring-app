@@ -15,7 +15,7 @@ import {
   AlertDescription,
   AlertTitle,
 } from "@/components/ui/alert"
-import { TOTAL_USERS_COUNT_URL, TOTAL_STAFF_COUNT_URL, TOTAL_ADMIN_COUNT_URL, TODAY_COUNT_URL, LASTDAY_COUNT_URL, LASTWEEK_COUNT_URL, LASTMONTH_COUNT_URL } from '@/utils/constants';
+import { TOTAL_USERS_COUNT_URL, TOTAL_STAFF_COUNT_URL, TOTAL_ADMIN_COUNT_URL, TODAY_COUNT_URL, LASTDAY_COUNT_URL, LASTWEEK_COUNT_URL, LASTMONTH_COUNT_URL, TOTAL_SECTION_COUNT_URL } from '@/utils/constants';
 import { TimeSeriesChart } from '@/components/charts/TimeSeriesChart';
 import Cookies from 'js-cookie';
 import { useToast } from "@/hooks/use-toast";
@@ -131,7 +131,7 @@ const HomePage = () => {
 
   const fetchTotalSection = async () => {
     try {
-      const response = await fetch(`${TOTAL_ADMIN_COUNT_URL}`, {
+      const response = await fetch(`${TOTAL_SECTION_COUNT_URL}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
