@@ -205,13 +205,18 @@ export function CommentDataTable() {
         window.location.href = '/'
       }
 
-      if (!response.ok) {
+      if (!response.ok && response.status === 404) {
         toast({
-          variant: "destructive",
+          title: "No details found",
+          description: "No details found for comments",
+        })
+      } else if (!response.ok && response.status === 500) {
+        toast({
           title: "Something went wrong",
-          description: "There was an error fetching comments",
+          description: "Error while fetching comments",
         })
       }
+
       const data: Comment[] = await response.json();
 
       setComments(data);

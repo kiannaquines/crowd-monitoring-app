@@ -55,6 +55,7 @@ import { Label } from '../ui/label';
 import Link from 'next/link';
 import Cookies from 'js-cookie'
 import { useToast } from '@/hooks/use-toast'
+import TagInput from '../parts/TagsInput';
 
 type ImageUrl = {
   id: number;
@@ -83,13 +84,13 @@ const SectionDetailsSheet: React.FC<{
   onSave: (updatedSection: Section) => void;
 }> = ({ section, onClose, isEditing, onSave }) => {
   if (!section) return null;
-
   const accessToken = Cookies.get('bearer')
 
   const [name, setName] = useState(section.name);
   const [description, setDescription] = useState(section.description);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const { toast } = useToast();
   useEffect(() => {
     setName(section.name);
@@ -103,9 +104,14 @@ const SectionDetailsSheet: React.FC<{
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
     const formData = new FormData();
     formData.append('name', name);
     formData.append('description', description);
+    if (selectedCategories.length > 0) {
+      const categoryIds = selectedCategories.map(category => category['value']);
+      formData.append('categories_json', categoryIds.join(','));
+    }
     uploadedFiles.forEach((file) => {
       formData.append('files', file);
     });
@@ -122,6 +128,7 @@ const SectionDetailsSheet: React.FC<{
       if (response.status === 401) {
         window.location.href = '/'
       }
+      const message = await response.json();
 
       if (response.ok) {
         const updatedSection: Section = {
@@ -136,11 +143,15 @@ const SectionDetailsSheet: React.FC<{
           description: 'Section details have been updated successfully.',
         })
         onClose();
+
+        setTimeout(function(){
+          window.location.reload();
+        }, 1000)
       } else {
         toast({
           variant: "destructive",
           title: 'Something went wrong',
-          description: 'There was an error while updating section.',
+          description: message.detail,
         })
       }
     } catch (error) {
@@ -162,6 +173,10 @@ const SectionDetailsSheet: React.FC<{
     { field: "Date Added", value: new Date(section.date_added).toLocaleString() },
     { field: "Last Updated", value: new Date(section.update_date).toLocaleString() },
   ];
+
+  const handleCategoryChange = (selectedOptions: React.SetStateAction<never[]>) => {
+    setSelectedCategories(selectedOptions);
+  };
 
   return (
     <Sheet open={!!section} onOpenChange={onClose}>
@@ -188,6 +203,7 @@ const SectionDetailsSheet: React.FC<{
                 <Textarea
                   id="description"
                   cols={30}
+                  rows={8}
                   className="col-span-12"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
@@ -197,6 +213,11 @@ const SectionDetailsSheet: React.FC<{
               <div className="grid w-full gap-1.5">
                 <Label>Upload Files</Label>
                 <FileUploadDropZone onDrop={handleDrop} />
+              </div>
+
+              <div className="grid w-full gap-1.5">
+                <Label>Categories</Label>
+                <TagInput onChange={handleCategoryChange} />
               </div>
 
               <div className="grid grid-cols-12 items-center gap-4 mt-2">
@@ -267,11 +288,15 @@ export function SectionDataTable() {
         window.location.href = '/'
       }
 
-      if (!response.ok) {
+      if (!response.ok && response.status === 404) {
         toast({
-          variant: "destructive",
-          title: 'Something went wrong',
-          description: 'There was an error while fetching sections.',
+          title: "No details found",
+          description: "No details found for sections",
+        })
+      } else if (!response.ok && response.status === 500) {
+        toast({
+          title: "Something went wrong",
+          description: "Error while fetching sections",
         })
       }
       const data: Section[] = await response.json();

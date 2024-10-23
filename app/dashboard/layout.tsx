@@ -36,7 +36,7 @@ export default function DashboardLayout({
       <body className={`${GeistSans.className} flex items-start justify-between`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >

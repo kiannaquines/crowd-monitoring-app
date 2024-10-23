@@ -11,15 +11,15 @@ import {
 import { BarGraphToday } from '@/components/charts/BarGraphToday';
 import { VisitorsCount } from '@/components/charts/VisitorsCount';
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
 import { TOTAL_USERS_COUNT_URL, TOTAL_STAFF_COUNT_URL, TOTAL_ADMIN_COUNT_URL, TODAY_COUNT_URL, LASTDAY_COUNT_URL, LASTWEEK_COUNT_URL, LASTMONTH_COUNT_URL } from '@/utils/constants';
 import { TimeSeriesChart } from '@/components/charts/TimeSeriesChart';
 import Cookies from 'js-cookie';
 import { useToast } from "@/hooks/use-toast";
+import { RocketIcon } from 'lucide-react';
 
 const HomePage = () => {
 
@@ -298,7 +298,13 @@ const HomePage = () => {
   return (
     <main>
       <h1 className='text-xl font-semibold'>Crowd Monitoring Overview</h1>
-
+      <Alert className='mt-3'>
+        <RocketIcon className="h-4 w-4 mt-3" />
+        <AlertTitle>Welcome, User</AlertTitle>
+        <AlertDescription>
+          Manage your crowd data, monitor visitors, and keep track of staff and admin counts.
+        </AlertDescription>
+      </Alert>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-4 gap-4'>
 
         <VisitorsCount type="Today" visitors={totalToday} />

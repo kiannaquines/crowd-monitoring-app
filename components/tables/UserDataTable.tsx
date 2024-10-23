@@ -43,6 +43,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '
 import { Label } from '../ui/label';
 import Cookies from 'js-cookie'
 import { useToast } from '@/hooks/use-toast'
+import { Switch } from "@/components/ui/switch"
 
 
 
@@ -54,6 +55,8 @@ export type Users = {
   last_name: string,
   is_verified: boolean,
   is_superuser: boolean,
+  is_staff: boolean,
+  is_active: boolean,
   register_date: string,
   update_date: string,
 }
@@ -75,6 +78,12 @@ const UsersEditViewSheet: React.FC<{
   const [last_name, setLastname] = useState(users.last_name);
   const [username, setUsername] = useState(users.username);
   const [email, setEmail] = useState(users.email);
+
+  const [is_staff, setIsStaff] = useState(users.is_staff);
+  const [is_superuser, setIsSuperUser] = useState(users.is_superuser);
+  const [is_verified, setIsVerified] = useState(users.is_verified);
+  const [is_active, setIsActive] = useState(users.is_active);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -82,6 +91,10 @@ const UsersEditViewSheet: React.FC<{
     setLastname(users.last_name);
     setUsername(users.username);
     setEmail(users.email);
+    setIsStaff(users.is_staff);
+    setIsSuperUser(users.is_superuser);
+    setIsVerified(users.is_verified);
+    setIsActive(users.is_active);
   }, [users]);
 
 
@@ -89,23 +102,35 @@ const UsersEditViewSheet: React.FC<{
     e.preventDefault();
     setIsSubmitting(true);
 
+    const formData = new FormData();
+
+    const params = new URLSearchParams({
+      user_id: users.id,
+      username: username.trim(),
+      email: email.trim(),
+      first_name: first_name.trim(),
+      last_name: last_name.trim(),
+      is_superuser: String(is_superuser),
+      is_verified: String(is_verified),
+      is_staff: String(is_staff),
+      is_active: String(is_active)
+    });
+
+    if (profileImage) {
+      formData.append('profile_img', profileImage);
+    }
+
     try {
-      const response = await fetch(`${UPDATE_USERS_URL}/?user_id=${users.id}`, {
+      const response = await fetch(`${UPDATE_USERS_URL}/?${params.toString()}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          username: username,
-          first_name: first_name,
-          last_name: last_name,
-          email: email,
-        }),
+        body: formData,
       });
 
       if (response.status === 401) {
-        window.location.href = '/'
+        window.location.href = '/';
       }
 
       if (response.ok) {
@@ -115,8 +140,10 @@ const UsersEditViewSheet: React.FC<{
           last_name,
           username,
           email,
-          is_verified: users.is_verified,
-          is_superuser: users.is_superuser,
+          is_verified,
+          is_superuser,
+          is_staff,
+          is_active,
           register_date: users.register_date,
           update_date: new Date().toISOString(),
         };
@@ -126,25 +153,20 @@ const UsersEditViewSheet: React.FC<{
         toast({
           title: "Success",
           description: 'User details updated successfully',
-        })
+        });
 
         onClose();
-
       } else {
-
         toast({
           title: "Something went wrong",
           description: 'Failed to update user details',
-        })
-
+        });
       }
     } catch (error) {
-
       toast({
         title: "Something went wrong",
         description: 'Failed to update user details',
-      })
-
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -156,6 +178,10 @@ const UsersEditViewSheet: React.FC<{
     { field: "Lastname", value: users.last_name },
     { field: "Email Address", value: users.email },
     { field: "Username", value: users.username },
+    { field: "Verified", value: users.is_verified ? "Yes" : "No" },
+    { field: "Superuser", value: users.is_superuser ? "Yes" : "No" },
+    { field: "Staff", value: users.is_staff ? "Yes" : "No" },
+    { field: "Active", value: users.is_active ? "Yes" : "No" },
     { field: "Date Added", value: new Date(users.register_date).toLocaleString() },
     { field: "Last Updated", value: new Date(users.update_date).toLocaleString() },
   ];
@@ -211,6 +237,58 @@ const UsersEditViewSheet: React.FC<{
                 />
               </div>
 
+
+              <div className="grid w-full max-w-sm items-center gap-4">
+                <Label htmlFor="profile_img">Profile</Label>
+                <Input
+                  id="profile_img"
+                  type="file"
+                  name="profile_img"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    const files = e.target.files;
+                    if (files && files.length > 0) {
+                      setProfileImage(files[0]);
+                    }
+                  }}
+                />
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="is_superuser"
+                  checked={is_superuser}
+                  onCheckedChange={setIsSuperUser}
+                />
+                <Label htmlFor="is_superuser">Super User</Label>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="is_active"
+                  checked={is_active}
+                  onCheckedChange={setIsActive}
+                />
+                <Label htmlFor="is_active">Active</Label>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="is_verified"
+                  checked={is_verified}
+                  onCheckedChange={setIsVerified}
+                />
+                <Label htmlFor="is_verified">Verified</Label>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="is_staff"
+                  checked={is_staff}
+                  onCheckedChange={setIsStaff}
+                />
+                <Label htmlFor="is_staff">Staff</Label>
+              </div>
+
               <div className="grid grid-cols-12 items-center gap-4 mt-2">
                 <Button type="submit" disabled={isSubmitting} className='col-span-12'>
                   {isSubmitting ? 'Submitting...' : 'Save Changes'}
@@ -264,12 +342,18 @@ export function UserDataTable() {
         window.location.href = '/'
       }
 
-      if (!response.ok) {
+      if (!response.ok && response.status === 404) {
+        toast({
+          title: "No details found",
+          description: "No details found for users",
+        })
+      } else if (!response.ok && response.status === 500) {
         toast({
           title: "Something went wrong",
-          description: 'Failed to fetch user data',
+          description: "Error while fetching users",
         })
       }
+
       const data: Users[] = await response.json();
 
       setUsers(data);

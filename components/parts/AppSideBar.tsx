@@ -39,43 +39,33 @@ const items = [
   },
   {
     group: 'General',
-    title: "Sections",
+    title: "Manage Sections",
     url: "/dashboard/sections",
     icon: Building,
-    actions: [
-      { title: "Add Section", url: "/dashboard/sections" }
-    ],
   },
   {
     group: 'General',
-    title: "Comments",
+    title: "Manage Comments",
     url: "/dashboard/comments",
     icon: LayoutDashboard,
   },
   {
     group: 'General',
-    title: "Category",
+    title: "Manage Category",
     url: "/dashboard/category",
     icon: LayoutDashboard,
   },
   {
     group: 'Authentication',
-    title: "Users",
+    title: "Manage Users",
     url: "/dashboard/users",
     icon: Users,
-    actions: [
-      { title: "Add User", url: "/dashboard/section" }
-    ],
   },
   {
     group: 'Model Result',
     title: "Predictions",
     url: "/dashboard/prediction",
     icon: Unplug,
-    actions: [
-      { title: "Generate Report", url: "/dashboard/section" },
-      { title: "Generate Users", url: "/dashboard/section" }
-    ],
   },
   {
     group: 'Model Result',
@@ -159,7 +149,7 @@ export function AppSideBar() {
                         <span>{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
-                    {item.actions && item.actions.length > 0 && (
+                    {/* {item.actions && item.actions.length > 0 && (
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <SidebarMenuAction>
@@ -176,7 +166,7 @@ export function AppSideBar() {
                           ))}
                         </DropdownMenuContent>
                       </DropdownMenu>
-                    )}
+                    )} */}
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>

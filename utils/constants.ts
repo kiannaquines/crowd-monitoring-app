@@ -31,3 +31,8 @@ export const VERIFICATION_URL = `${API_ENDPOINT}/auth/register/verify`;
 export const USER_INFO_URL = `${API_ENDPOINT}/users/me`
 
 
+
+export const GENERATE_REPORT_URL = `${API_ENDPOINT}/generate/report/daily`
+
+
+

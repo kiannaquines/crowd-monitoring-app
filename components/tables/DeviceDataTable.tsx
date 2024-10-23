@@ -2,9 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import {
-  CaretSortIcon,
   ChevronDownIcon,
-  DotsHorizontalIcon,
 } from "@radix-ui/react-icons"
 import {
   ColumnDef,
@@ -78,11 +76,15 @@ export function DeviceDataTable() {
         window.location.href = '/'
       }
 
-      if (!response.ok) {
+      if (!response.ok && response.status === 404) {
         toast({
-          variant: "destructive",
+          title: "No details found",
+          description: "No details found for tracked devices",
+        })
+      } else if (!response.ok && response.status === 500) {
+        toast({
           title: "Something went wrong",
-          description: "Error removing section",
+          description: "Error while fetching tracked devices",
         })
       }
 

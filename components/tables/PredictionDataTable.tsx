@@ -77,13 +77,17 @@ export function PredictionDataTable() {
                 window.location.href = '/'
             }
 
-            if (!response.ok) {
+            if (!response.ok && response.status === 404) {
                 toast({
-                    variant: "destructive",
-                    title: "Something went wrong",
-                    description: "There was an error fetching the prediction data",
+                  title: "No details found",
+                  description: "No details found for predicitons",
                 })
-            }
+              } else if (!response.ok && response.status === 500) {
+                toast({
+                  title: "Something went wrong",
+                  description: "Error while fetching predictions",
+                })
+              }
 
             const data: PredictionData[] = await response.json();
             setPrediction(data);
