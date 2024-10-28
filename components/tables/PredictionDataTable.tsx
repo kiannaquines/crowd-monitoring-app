@@ -201,9 +201,9 @@ export function PredictionDataTable() {
             <div className="flex items-center py-4">
                 <Input
                     placeholder="Filter sections..."
-                    value={(table.getColumn("sectionName")?.getFilterValue() as string) ?? ""}
+                    value={(table.getColumn("score")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        table.getColumn("sectionName")?.setFilterValue(event.target.value)
+                        table.getColumn("score")?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm"
                 />

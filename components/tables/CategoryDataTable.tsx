@@ -371,9 +371,9 @@ export function CategoryDataTable() {
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter sections..."
-          value={(table.getColumn("section.name")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("category_name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("section.name")?.setFilterValue(event.target.value)
+            table.getColumn("category_name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
