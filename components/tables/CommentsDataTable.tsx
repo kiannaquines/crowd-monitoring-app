@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, FormEvent } from 'react';
 import {
-  CaretSortIcon,
   ChevronDownIcon,
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons";
@@ -185,10 +184,11 @@ export function CommentDataTable() {
   const [selectedComment, setSelectedComment] = useState<Comment | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const { toast } = useToast()
 
   useEffect(() => {
+    setLoading(true);
     fetchComments();
   }, []);
 
@@ -460,7 +460,7 @@ export function CommentDataTable() {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No comments found. Please try again later.
+                {isLoading ? 'Please wait while loading the data': 'No comment'}
                 </TableCell>
               </TableRow>
             )}

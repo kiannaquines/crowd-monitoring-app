@@ -1,10 +1,8 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import {
-    CaretSortIcon,
     ChevronDownIcon,
-    DotsHorizontalIcon,
 } from "@radix-ui/react-icons"
 import {
     ColumnDef,
@@ -39,6 +37,10 @@ import {
 import { PREDICTION_URL } from '@/utils/constants'
 import Cookies from 'js-cookie'
 import { useToast } from '@/hooks/use-toast'
+import { Badge } from "@/components/ui/badge"
+
+
+
 export type PredictionData = {
     id: string,
     zone_name: string,
@@ -58,9 +60,9 @@ export function PredictionDataTable() {
         React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
 
-    const [prediction, setPrediction] = useState<PredictionData[]>([])
+    const [prediction, setPrediction] = React.useState<PredictionData[]>([])
     const { toast } = useToast();
-
+    const [isLoading, setLoading] = React.useState(true);
     const accessToken = Cookies.get('bearer')
 
     const fetchPrediction = async () => {
@@ -75,34 +77,40 @@ export function PredictionDataTable() {
 
             if (response.status === 401) {
                 window.location.href = '/'
+                setLoading(false);
             }
 
             if (!response.ok && response.status === 404) {
                 toast({
-                  title: "No details found",
-                  description: "No details found for predicitons",
+                    title: "No details found",
+                    description: "No details found for predicitons",
                 })
-              } else if (!response.ok && response.status === 500) {
+
+                setLoading(false);
+            } else if (!response.ok && response.status === 500) {
                 toast({
-                  title: "Something went wrong",
-                  description: "Error while fetching predictions",
+                    title: "Something went wrong",
+                    description: "Error while fetching predictions",
                 })
-              }
+                setLoading(false);
+            }
 
             const data: PredictionData[] = await response.json();
             setPrediction(data);
-
+            setLoading(false);
         } catch (error) {
             toast({
                 variant: "destructive",
                 title: "Something went wrong",
                 description: "There was an error fetching the prediction data",
             })
+            setLoading(false);
         }
     }
 
 
     useEffect(() => {
+        setLoading(true);
         fetchPrediction();
     }, []);
 
@@ -141,14 +149,16 @@ export function PredictionDataTable() {
             accessorKey: "score",
             header: () => <div className="text-left">Silhouett Score</div>,
             cell: ({ row }) => {
-                return <div className="font-normal">{row.getValue("score")}%</div>
+                const score: number = row.getValue("score");
+                const percentage: string = (score * 100).toFixed(2);
+                return <div className="font-normal"><Badge>{percentage}%</Badge></div>
             },
         },
         {
             accessorKey: "estimated_count",
             header: () => <div className="text-left">Crowd Count</div>,
             cell: ({ row }) => {
-                return <div className="font-normal">{row.getValue("estimated_count")}</div>
+                return <div className="font-normal"><Badge>{row.getValue("estimated_count")}</Badge></div>
             },
         },
         {
@@ -267,7 +277,7 @@ export function PredictionDataTable() {
                                     colSpan={columns.length}
                                     className="h-24 text-center"
                                 >
-                                    No results.
+                                    {isLoading? 'Please wait while loading the data' : 'No data available.'}
                                 </TableCell>
                             </TableRow>
                         )}

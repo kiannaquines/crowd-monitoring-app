@@ -189,6 +189,7 @@ export function CategoryDataTable() {
   const [isLoading, setLoading] = useState(false);
   const { toast } = useToast()
 
+
   const fetchCategory = async () => {
     try {
       const response = await fetch(`${CATEGORY_URL}`, {
@@ -215,6 +216,7 @@ export function CategoryDataTable() {
 
       const data: Category[] = message;
       setCategory(data);
+      setLoading(false);
 
     } catch (error) {
       toast({
@@ -270,6 +272,7 @@ export function CategoryDataTable() {
 
 
   useEffect(() => {
+    setLoading(true); 
     fetchCategory();
   }, []);
 
@@ -425,7 +428,7 @@ export function CategoryDataTable() {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No Categories found.
+                  {isLoading ? 'Please wait while loading the data': 'No category'}
                 </TableCell>
               </TableRow>
             )}

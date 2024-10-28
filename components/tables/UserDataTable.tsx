@@ -326,7 +326,7 @@ export function UserDataTable() {
 
   const accessToken = Cookies.get('bearer')
   const [users, setUsers] = useState<Users[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const [selectedUser, setSelectedUser] = useState<Users | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const fetchSections = async () => {
@@ -348,16 +348,21 @@ export function UserDataTable() {
           title: "No details found",
           description: "No details found for users",
         })
+
+        setLoading(false);
+
       } else if (!response.ok && response.status === 500) {
         toast({
           title: "Something went wrong",
           description: "Error while fetching users",
         })
+        setLoading(false);
       }
 
       const data: Users[] = await response.json();
 
       setUsers(data);
+      setLoading(false);
     } catch (error) {
       toast({
         title: "Something went wrong",
@@ -403,6 +408,7 @@ export function UserDataTable() {
   }
 
   useEffect(() => {
+    setLoading(true);
     fetchSections();
   }, []);
 
@@ -610,7 +616,7 @@ export function UserDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No user's found.
+                  {isLoading ? 'Please wait while loading the data':'No Users Available'}
                 </TableCell>
               </TableRow>
             )}

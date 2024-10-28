@@ -41,7 +41,7 @@ export function VisitorsCount({ type, visitors, fill = "var(--color-visitors)" }
   const data = [{ type, visitors, fill }];
 
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col w-full">
       <CardHeader>
         <CardTitle>{type}</CardTitle>
         <CardDescription>
@@ -51,7 +51,7 @@ export function VisitorsCount({ type, visitors, fill = "var(--color-visitors)" }
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-square max-h-[230px] w-full"
         >
           <RadialBarChart
             data={data}
@@ -102,8 +102,8 @@ export function VisitorsCount({ type, visitors, fill = "var(--color-visitors)" }
           </RadialBarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-start gap-2 font-medium leading-none">
+      <CardFooter className="flex-col gap-2 text-sm mt-3">
+        <div className="flex items-start gap-2 font-medium leading-none text-center">
           Visitors up by {visitors.toLocaleString()} <TrendingUp className="h-4 w-4" />
         </div>
       </CardFooter>

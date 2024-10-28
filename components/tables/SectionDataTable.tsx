@@ -144,7 +144,7 @@ const SectionDetailsSheet: React.FC<{
         })
         onClose();
 
-        setTimeout(function(){
+        setTimeout(function () {
           window.location.reload();
         }, 1000)
       } else {
@@ -269,7 +269,7 @@ export function SectionDataTable() {
   const [rowSelection, setRowSelection] = React.useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [sections, setSections] = useState<Section[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
   const { toast } = useToast();
 
@@ -293,11 +293,14 @@ export function SectionDataTable() {
           title: "No details found",
           description: "No details found for sections",
         })
+
+        setLoading(false);
       } else if (!response.ok && response.status === 500) {
         toast({
           title: "Something went wrong",
           description: "Error while fetching sections",
         })
+        setLoading(false);
       }
       const data: Section[] = await response.json();
 
@@ -308,6 +311,8 @@ export function SectionDataTable() {
         title: 'Something went wrong',
         description: 'There was an error while fetching sections.',
       })
+
+      setLoading(false);
     } finally {
       setLoading(false);
     }
@@ -351,6 +356,7 @@ export function SectionDataTable() {
 
 
   useEffect(() => {
+    setLoading(true);
     fetchSections();
   }, []);
 
@@ -532,7 +538,7 @@ export function SectionDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No sections found. Please add sections to see the table.
+                 {isLoading ? 'Please wait while loading the data':'No sections found.'}
                 </TableCell>
               </TableRow>
             )}
