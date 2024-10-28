@@ -1,8 +1,7 @@
 "use client";
 
 import { TrendingUp } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis, Tooltip } from "recharts";
-import { useEffect, useState } from "react";
+import { Bar, BarChart, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -18,8 +17,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import {SECTION_UTILIZATION_URL} from "@/utils/constants";
+import { SECTION_UTILIZATION_URL } from "@/utils/constants";
 import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 interface SectionUtilization {
@@ -35,10 +35,10 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function BarGraphToday() {
-
-  const accessToken = Cookies.get('bearer')
+  const accessToken = Cookies.get('bearer');
   const [chartData, setChartData] = useState<SectionUtilization[]>([]);
-  const { toast } = useToast()
+  const { toast } = useToast();
+
   const fetchSectionUtilization = async () => {
     try {
       const response = await fetch(`${SECTION_UTILIZATION_URL}`, {
@@ -48,6 +48,11 @@ export function BarGraphToday() {
           'Content-Type': 'application/json',
         }
       });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
       const data = await response.json();
       setChartData(data);
     } catch (error) {
@@ -55,7 +60,7 @@ export function BarGraphToday() {
         title: "Error fetching section utilization data",
         description: "There was an error fetching the section utilization data",
         duration: 5000,
-      })
+      });
     }
   };
 
@@ -70,41 +75,43 @@ export function BarGraphToday() {
         <CardDescription>Shows the utilization of library sections</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="h-[200px] w-full">
+        <ChartContainer config={chartConfig} className="h-[260px] w-full">
           <BarChart
             accessibilityLayer
             data={chartData}
+            layout="vertical"
             margin={{
+              left: 35,
+              right: 20,
               top: 20,
-              right: 30,
-              left: 20,
               bottom: 5,
             }}
-            height={150}
           >
-            <CartesianGrid vertical={false} />
-            <XAxis
+            <XAxis type="number" dataKey="count" hide />
+            <YAxis
               dataKey="section_name"
+              type="category"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
+              tickFormatter={(value) => value.slice(0, 20)}
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
+              content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="count" fill="var(--color-desktop)" radius={5}>
-              <LabelList
-                dataKey="count"
-                position="top"
-                offset={12}
-                className="fill-foreground"
-                fontSize={12}
-              />
-            </Bar>
+            <Bar dataKey="count" fill="var(--color-desktop)" radius={5} />
           </BarChart>
         </ChartContainer>
       </CardContent>
+      <CardFooter className="flex-col items-start gap-2 text-sm">
+        <div className="flex gap-2 font-medium leading-none">
+          Section utilization <TrendingUp className="h-4 w-4" />
+        </div>
+        <div className="leading-none text-muted-foreground">
+          Showing total utilization for the library sections
+        </div>
+      </CardFooter>
     </Card>
   );
 }

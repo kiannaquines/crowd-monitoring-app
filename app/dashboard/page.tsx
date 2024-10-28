@@ -315,7 +315,7 @@ const HomePage = () => {
         <TimeSeriesChart />
         <Card className='shadow-sm cursor-pointer w-full'>
           <CardHeader className="items-start pb-4">
-            <CardTitle>Users</CardTitle>
+            <CardTitle>Registered Users</CardTitle>
             <CardDescription>Show total users</CardDescription>
           </CardHeader>
           <CardContent className='py-3'>
@@ -325,7 +325,7 @@ const HomePage = () => {
 
         <Card className='shadow-sm cursor-pointer w-full'>
           <CardHeader className="items-start pb-4">
-            <CardTitle>Staff</CardTitle>
+            <CardTitle>Registered Staff</CardTitle>
             <CardDescription>Show total staff</CardDescription>
           </CardHeader>
           <CardContent className='py-3'>
@@ -335,7 +335,7 @@ const HomePage = () => {
 
         <Card className='shadow-sm cursor-pointer w-full'>
           <CardHeader className="items-start pb-4">
-            <CardTitle>Admin</CardTitle>
+            <CardTitle>Registered Admin</CardTitle>
             <CardDescription>Show total users</CardDescription>
           </CardHeader>
           <CardContent className='py-3'>
@@ -345,7 +345,7 @@ const HomePage = () => {
 
         <Card className='shadow-sm cursor-pointer w-full'>
           <CardHeader className="items-start pb-4">
-            <CardTitle>Sections</CardTitle>
+            <CardTitle>Available Sections</CardTitle>
             <CardDescription>Show total sections</CardDescription>
           </CardHeader>
           <CardContent className='py-3'>
