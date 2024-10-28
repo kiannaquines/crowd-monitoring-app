@@ -8,9 +8,9 @@ export function middleware(request: NextRequest) {
 
   if (protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))) {
     if (!token) {
-      return NextResponse.redirect(new URL('/', request.url));
+      return NextResponse.redirect(new URL('/auth', request.url));
     }
-  } else if (token && request.nextUrl.pathname === '/') {
+  } else if (token && request.nextUrl.pathname === '/auth') {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
@@ -18,5 +18,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/'],
+  matcher: ['/dashboard/:path*', '/auth'],
 };

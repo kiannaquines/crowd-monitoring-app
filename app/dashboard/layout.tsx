@@ -32,27 +32,16 @@ export default function DashboardLayout({
   }
 
   return (
-    <html lang="en">
-      <body className={`${GeistSans.className} flex items-start justify-between`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-            <SidebarProvider>
-              <AppSideBar />
-              <main className="w-full h-full overflow-y-auto">
-                <Header />
-                <div className="p-4">
-                  <Breadcrumbs />
-                  {children}
-                </div>
-              </main>
-              <Toaster />
-            </SidebarProvider>
-        </ThemeProvider>
-      </body>
-    </html>
+    <SidebarProvider>
+      <AppSideBar />
+      <main className="w-full h-full overflow-y-auto">
+        <Header />
+        <div className="p-4">
+          <Breadcrumbs />
+          {children}
+        </div>
+      </main>
+      <Toaster />
+    </SidebarProvider>
   );
 }
