@@ -6,11 +6,21 @@ export function middleware(request: NextRequest) {
 
   const protectedRoutes = ['/dashboard', '/dashboard/sections/'];
 
+  if (request.nextUrl.pathname === '/') {
+    if (!token) {
+      return NextResponse.redirect(new URL('/auth', request.url));
+    } else {
+      return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
+  }
+
   if (protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))) {
     if (!token) {
       return NextResponse.redirect(new URL('/auth', request.url));
     }
-  } else if (token && request.nextUrl.pathname === '/auth') {
+  }
+
+  if (token && request.nextUrl.pathname === '/auth') {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
@@ -18,5 +28,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/auth'],
+  matcher: ['/', '/dashboard/:path*', '/auth'],
 };
