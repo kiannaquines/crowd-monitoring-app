@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, FormEvent } from 'react'
+import React, { useState, useEffect, FormEvent, useCallback } from 'react'
 import {
   ChevronDownIcon,
   DotsHorizontalIcon,
@@ -68,35 +68,37 @@ const UsersEditViewSheet: React.FC<{
   isEditing: boolean;
   onSave: (updatedUsers: Users) => void;
 }> = ({ users, onClose, isEditing, onSave }) => {
-  if (!users) return null;
   const { toast } = useToast();
 
   const accessToken = Cookies.get('bearer')
 
 
-  const [first_name, setFirstname] = useState(users.first_name);
-  const [last_name, setLastname] = useState(users.last_name);
-  const [username, setUsername] = useState(users.username);
-  const [email, setEmail] = useState(users.email);
+  const [first_name, setFirstname] = useState('');
+  const [last_name, setLastname] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
 
-  const [is_staff, setIsStaff] = useState(users.is_staff);
-  const [is_superuser, setIsSuperUser] = useState(users.is_superuser);
-  const [is_verified, setIsVerified] = useState(users.is_verified);
-  const [is_active, setIsActive] = useState(users.is_active);
+  const [is_staff, setIsStaff] = useState(false);
+  const [is_superuser, setIsSuperUser] = useState(false);
+  const [is_verified, setIsVerified] = useState(false);
+  const [is_active, setIsActive] = useState(false);
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    setFirstname(users.first_name);
-    setLastname(users.last_name);
-    setUsername(users.username);
-    setEmail(users.email);
-    setIsStaff(users.is_staff);
-    setIsSuperUser(users.is_superuser);
-    setIsVerified(users.is_verified);
-    setIsActive(users.is_active);
+    if (users) {
+      setFirstname(users.first_name);
+      setLastname(users.last_name);
+      setUsername(users.username);
+      setEmail(users.email);
+      setIsStaff(users.is_staff);
+      setIsSuperUser(users.is_superuser);
+      setIsVerified(users.is_verified);
+      setIsActive(users.is_active);
+    }
   }, [users]);
 
+  if (!users) return null;
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -315,13 +317,13 @@ const UsersEditViewSheet: React.FC<{
 };
 
 export function UserDataTable() {
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
     []
   )
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
+    useState<VisibilityState>({})
+  const [rowSelection, setRowSelection] = useState({})
   const { toast } = useToast();
 
   const accessToken = Cookies.get('bearer')
@@ -329,7 +331,9 @@ export function UserDataTable() {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [selectedUser, setSelectedUser] = useState<Users | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const fetchSections = async () => {
+
+  const fetchSections = useCallback(async () => {
+    setLoading(true);
     try {
       const response = await fetch(`${USERS_URL}`, {
         method: 'GET',
@@ -341,6 +345,7 @@ export function UserDataTable() {
 
       if (response.status === 401) {
         window.location.href = '/'
+        return
       }
 
       if (!response.ok && response.status === 404) {
@@ -351,12 +356,6 @@ export function UserDataTable() {
 
         setLoading(false);
 
-      } else if (!response.ok && response.status === 500) {
-        toast({
-          title: "Something went wrong",
-          description: "Error while fetching users",
-        })
-        setLoading(false);
       }
 
       const data: Users[] = await response.json();
@@ -371,7 +370,7 @@ export function UserDataTable() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [accessToken, toast]);
 
   const removeUser = async (userId: string) => {
     try {
@@ -392,6 +391,7 @@ export function UserDataTable() {
           title: "Something went wrong",
           description: 'Failed to remove user',
         })
+        return;
       }
 
       toast({
@@ -408,9 +408,8 @@ export function UserDataTable() {
   }
 
   useEffect(() => {
-    setLoading(true);
     fetchSections();
-  }, []);
+  }, [fetchSections]);
 
 
   const columns: ColumnDef<Users>[] = [
@@ -616,7 +615,7 @@ export function UserDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  {isLoading ? 'Please wait while loading the data':'No Users Available'}
+                  {isLoading ? 'Please wait while loading the data' : 'No Users Available'}
                 </TableCell>
               </TableRow>
             )}

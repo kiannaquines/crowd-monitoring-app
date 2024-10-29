@@ -35,7 +35,7 @@ const HomePage = () => {
   const [totalLastMonth, setTotalLastMonth] = React.useState(0);
   const { toast } = useToast()
 
-  const fetchTotalUsers = async () => {
+  const fetchTotalUsers = React.useCallback(async () => {
     try {
       const response = await fetch(`${TOTAL_USERS_COUNT_URL}`, {
         method: 'GET',
@@ -46,7 +46,7 @@ const HomePage = () => {
       });
 
       if (response.status === 401) {
-        window.location.href = '/'
+        window.location.href = '/';
       }
 
       if (!response.ok) {
@@ -54,7 +54,7 @@ const HomePage = () => {
           variant: "destructive",
           title: 'Failed to fetch total users',
           description: 'Please check your internet connection or try again later.',
-        })
+        });
       }
 
       const data = await response.json();
@@ -64,12 +64,12 @@ const HomePage = () => {
         variant: "destructive",
         title: 'Failed to fetch total users',
         description: 'Please check your internet connection or try again later.',
-      })
+      });
       setTotalUsers(0);
     }
-  }
+  }, [accessToken, toast]);
 
-  const fetchTotalStaff = async () => {
+  const fetchTotalStaff = React.useCallback(async () => {
     try {
       const response = await fetch(`${TOTAL_STAFF_COUNT_URL}`, {
         method: 'GET',
@@ -84,7 +84,7 @@ const HomePage = () => {
           variant: "destructive",
           title: 'Failed to fetch total staff',
           description: 'Please check your internet connection or try again later.',
-        })
+        });
       }
 
       const data = await response.json();
@@ -94,12 +94,12 @@ const HomePage = () => {
         variant: "destructive",
         title: 'Failed to fetch total staff',
         description: 'Please check your internet connection or try again later.',
-      })
+      });
       setTotalStaff(0);
     }
-  }
+  }, [accessToken, toast]);
 
-  const fetchTotalAdmin = async () => {
+  const fetchTotalAdmin = React.useCallback(async () => {
     try {
       const response = await fetch(`${TOTAL_ADMIN_COUNT_URL}`, {
         method: 'GET',
@@ -114,7 +114,7 @@ const HomePage = () => {
           variant: "destructive",
           title: 'Failed to fetch total admin',
           description: 'Please check your internet connection or try again later.',
-        })
+        });
       }
 
       const data = await response.json();
@@ -124,12 +124,12 @@ const HomePage = () => {
         variant: "destructive",
         title: 'Failed to fetch total admin',
         description: 'Please check your internet connection or try again later.',
-      })
+      });
       setTotalAdmin(0);
     }
-  }
+  }, [accessToken, toast]);
 
-  const fetchTotalSection = async () => {
+  const fetchTotalSection = React.useCallback(async () => {
     try {
       const response = await fetch(`${TOTAL_SECTION_COUNT_URL}`, {
         method: 'GET',
@@ -139,16 +139,16 @@ const HomePage = () => {
         },
       });
 
+      if (response.status === 401) {
+        window.location.href = '/';
+      }
+
       if (!response.ok) {
         toast({
           variant: "destructive",
           title: 'Failed to fetch total section',
           description: 'There was an error fetching total section.',
-        })
-      }
-
-      if (response.status === 401) {
-        window.location.href = '/';
+        });
       }
 
       const data = await response.json();
@@ -158,12 +158,12 @@ const HomePage = () => {
         variant: "destructive",
         title: 'Failed to fetch total section',
         description: 'There was an error fetching total section.',
-      })
+      });
       setTotalSection(0);
     }
-  }
+  }, [accessToken, toast]);
 
-  const fetchTotalToday = async () => {
+  const fetchTotalToday = React.useCallback(async () => {
     try {
       const response = await fetch(`${TODAY_COUNT_URL}`, {
         method: 'GET',
@@ -178,7 +178,7 @@ const HomePage = () => {
           variant: "destructive",
           title: 'Failed to fetch today count',
           description: 'There was an error fetching today count.',
-        })
+        });
       }
 
       const data = await response.json();
@@ -188,12 +188,12 @@ const HomePage = () => {
         variant: "destructive",
         title: 'Failed to fetch today count',
         description: 'There was an error fetching today count.',
-      })
+      });
       setTotalToday(0);
     }
-  }
+  }, [accessToken, toast]);
 
-  const fetchTotalLastDay = async () => {
+  const fetchTotalLastDay = React.useCallback(async () => {
     try {
       const response = await fetch(`${LASTDAY_COUNT_URL}`, {
         method: 'GET',
@@ -208,7 +208,7 @@ const HomePage = () => {
           variant: "destructive",
           title: 'Failed to fetch last day count',
           description: 'There was an error fetching last day count.',
-        })
+        });
       }
 
       const data = await response.json();
@@ -218,12 +218,12 @@ const HomePage = () => {
         variant: "destructive",
         title: 'Failed to fetch last day count',
         description: 'There was an error fetching last day count.',
-      })
+      });
       setTotalLastDay(0);
     }
-  }
+  }, [accessToken, toast]);
 
-  const fetchTotalLastWeek = async () => {
+  const fetchTotalLastWeek = React.useCallback(async () => {
     try {
       const response = await fetch(`${LASTWEEK_COUNT_URL}`, {
         method: 'GET',
@@ -238,7 +238,7 @@ const HomePage = () => {
           variant: "destructive",
           title: 'Failed to fetch last week count',
           description: 'There was an error fetching last week count.',
-        })
+        });
       }
 
       const data = await response.json();
@@ -248,13 +248,12 @@ const HomePage = () => {
         variant: "destructive",
         title: 'Failed to fetch last week count',
         description: 'There was an error fetching last week count.',
-      })
+      });
       setTotalLastWeek(0);
     }
-  }
+  }, [accessToken, toast]);
 
-
-  const fetchTotalLastMonth = async () => {
+  const fetchTotalLastMonth = React.useCallback(async () => {
     try {
       const response = await fetch(`${LASTMONTH_COUNT_URL}`, {
         method: 'GET',
@@ -269,7 +268,7 @@ const HomePage = () => {
           variant: "destructive",
           title: 'Failed to fetch last month count',
           description: 'There was an error fetching last month count.',
-        })
+        });
       }
 
       const data = await response.json();
@@ -279,10 +278,10 @@ const HomePage = () => {
         variant: "destructive",
         title: 'Failed to fetch last month count',
         description: 'There was an error fetching last month count.',
-      })
+      });
       setTotalLastMonth(0);
     }
-  }
+  }, [accessToken, toast]);
 
   React.useEffect(() => {
     fetchTotalUsers();
@@ -293,7 +292,16 @@ const HomePage = () => {
     fetchTotalLastDay();
     fetchTotalLastWeek();
     fetchTotalLastMonth();
-  }, []);
+  }, [
+    fetchTotalUsers,
+    fetchTotalStaff,
+    fetchTotalAdmin,
+    fetchTotalSection,
+    fetchTotalToday,
+    fetchTotalLastDay,
+    fetchTotalLastWeek,
+    fetchTotalLastMonth
+  ]);
 
   return (
     <main>

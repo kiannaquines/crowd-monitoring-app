@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent, useCallback } from 'react';
 import {
   ChevronDownIcon,
   DotsHorizontalIcon,
@@ -58,18 +58,19 @@ const CategoryEditViewSheet: React.FC<{
   isEditing: boolean;
   onSave: (updatedSection: Category) => void;
 }> = ({ category, onClose, isEditing, onSave }) => {
-  if (!category) return null;
-  const { toast } = useToast()
+  const { toast } = useToast();
 
-  const [category_name, setCategory] = useState(category.category_name);
+  const [category_name, setCategoryName] = useState(category ? category.category_name : '');
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const accessToken = Cookies.get('bearer')
+  const accessToken = Cookies.get('bearer');
 
   useEffect(() => {
-    setCategory(category.category_name);
+    if (category) {
+      setCategoryName(category.category_name);
+    }
   }, [category]);
 
+  if (!category) return null;
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -82,17 +83,14 @@ const CategoryEditViewSheet: React.FC<{
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          category_name: category_name,
-        }),
+        body: JSON.stringify({ category_name }),
       });
 
       if (response.status === 401) {
-        window.location.href = '/'
+        window.location.href = '/';
       }
 
       if (response.ok) {
-
         const updatedCategory: Category = {
           ...category,
           category_name,
@@ -102,21 +100,21 @@ const CategoryEditViewSheet: React.FC<{
         toast({
           title: "Success",
           description: "You have successfully updated the category",
-        })
+        });
         onClose();
       } else {
         toast({
           variant: "destructive",
           title: "Something went wrong",
           description: 'An error occurred while updating the category',
-        })
+        });
       }
     } catch (error) {
       toast({
         variant: "destructive",
         title: "Something went wrong",
         description: "Error occurred while updating the category",
-      })
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -146,7 +144,7 @@ const CategoryEditViewSheet: React.FC<{
                   id="section"
                   className="col-span-12"
                   value={category_name}
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={(e) => setCategoryName(e.target.value)}
                 />
               </div>
               <div className="grid grid-cols-12 items-center gap-4 mt-2">
@@ -174,23 +172,23 @@ const CategoryEditViewSheet: React.FC<{
 };
 
 
-export function CategoryDataTable() {
-
+export const CategoryDataTable: React.FC = () => {
+  
+  const { toast } = useToast()
   const accessToken = Cookies.get('bearer')
 
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
-
   const [category, setCategory] = useState<Category[]>([]);
   const [isLoading, setLoading] = useState(false);
-  const { toast } = useToast()
 
 
-  const fetchCategory = async () => {
+  const fetchCategory = useCallback(async () => {
+    setLoading(true);
     try {
       const response = await fetch(`${CATEGORY_URL}`, {
         method: 'GET',
@@ -200,7 +198,8 @@ export function CategoryDataTable() {
       });
 
       if (response.status === 401) {
-        window.location.href = '/'
+        window.location.href = '/';
+        return;
       }
 
       const message = await response.json();
@@ -216,8 +215,6 @@ export function CategoryDataTable() {
 
       const data: Category[] = message;
       setCategory(data);
-      setLoading(false);
-
     } catch (error) {
       toast({
         variant: "destructive",
@@ -227,8 +224,12 @@ export function CategoryDataTable() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [accessToken, toast]);
 
+
+  useEffect(() => {
+    fetchCategory();
+  }, [fetchCategory]);
 
   const removeCategory = async (category_id: string) => {
     try {
@@ -241,22 +242,23 @@ export function CategoryDataTable() {
       });
 
       if (response.status === 401) {
-        window.location.href = '/'
+        window.location.href = '/';
+        return;
       }
 
-      const message = await response.json()
+      const message = await response.json();
 
       if (!response.ok) {
         toast({
           variant: "destructive",
           title: "Something went wrong",
           description: message.detail,
-        })
+        });
       } else {
         toast({
           title: "Success",
           description: "You have successfully removed the category",
-        })
+        });
       }
 
       setCategory((prevCategory) => prevCategory.filter((cat) => String(cat.category_id) !== String(category_id)));
@@ -266,16 +268,9 @@ export function CategoryDataTable() {
         variant: "destructive",
         title: "Something went wrong",
         description: 'Error removing category',
-      })
+      });
     }
-  }
-
-
-  useEffect(() => {
-    setLoading(true); 
-    fetchCategory();
-  }, []);
-
+  };
 
   const columns: ColumnDef<Category>[] = [
     {

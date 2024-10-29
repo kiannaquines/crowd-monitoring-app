@@ -1,6 +1,6 @@
-import React, { useCallback, useState, useEffect } from 'react'
-import { useDropzone } from 'react-dropzone'
-import Image from 'next/image'
+import React, { useCallback, useState, useEffect } from 'react';
+import { useDropzone } from 'react-dropzone';
+import Image from 'next/image';
 
 interface FileUploadDropZoneProps {
   onDrop: (acceptedFiles: File[]) => void;
@@ -39,7 +39,7 @@ function FileUploadDropZone({ onDrop, className = '' }: FileUploadDropZoneProps)
         {
           isDragActive ?
             <p className="text-blue-500">Drop the images here ...</p> :
-            <p>Drag 'n' drop some images here, or click to select files</p>
+            <p>Drag &apos;n&apos; drop some images here, or click to select files</p>
         }
       </div>
       {previews.length > 0 && (
@@ -63,7 +63,7 @@ function FileUploadDropZone({ onDrop, className = '' }: FileUploadDropZoneProps)
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default FileUploadDropZone
+export default FileUploadDropZone;

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import {
     ChevronDownIcon,
 } from "@radix-ui/react-icons"
@@ -65,7 +65,9 @@ export function PredictionDataTable() {
     const [isLoading, setLoading] = React.useState(true);
     const accessToken = Cookies.get('bearer')
 
-    const fetchPrediction = async () => {
+    const fetchPrediction = useCallback(async () => {
+        setLoading(true);
+
         try {
             const response = await fetch(`${PREDICTION_URL}`, {
                 method: 'GET',
@@ -106,13 +108,12 @@ export function PredictionDataTable() {
             })
             setLoading(false);
         }
-    }
+    }, [accessToken, toast]);
 
 
     useEffect(() => {
-        setLoading(true);
         fetchPrediction();
-    }, []);
+    }, [fetchPrediction]);
 
 
     const columns: ColumnDef<PredictionData>[] = [

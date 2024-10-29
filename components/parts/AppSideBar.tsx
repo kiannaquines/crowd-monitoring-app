@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import {
   ChevronUp,
@@ -19,7 +19,6 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
@@ -27,8 +26,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import UserItem from "./UserItem";
 import { USER_INFO_URL } from '@/utils/constants';
 import Cookies from 'js-cookie'
-import { useRouter } from 'next/navigation';
 import { useToast } from "@/hooks/use-toast";
+import { access } from 'fs';
 
 const items = [
   {
@@ -79,11 +78,11 @@ export function AppSideBar() {
   const [isClient, setIsClient] = useState(false);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const router = useRouter();
   const {toast } = useToast();
+  
   const accessToken = Cookies.get('bearer')
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       const response = await fetch(`${USER_INFO_URL}`, {
         method: 'GET',
@@ -92,7 +91,7 @@ export function AppSideBar() {
         },
       });
       const user = await response.json();
-      const fullname = `${user.first_name} ${user.last_name}`;
+      const fullname = `${user.first_name || ''} ${user.last_name || ''}`.trim();
 
       setFullName(fullname);
       setEmail(user.email)
@@ -103,12 +102,14 @@ export function AppSideBar() {
         description: 'Failed to fetch user details',
       })
     }
-  }
+  }, [accessToken, setFullName, setEmail, toast]);
 
   useEffect(() => {
-    setIsClient(true);
-    fetchUser();
-  }, []);
+    if (accessToken){
+      setIsClient(true);
+      fetchUser();
+    }
+  }, [accessToken, fetchUser]);
 
   const groupedItems = useMemo(() => {
     return items.reduce((acc, item) => {
@@ -117,7 +118,7 @@ export function AppSideBar() {
       }
       acc[item.group].push(item);
       return acc;
-    }, {} as Record<string, typeof items>);
+    }, {} as Record<string, typeof items[number][]>);
   }, []);
 
 

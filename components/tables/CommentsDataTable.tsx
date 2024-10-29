@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent, useCallback } from 'react';
 import {
   ChevronDownIcon,
   DotsHorizontalIcon,
@@ -59,18 +59,18 @@ const CommentEditViewSheet: React.FC<{
   comment: Comment | null;
   onClose: () => void;
   isEditing: boolean;
-  onSave: (updatedSection: Comment) => void;
+  onSave: (updatedComment: Comment) => void;
 }> = ({ comment, onClose, isEditing, onSave }) => {
-  if (!comment) return null;
-  const { toast } = useToast()
+  const { toast } = useToast();
 
-  const accessToken = Cookies.get('bearer')
-
-  const [commentText, setCommentText] = useState(comment.comment);
+  const accessToken = Cookies.get('bearer');
+  const [commentText, setCommentText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    setCommentText(comment.comment);
+    if (comment) {
+      setCommentText(comment.comment);
+    }
   }, [comment]);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -78,54 +78,53 @@ const CommentEditViewSheet: React.FC<{
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${COMMENTS_URL}/${comment.id}`, {
+      const response = await fetch(`${COMMENTS_URL}/${comment?.id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          comment: commentText,
-        }),
+        body: JSON.stringify({ comment: commentText }),
       });
 
-
-      if (response.ok) {
-        const updatedCategory: Comment = {
+      if (response.ok && comment) {
+        const updatedComment: Comment = {
           ...comment,
           comment: commentText,
           update_date: new Date().toISOString(),
         };
-        onSave(updatedCategory);
+        onSave(updatedComment);
         toast({
           title: "Success",
           description: "Comment updated successfully",
-        })
+        });
         onClose();
       } else {
         toast({
           variant: "destructive",
           title: "Something went wrong",
           description: "There was an error updating the comment",
-        })
+        });
       }
     } catch (error) {
       toast({
         variant: "destructive",
         title: "Something went wrong",
         description: "There was an error updating the comment",
-      })
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const sectionDetails = [
-    { field: "ID", value: comment.id },
-    { field: "Comment", value: comment.comment },
-    { field: "Date Added", value: new Date(comment.date_added).toLocaleString() },
-    { field: "Last Updated", value: new Date(comment.update_date).toLocaleString() },
-  ];
+  const sectionDetails = comment
+    ? [
+        { field: "ID", value: comment.id },
+        { field: "Comment", value: comment.comment },
+        { field: "Date Added", value: new Date(comment.date_added).toLocaleString() },
+        { field: "Last Updated", value: new Date(comment.update_date).toLocaleString() },
+      ]
+    : [];
 
   return (
     <Sheet open={!!comment} onOpenChange={onClose}>
@@ -174,25 +173,21 @@ const CommentEditViewSheet: React.FC<{
 
 
 export function CommentDataTable() {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
-
+  
+  const { toast } = useToast()
   const accessToken = Cookies.get('bearer')
-
+  
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
   const [selectedComment, setSelectedComment] = useState<Comment | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const [isLoading, setLoading] = useState<boolean>(true);
-  const { toast } = useToast()
 
-  useEffect(() => {
+  const fetchComments = useCallback(async () => {
     setLoading(true);
-    fetchComments();
-  }, []);
-
-  const fetchComments = async () => {
     try {
       const response = await fetch(`${COMMENTS_URL}`, {
         method: 'GET',
@@ -229,8 +224,11 @@ export function CommentDataTable() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [accessToken, toast]);
 
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
 
   const removeComment = async (commentId: string) => {
     try {

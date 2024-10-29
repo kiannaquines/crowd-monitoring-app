@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, {useEffect, useCallback, useState} from 'react';
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
@@ -56,18 +56,18 @@ type TrackDevicesInfo = {
 }
 
 export function DeviceDataTable() {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
-  const [devicesInfo, setDevicesInfo] = React.useState<TrackDevicesInfo>({ total: 0, page: 1, limit: 100, devices: [] });
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+  const [devicesInfo, setDevicesInfo] = useState<TrackDevicesInfo>({ total: 0, page: 1, limit: 100, devices: [] });
   const { toast } = useToast();
   const accessToken = Cookies.get('bearer');
-  const [isLoading, setLoading] = React.useState(true);
-  const [page, setPage] = React.useState(1);
+  const [isLoading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
   const limit = 500;
 
-  const fetchDevices = async () => {
+  const fetchDevices = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch(`${DEVICES_URL}?page=${page}&limit=${limit}`, {
@@ -106,11 +106,11 @@ export function DeviceDataTable() {
       });
       setLoading(false);
     }
-  };
+  }, [accessToken, page, toast]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchDevices();
-  }, [page]);
+  }, [fetchDevices]);
 
   const columns: ColumnDef<TrackDevices>[] = [
     {

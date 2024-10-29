@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { AreaChart, Area, CartesianGrid, XAxis, YAxis } from "recharts"
+import React, { useCallback, useEffect, useState } from "react";
+import { AreaChart, Area, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -10,17 +10,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 import Cookies from "js-cookie";
-import { PER_HOUR } from "@/utils/constants"
+import { PER_HOUR } from "@/utils/constants";
 import { useToast } from "@/hooks/use-toast";
-import { TrendingUp } from "lucide-react"
+import { TrendingUp } from "lucide-react";
 
 interface TimeSeriesData {
   count: number;
@@ -35,39 +35,43 @@ const chartConfig = {
     label: "Visitor Count",
     color: "hsl(var(--chart-3))",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function TimeSeriesChart() {
+  const [chartData, setChartData] = useState<TimeSeriesData[]>([]);
+  const [total, setTotal] = useState(0);
+  const { toast } = useToast();
 
-  const accessToken = Cookies.get('bearer')
+  const fetchData = useCallback(async () => {
+    const accessToken = Cookies.get("bearer");
+    try {
+      const response = await fetch(`${PER_HOUR}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      });
 
-  const [chartData, setChartData] = React.useState<TimeSeriesData[]>([]);
-  const [total, setTotal] = React.useState(0);
-  const { toast } = useToast()
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${PER_HOUR}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await response.json();
-        setChartData(data);
-        setTotal(data.reduce((acc: number, curr: TimeSeriesData) => acc + curr.count, 0));
-      } catch (error) {
-        toast({
-          title: "Error fetching section time series data",
-          description: "There was an error fetching the time series data",
-          duration: 5000,
-        })
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
 
+      const data = await response.json();
+      setChartData(data);
+      setTotal(data.reduce((acc: number, curr: TimeSeriesData) => acc + curr.count, 0));
+    } catch (error) {
+      toast({
+        title: "Error fetching section time series data",
+        description: "There was an error fetching the time series data",
+        duration: 5000,
+      });
+    }
+  }, [toast]); // Only toast is now in the dependency array
+
+  useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]); // Fetch data on component mount
 
   return (
     <Card className="shadow-sm col-span-1 md:col-span-4 row-span-2">
@@ -158,5 +162,5 @@ export function TimeSeriesChart() {
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

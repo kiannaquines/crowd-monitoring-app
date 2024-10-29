@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/chart";
 import { SECTION_UTILIZATION_URL } from "@/utils/constants";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 interface SectionUtilization {
@@ -39,7 +39,7 @@ export function BarGraphToday() {
   const [chartData, setChartData] = useState<SectionUtilization[]>([]);
   const { toast } = useToast();
 
-  const fetchSectionUtilization = async () => {
+  const fetchSectionUtilization = useCallback(async () => {
     try {
       const response = await fetch(`${SECTION_UTILIZATION_URL}`, {
         method: 'GET',
@@ -62,11 +62,11 @@ export function BarGraphToday() {
         duration: 5000,
       });
     }
-  };
+  }, [accessToken, toast]);
 
   useEffect(() => {
     fetchSectionUtilization();
-  }, []);
+  }, [fetchSectionUtilization]);
 
   return (
     <Card className="shadow-sm col-span-1 md:col-span-4 row-span-2">

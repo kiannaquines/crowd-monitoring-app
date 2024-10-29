@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, FormEvent, useCallback } from 'react';
 import {
   CaretSortIcon,
   ChevronDownIcon,
@@ -56,6 +56,7 @@ import Link from 'next/link';
 import Cookies from 'js-cookie'
 import { useToast } from '@/hooks/use-toast'
 import TagInput from '../parts/TagsInput';
+import Image from 'next/image';
 
 type ImageUrl = {
   id: number;
@@ -83,19 +84,24 @@ const SectionDetailsSheet: React.FC<{
   isEditing: boolean;
   onSave: (updatedSection: Section) => void;
 }> = ({ section, onClose, isEditing, onSave }) => {
-  if (!section) return null;
-  const accessToken = Cookies.get('bearer')
+  
+  const { toast } = useToast();
+  const accessToken = Cookies.get('bearer');
 
-  const [name, setName] = useState(section.name);
-  const [description, setDescription] = useState(section.description);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const { toast } = useToast();
+
   useEffect(() => {
-    setName(section.name);
-    setDescription(section.description);
+    if (section) {
+      setName(section.name);
+      setDescription(section.description);
+    }
   }, [section]);
+
+  if (!section) return null;
 
   const handleDrop = (acceptedFiles: File[]) => {
     setUploadedFiles(acceptedFiles);
@@ -144,7 +150,7 @@ const SectionDetailsSheet: React.FC<{
         })
         onClose();
 
-        setTimeout(function () {
+        setTimeout(() => {
           window.location.reload();
         }, 1000)
       } else {
@@ -169,7 +175,11 @@ const SectionDetailsSheet: React.FC<{
     { field: "ID", value: section.id },
     { field: "Name", value: section.name },
     { field: "Description", value: section.description },
-    { field: "Categories", value: section.categories.map(cat => <Badge key={cat.id} variant="outline" className='ml-2'>{cat.category_name}</Badge>) },
+    { field: "Categories", value: section.categories.map(cat => (
+      <Badge key={cat.id} variant="outline" className='ml-2'>
+        {cat.category_name}
+      </Badge>
+    )) },
     { field: "Date Added", value: new Date(section.date_added).toLocaleString() },
     { field: "Last Updated", value: new Date(section.update_date).toLocaleString() },
   ];
@@ -244,11 +254,12 @@ const SectionDetailsSheet: React.FC<{
             <h3 className="text-lg font-semibold mb-2">Images</h3>
             <div className="grid grid-cols-2 gap-4">
               {section.image_url.map((image) => (
-                <img
+                <Image
                   key={image.id}
                   src={`${ZONE_UPLOAD_URL}${image.image_url}`}
                   alt={`Section image ${image.id}`}
-                  className="w-full h-auto object-cover rounded-md"
+                  fill
+                  className="object-cover rounded-md"
                 />
               ))}
             </div>
@@ -259,23 +270,26 @@ const SectionDetailsSheet: React.FC<{
   );
 };
 
+
 export function SectionDataTable() {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+  const { toast } = useToast();
+  const accessToken = Cookies.get('bearer')
+
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
     []
   );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+    useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [sections, setSections] = useState<Section[]>([]);
   const [isLoading, setLoading] = useState<boolean>(true);
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
-  const { toast } = useToast();
 
-  const accessToken = Cookies.get('bearer')
 
-  const fetchSections = async () => {
+  const fetchSections = useCallback(async () => {
+    setLoading(true)
     try {
       const response = await fetch(`${GET_ZONES_URL}`, {
         method: 'GET',
@@ -286,22 +300,22 @@ export function SectionDataTable() {
 
       if (response.status === 401) {
         window.location.href = '/'
+        return;
       }
 
-      if (!response.ok && response.status === 404) {
-        toast({
-          title: "No details found",
-          description: "No details found for sections",
-        })
+      if (!response.ok) {
+        const message = response.status === 404
+          ? "No details found for sections"
+          : "Error while fetching sections";
 
-        setLoading(false);
-      } else if (!response.ok && response.status === 500) {
         toast({
-          title: "Something went wrong",
-          description: "Error while fetching sections",
-        })
+          title: response.status === 404 ? "No details found" : "Something went wrong",
+          description: message,
+        });
         setLoading(false);
+        return;
       }
+
       const data: Section[] = await response.json();
 
       setSections(data);
@@ -316,7 +330,11 @@ export function SectionDataTable() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [accessToken, toast]);
+
+  useEffect(() => {
+    fetchSections();
+  }, [fetchSections]);
 
   const removeSection = async (sectionId: string) => {
     try {
@@ -355,10 +373,6 @@ export function SectionDataTable() {
   };
 
 
-  useEffect(() => {
-    setLoading(true);
-    fetchSections();
-  }, []);
 
   const columns: ColumnDef<Section>[] = [
     {
@@ -538,7 +552,7 @@ export function SectionDataTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                 {isLoading ? 'Please wait while loading the data':'No sections found.'}
+                  {isLoading ? 'Please wait while loading the data' : 'No sections found.'}
                 </TableCell>
               </TableRow>
             )}
