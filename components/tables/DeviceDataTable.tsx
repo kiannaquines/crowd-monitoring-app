@@ -224,6 +224,7 @@ export function DeviceDataTable() {
           </DropdownMenu>
         </div>
       </div>
+      <div className='rounded-md border'>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map(headerGroup => (
@@ -262,6 +263,7 @@ export function DeviceDataTable() {
           )}
         </TableBody>
       </Table>
+      </div>
       <div className="flex items-center justify-between py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           Page {devicesInfo.page} of {Math.ceil(devicesInfo.total / limit)} rows.

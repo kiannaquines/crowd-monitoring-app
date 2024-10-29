@@ -35,4 +35,7 @@ export const USER_INFO_URL = `${API_ENDPOINT}/users/me`
 export const GENERATE_REPORT_URL = `${API_ENDPOINT}/generate/report/daily`
 
 
+export const SECTION_INFORMATION_URL_TODAY_COUNT = `${API_ENDPOINT}/zones/info/count/section/`
+
+
 

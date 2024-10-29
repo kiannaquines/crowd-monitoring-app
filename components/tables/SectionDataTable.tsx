@@ -444,7 +444,7 @@ export function SectionDataTable() {
               <DropdownMenuItem className='cursor-pointer' onClick={() => removeSection(section.id)}>
                 Remove Section
               </DropdownMenuItem>
-              <Link href='/dashboard/sections/1'>
+              <Link href={`/dashboard/sections/section/${section.id}`}>
                 <DropdownMenuItem className='cursor-pointer'>
                   Details
                 </DropdownMenuItem>
