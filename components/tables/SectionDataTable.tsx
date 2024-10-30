@@ -259,6 +259,8 @@ const SectionDetailsSheet: React.FC<{
                   src={`${ZONE_UPLOAD_URL}${image.image_url}`}
                   alt={`Section image ${image.id}`}
                   fill
+                  width={500}
+                  height={300}
                   className="object-cover rounded-md"
                 />
               ))}

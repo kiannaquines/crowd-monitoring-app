@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button"
-import Link from "next/link";
 import { Menu } from 'lucide-react';
 import { ModeToggle } from '@/components/parts/Toggler';
 import { useSidebar } from "@/components/ui/sidebar"

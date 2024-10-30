@@ -17,7 +17,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={false}>
       <AppSideBar />
       <main className="w-full h-full overflow-y-auto">
         <Header />

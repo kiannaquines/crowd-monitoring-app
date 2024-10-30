@@ -9,6 +9,11 @@ import {
   Users,
   Unplug,
   Scroll,
+  MessageCircle,
+  Brain,
+  Fingerprint,
+  Percent,
+  DiamondPercent,
 } from "lucide-react";
 import {
   Sidebar,
@@ -44,31 +49,31 @@ const items = [
     group: 'General',
     title: "Manage Comments",
     url: "/dashboard/comments",
-    icon: LayoutDashboard,
+    icon: MessageCircle,
   },
   {
     group: 'General',
     title: "Manage Category",
     url: "/dashboard/category",
-    icon: LayoutDashboard,
+    icon: Brain,
   },
   {
     group: 'Authentication',
     title: "Manage Users",
     url: "/dashboard/users",
-    icon: Users,
+    icon: Fingerprint,
   },
   {
     group: 'Model Result',
     title: "Predictions",
     url: "/dashboard/prediction",
-    icon: Unplug,
+    icon: Percent,
   },
   {
     group: 'Model Result',
     title: "Track Devices",
     url: '/dashboard/devices',
-    icon: Scroll,
+    icon: DiamondPercent,
   },
 ];
 
@@ -147,24 +152,6 @@ export function AppSideBar() {
                         <span>{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
-                    {/* {item.actions && item.actions.length > 0 && (
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <SidebarMenuAction>
-                            <MoreHorizontal className="h-4 w-4" />
-                          </SidebarMenuAction>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent side="right" align="start">
-                          {item.actions.map((action) => (
-                            <DropdownMenuItem key={action.title}>
-                              <Link href={action.url}>
-                                {action.title}
-                              </Link>
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    )} */}
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>

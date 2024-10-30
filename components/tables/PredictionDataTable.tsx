@@ -157,7 +157,7 @@ export function PredictionDataTable() {
         },
         {
             accessorKey: "estimated_count",
-            header: () => <div className="text-left">Crowd Count</div>,
+            header: () => <div className="text-left">Estimated Crowd</div>,
             cell: ({ row }) => {
                 return <div className="font-normal"><Badge>{row.getValue("estimated_count")}</Badge></div>
             },

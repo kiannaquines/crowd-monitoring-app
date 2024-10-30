@@ -20,6 +20,7 @@ import { TimeSeriesChart } from '@/components/charts/TimeSeriesChart';
 import Cookies from 'js-cookie';
 import { useToast } from "@/hooks/use-toast";
 import { RocketIcon } from 'lucide-react';
+import { RealTimeChartDevice } from '@/components/charts/RealTimeChart';
 
 const HomePage = () => {
 
@@ -314,13 +315,11 @@ const HomePage = () => {
         </AlertDescription>
       </Alert>
       <div className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 mt-4 gap-4 w-full">
-
-
         <VisitorsCount type="Today" visitors={totalToday} />
         <VisitorsCount type="Last Day" visitors={totalLastDay} />
         <VisitorsCount type="Last Week" visitors={totalLastWeek} />
         <VisitorsCount type="Last Month" visitors={totalLastMonth} />
-
+        <RealTimeChartDevice/>
         <TimeSeriesChart />
         <Card className='shadow-sm cursor-pointer w-full'>
           <CardHeader className="items-start pb-4">
