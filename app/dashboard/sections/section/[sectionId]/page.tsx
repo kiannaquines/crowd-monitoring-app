@@ -5,7 +5,7 @@ import { VisitorsCount } from '@/components/charts/VisitorsCount'
 import Cookies from 'js-cookie';
 import { useToast } from '@/hooks/use-toast';
 import { SECTION_INFORMATION_URL_TODAY_COUNT } from '@/utils/constants'
-import { TimeSeriesBarChartSection } from './TimeSeriesBarChart'
+import { TimeSeriesChartSection } from './TimeSeriesBarChart'
 
 type SectionInformationProps = {
   params: {
@@ -75,7 +75,7 @@ const SectionInformation: React.FC<SectionInformationProps> = ({ params: { secti
         <VisitorsCount type='Last Week' visitors={visitorsCount.last_week?.count || 0} />
         <VisitorsCount type='Last Month' visitors={visitorsCount.last_month?.count || 0} />
 
-        <TimeSeriesBarChartSection />
+        <TimeSeriesChartSection sectionId={sectionId} />
       </div>
     </main>
   )

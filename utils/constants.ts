@@ -29,13 +29,10 @@ export const LOGIN_URL = `${API_ENDPOINT}/auth/login`;
 export const REGISTER_URL = `${API_ENDPOINT}/auth/register`;
 export const VERIFICATION_URL = `${API_ENDPOINT}/auth/register/verify`;
 export const USER_INFO_URL = `${API_ENDPOINT}/users/me`
-
-
-
 export const GENERATE_REPORT_URL = `${API_ENDPOINT}/generate/report/daily`
-
-
 export const SECTION_INFORMATION_URL_TODAY_COUNT = `${API_ENDPOINT}/zones/info/count/section/`
+export const SECTION_INFORMATION_URL_DAILY_CHART = `${API_ENDPOINT}/charts/prediction/daily/zone/`
+
 
 
 
