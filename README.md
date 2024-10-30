@@ -8,6 +8,10 @@ npm run dev
 
 Run the production server:
 
+```
+npm i
+```
+
 ```bash
 npm run build
 ```
