@@ -67,11 +67,11 @@ export function TimeSeriesChart() {
         duration: 5000,
       });
     }
-  }, [toast]); // Only toast is now in the dependency array
+  }, [toast]);
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]); // Fetch data on component mount
+  }, [fetchData]);
 
   return (
     <Card className="shadow-sm col-span-1 md:col-span-4 row-span-2">
@@ -128,10 +128,7 @@ export function TimeSeriesChart() {
                   nameKey="views"
                   indicator="line"
                   labelFormatter={(value) => {
-                    return new Date(value).toLocaleTimeString("en-US", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    });
+                    return new Date(value).toLocaleTimeString("en-US");
                   }}
                 />
               }

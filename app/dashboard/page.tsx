@@ -354,7 +354,7 @@ const HomePage = () => {
 
         <Card className='shadow-sm cursor-pointer w-full'>
           <CardHeader className="items-start pb-4">
-            <CardTitle>Available Sections</CardTitle>
+            <CardTitle>Library Sections</CardTitle>
             <CardDescription>Show total sections</CardDescription>
           </CardHeader>
           <CardContent className='py-3'>

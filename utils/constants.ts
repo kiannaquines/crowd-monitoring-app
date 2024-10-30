@@ -25,13 +25,16 @@ export const LASTMONTH_COUNT_URL = `${API_ENDPOINT}/visitors/count/last-month`;
 export const SECTION_UTILIZATION_URL = `${API_ENDPOINT}/section/utilization`;
 export const SECTION_VS_SECTION_UTILIZATION_URL = `${API_ENDPOINT}/section/utilization/sections/percentage`;
 export const PER_HOUR = `${API_ENDPOINT}/time-series/per-hour/visitors`;
-export const LOGIN_URL = `${API_ENDPOINT}/auth/login`;
+export const LOGIN_URL = `${API_ENDPOINT}/auth/admin/login`;
 export const REGISTER_URL = `${API_ENDPOINT}/auth/register`;
 export const VERIFICATION_URL = `${API_ENDPOINT}/auth/register/verify`;
 export const USER_INFO_URL = `${API_ENDPOINT}/users/me`
 export const GENERATE_REPORT_URL = `${API_ENDPOINT}/generate/report/daily`
 export const SECTION_INFORMATION_URL_TODAY_COUNT = `${API_ENDPOINT}/zones/info/count/section/`
 export const SECTION_INFORMATION_URL_DAILY_CHART = `${API_ENDPOINT}/charts/prediction/daily/zone/`
+
+export const USER_VALIDATION = `${API_ENDPOINT}/users/me`
+
 
 
 

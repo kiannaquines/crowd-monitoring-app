@@ -4,7 +4,6 @@ import React, { useMemo, useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import {
   ChevronUp,
-  MoreHorizontal,
   LayoutDashboard,
   Building,
   Users,
@@ -22,12 +21,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu";
 import UserItem from "./UserItem";
 import { USER_INFO_URL } from '@/utils/constants';
 import Cookies from 'js-cookie'
 import { useToast } from "@/hooks/use-toast";
-import { access } from 'fs';
 
 const items = [
   {
@@ -78,8 +76,8 @@ export function AppSideBar() {
   const [isClient, setIsClient] = useState(false);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const {toast } = useToast();
-  
+  const { toast } = useToast();
+
   const accessToken = Cookies.get('bearer')
 
   const fetchUser = useCallback(async () => {
@@ -105,7 +103,7 @@ export function AppSideBar() {
   }, [accessToken, setFullName, setEmail, toast]);
 
   useEffect(() => {
-    if (accessToken){
+    if (accessToken) {
       setIsClient(true);
       fetchUser();
     }
@@ -121,11 +119,10 @@ export function AppSideBar() {
     }, {} as Record<string, typeof items[number][]>);
   }, []);
 
-
   const logout = () => {
     Cookies.remove('bearer');
-    window.location.href = '/';
-  }
+    window.location.replace('/');
+  };
 
   if (!isClient) {
     return null;

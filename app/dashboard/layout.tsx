@@ -7,7 +7,7 @@ import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSideBar } from "@/components/parts/AppSideBar";
 
 export const metadata: Metadata = {
-  title: "Crowd Monitoring System",
+  title: "TaraLibrary | Crowd Monitoring System with Artificial Intelligence",
   description: "Artificial Intelligence Driven Crowd Monitoring System",
 };
 
