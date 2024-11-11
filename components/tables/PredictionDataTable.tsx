@@ -102,7 +102,6 @@ export function PredictionDataTable() {
             setLoading(false);
         } catch (error) {
             toast({
-                variant: "destructive",
                 title: "Something went wrong",
                 description: "There was an error fetching the prediction data",
             })

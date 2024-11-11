@@ -3,8 +3,8 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-            protocol: 'http',
-            hostname: '10.0.0.195',
+            protocol: 'https',
+            hostname: 'api.taralibrary.online',
             port: '',
             pathname: '/static/**',
             },

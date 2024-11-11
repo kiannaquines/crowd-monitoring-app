@@ -4,6 +4,7 @@ import React, { useState, useEffect, FormEvent, useCallback } from 'react'
 import {
   ChevronDownIcon,
   DotsHorizontalIcon,
+  TrashIcon,
 } from "@radix-ui/react-icons"
 import {
   ColumnDef,
@@ -496,7 +497,7 @@ export function UserDataTable() {
                   setIsEditing(true);
                 }}
               >
-                Edit
+                Edit User
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
@@ -505,9 +506,9 @@ export function UserDataTable() {
                   setIsEditing(false);
                 }}
               >
-                View
+                View User
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => removeUser(users.id)}>Remove Schedule</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => removeUser(users.id)}>Remove User</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )

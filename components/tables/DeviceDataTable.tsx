@@ -100,7 +100,6 @@ export function DeviceDataTable() {
       setLoading(false);
     } catch (error) {
       toast({
-        variant: "destructive",
         title: "Something went wrong",
         description: "Error removing section",
       });

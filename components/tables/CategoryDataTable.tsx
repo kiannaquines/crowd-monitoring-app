@@ -104,14 +104,12 @@ const CategoryEditViewSheet: React.FC<{
         onClose();
       } else {
         toast({
-          variant: "destructive",
           title: "Something went wrong",
           description: 'An error occurred while updating the category',
         });
       }
     } catch (error) {
       toast({
-        variant: "destructive",
         title: "Something went wrong",
         description: "Error occurred while updating the category",
       });
@@ -206,7 +204,6 @@ export const CategoryDataTable: React.FC = () => {
 
       if (!response.ok) {
         toast({
-          variant: "destructive",
           title: "Something went wrong",
           description: message.detail,
         });
@@ -217,7 +214,6 @@ export const CategoryDataTable: React.FC = () => {
       setCategory(data);
     } catch (error) {
       toast({
-        variant: "destructive",
         title: "Something went wrong",
         description: 'Error fetching category',
       });
@@ -250,7 +246,6 @@ export const CategoryDataTable: React.FC = () => {
 
       if (!response.ok) {
         toast({
-          variant: "destructive",
           title: "Something went wrong",
           description: message.detail,
         });
@@ -265,7 +260,6 @@ export const CategoryDataTable: React.FC = () => {
 
     } catch (error) {
       toast({
-        variant: "destructive",
         title: "Something went wrong",
         description: 'Error removing category',
       });
@@ -331,10 +325,10 @@ export const CategoryDataTable: React.FC = () => {
               <DropdownMenuItem onClick={() => {
                 setSelectedCategory(category);
                 setIsEditing(true);
-              }}>Edit</DropdownMenuItem>
+              }}>Edit Category</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setSelectedCategory(category)}>View</DropdownMenuItem>
-              <DropdownMenuItem className='cursor-pointer' onClick={() => removeCategory(category.category_id)}>Remove</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setSelectedCategory(category)}>View Category</DropdownMenuItem>
+              <DropdownMenuItem className='cursor-pointer' onClick={() => removeCategory(category.category_id)}>Remove Category</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )

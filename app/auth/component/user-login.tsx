@@ -43,7 +43,6 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
         const errorData = await response.json();
   
         toast({
-          variant: "destructive",
           title: "Oh no something went wrong.",
           description: errorData.detail,
           action: <ToastAction altText="Try again">Try again</ToastAction>,
@@ -65,7 +64,6 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
     } catch (error) {
       console.error("Error during fetch:", error);
       toast({
-        variant: "destructive",
         title: "Error",
         description: "Something went wrong while processing the request.",
         action: <ToastAction altText="Try again">Try again</ToastAction>,

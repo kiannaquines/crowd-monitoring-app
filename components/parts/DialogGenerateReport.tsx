@@ -1,17 +1,14 @@
 'use client';
 
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose
+} from "@/components/ui/dialog";
 import { DatePickerInput } from "./DatePickerInput";
 import { Button } from "@/components/ui/button";
 import { useState, useCallback } from "react";
@@ -19,7 +16,7 @@ import Cookies from "js-cookie";
 import { useToast } from "@/hooks/use-toast";
 import { GENERATE_REPORT_URL } from '@/utils/constants';
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { File } from "lucide-react";
+import { Label } from "../ui/label";
 
 export function GenerateReportDialog() {
   const { toast } = useToast();
@@ -88,39 +85,38 @@ export function GenerateReportDialog() {
   }, [accessToken, startDate, endDate, toast]);
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
+    <Dialog>
+      <DialogTrigger asChild>
         <Button>Generate Report</Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Select Date Range for Report</AlertDialogTitle>
-          <AlertDialogDescription>
-            <Alert>
-              <div className="flex items-center">
-                <File className="h-4 w-4 mr-2" />
-                <AlertTitle>Guide</AlertTitle>
-              </div>
-              <AlertDescription>
-                Please pick both start and end dates to generate your PDF report.
-              </AlertDescription>
-            </Alert>
-            <div className="grid grid-flow-col gap-4 mt-2">
-              <DatePickerInput label="Pick Start Date" date={startDate} setDate={setStartDate} />
-              <DatePickerInput label="Pick End Date" date={endDate} setDate={setEndDate} />
+      </DialogTrigger>
+      <DialogContent>
+        <DialogTitle>Select Date Range for Report</DialogTitle>
+        <DialogDescription>
+          <Alert className="mb-2">
+            <div className="flex items-center">
+              <AlertTitle>Guide</AlertTitle>
             </div>
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={async (event) => {
+            <AlertDescription>
+              Please pick both start and end dates to generate your PDF report.
+            </AlertDescription>
+          </Alert>
+          <Label className="mt-3">Range Start Date</Label>
+          <DatePickerInput label="Pick Start Date" date={startDate} setDate={setStartDate} />
+          <Label className="mt-1">Range End Date</Label>
+          <DatePickerInput label="Pick End Date" date={endDate} setDate={setEndDate} />
+        </DialogDescription>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </DialogClose>
+          <Button onClick={async (event) => {
             event.preventDefault();
             await generateReportAction();
           }} disabled={isLoading}>
             {isLoading ? 'Generating...' : 'Generate Report'}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

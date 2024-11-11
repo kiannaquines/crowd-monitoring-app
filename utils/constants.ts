@@ -1,4 +1,4 @@
-const API_URL = "http://10.0.0.195";
+const API_URL = "https://api.taralibrary.online";
 const API_VERSION = "v1";
 
 export const API_ENDPOINT = `${API_URL}/api/${API_VERSION}`;

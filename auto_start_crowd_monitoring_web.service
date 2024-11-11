@@ -1,0 +1,17 @@
+[Unit]
+Description=NextJS Crowd Monitoring Auto Start Script
+After=network.target
+
+[Service]
+ExecStart=/root/.nvm/versions/node/v22.11.0/bin/npm start
+Restart=always
+RestartSec=10
+User=root
+Group=root
+WorkingDirectory=/var/www/crowd-monitoring-app
+StandardOutput=append:/var/log/crowd-monitoring-app.log
+StandardError=append:/var/log/crowd-monitoring-app.log
+SyslogIdentifier=crowd-monitoring
+
+[Install]
+WantedBy=multi-user.target

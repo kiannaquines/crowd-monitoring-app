@@ -18,7 +18,7 @@ const Sections = () => {
         <Card className='col-span-4 pt-4'>
           <CardContent>
             <div className='flex flex-row justify-between justify-items-center items-center'>
-                <h4 className='font-medium'>Available Schedules</h4>
+                <h4 className='font-medium'>Available Section</h4>
             </div>
             <SectionDataTable/>
           </CardContent>
