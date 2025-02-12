@@ -26,10 +26,6 @@ Open [http://localhost:80](http://localhost:80) with your browser to see the res
 
 To change the port number in development server open the ```package.json``` file and change ```80``` to your desire port number.
 
-## Take Note
-
-The port you want to use must not inused in other program else it will cause an issue.
-
 ## User Interfaces (Dark Mode)
 
 ![image](https://github.com/user-attachments/assets/86d1c3fa-e63d-4062-9d1c-f4db7fc006ae)
