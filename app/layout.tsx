@@ -1,4 +1,4 @@
-import { GeistSans } from "geist/font/sans";
+import { GeistSans } from 'geist/font/sans';
 import { ThemeProvider } from "@/provider/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 

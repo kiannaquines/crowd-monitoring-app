@@ -1,4 +1,4 @@
-const API_URL = "https://api.taralibrary.online";
+const API_URL = "http://127.0.0.1:3002";
 const API_VERSION = "v1";
 
 export const API_ENDPOINT = `${API_URL}/api/${API_VERSION}`;
@@ -28,12 +28,12 @@ export const PER_HOUR = `${API_ENDPOINT}/time-series/per-hour/visitors`;
 export const LOGIN_URL = `${API_ENDPOINT}/auth/admin/login`;
 export const REGISTER_URL = `${API_ENDPOINT}/auth/register`;
 export const VERIFICATION_URL = `${API_ENDPOINT}/auth/register/verify`;
-export const USER_INFO_URL = `${API_ENDPOINT}/users/me`
-export const GENERATE_REPORT_URL = `${API_ENDPOINT}/generate/report/daily`
-export const SECTION_INFORMATION_URL_TODAY_COUNT = `${API_ENDPOINT}/zones/info/count/section/`
-export const SECTION_INFORMATION_URL_DAILY_CHART = `${API_ENDPOINT}/charts/prediction/daily/zone/`
+export const USER_INFO_URL = `${API_ENDPOINT}/users/me`;
+export const GENERATE_REPORT_URL = `${API_ENDPOINT}/generate/report/daily`;
+export const SECTION_INFORMATION_URL_TODAY_COUNT = `${API_ENDPOINT}/zones/info/count/section/`;
+export const SECTION_INFORMATION_URL_DAILY_CHART = `${API_ENDPOINT}/charts/prediction/daily/zone/`;
 
-export const USER_VALIDATION = `${API_ENDPOINT}/users/me`
+export const USER_VALIDATION = `${API_ENDPOINT}/users/me`;
 
 
 
